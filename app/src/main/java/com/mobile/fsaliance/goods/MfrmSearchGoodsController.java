@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
+import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
 
 public class MfrmSearchGoodsController extends BaseController implements View.OnClickListener {
@@ -102,10 +103,10 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
             case R.id.search_goods_btn:
                 String searchString = getValues();
                 L.i(TAG,"searchString: "+searchString);
-                //TODO 根据用户输入的搜索数据 进行搜索
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putString("search_goods", searchString);
+                bundle.putInt("from", AppMacro.FROM_SEARCH);
                 intent.putExtras(bundle);
                 intent.setClass(this,MfrmSearchGoodListController.class);
                 startActivity(intent);

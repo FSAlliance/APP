@@ -120,12 +120,13 @@ public class MfrmSearchGoodListController extends BaseController
      * @date 2017/9/9 10:42
      */
     private void getSearchAssetData(String param, int pageNo) {
-        String uri = AppMacro.REQUEST_URL + "/asset/query";
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_SEARCH_GOOD;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
-        request.add("param", param);
-        request.add("page", pageNo);
-        request.add("limit", AppMacro.PAGE_SIZE);
+        request.add("text", param);
+        request.add("pageNo", pageNo);
+        request.add("pageSize", AppMacro.PAGE_SIZE);
+        L.i("QQQQQQQQQQQQQ","url: "+request.url());
         queue.add(SEARCH_ASSET_LIST, request, this);
     }
 
@@ -139,7 +140,7 @@ public class MfrmSearchGoodListController extends BaseController
     @Override
     public void onClickLoadMore(String searchTxt) {
         loadMoreList = true;
-        getSearchAssetData(searchTxt, pageNo);
+        getSearchAssetData(searchGoods, pageNo);
     }
 
     @Override
@@ -185,7 +186,7 @@ public class MfrmSearchGoodListController extends BaseController
                     break;
                 //搜索商品信息
                 case SEARCH_ASSET_LIST:
-//                    assetList = analyzeAssetsData(result);
+//                    assetList = analyzeSearchData(result);
 //                    mfrmSearchGoodListView.showSearchAssetList(assetList);
                     break;
                 default:
@@ -319,6 +320,86 @@ public class MfrmSearchGoodListController extends BaseController
         }
         return goods;
     }
+
+    /**
+     * @param result 获取到的数据
+     * @author yuanxueyuan
+     * @Title: analyzeSearchData
+     * @Description: 解析搜索到的数据
+     * @date 2018/1/29 22:39
+     */
+    private List<Good> analyzeSearchData(String result) {
+        if (!loadMoreList) {
+//            if (goodsList != null) {
+//                goodsList.clear();
+//            }
+        }
+        if (null == result || "".equals(result)) {
+            T.showShort(this, R.string.get_myasset_failed);
+//            reloadNoDataList();
+            L.e("result == null");
+            return null;
+        }
+        List<Good> goodsList = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if (jsonObject.has("tbk_item_get_response")) {
+                JSONObject optJSONObject = jsonObject.optJSONObject("tbk_item_get_response");
+                if (optJSONObject == null) {
+                    return null;
+                }
+                JSONObject jsonObjectResult= optJSONObject.optJSONObject("results");
+                if (jsonObjectResult == null) {
+                    return null;
+                }
+                JSONArray jsonArray = jsonObjectResult.optJSONArray("n_tbk_item");
+                mfrmSearchGoodListView.isLoadMore = true;
+                if (jsonArray.length() <= 0) {
+                    if (loadMoreList) {
+                        mfrmSearchGoodListView.isLoadMore = false;
+                        T.showShort(this, R.string.check_asset_no_more);
+                    } else {
+//                        reloadNoDataList();
+                    }
+                    return null;
+                } else {
+                    pageNo++;
+                    mfrmSearchGoodListView.setNoDataView(false);
+                }
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Good good = new Good();
+                    JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
+                    good.setCommissionRate(jsonObjectContent.optString("commission_rate"));
+                    good.setCouponClickUrl(jsonObjectContent.optString("coupon_click_url"));
+                    good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
+                    good.setCouponRemainCount(jsonObjectContent.optInt("coupon_remain_count"));
+                    good.setCouponTotalCount(jsonObjectContent.optInt("coupon_total_count"));
+                    good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
+                    good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
+                    good.setItemDescription(jsonObjectContent.optString("item_description"));
+                    good.setItemUrl(jsonObjectContent.optString("item_url"));
+                    good.setNick(jsonObjectContent.optString("nick"));
+                    good.setGoodsImg(jsonObjectContent.optString("pict_url"));
+                    good.setShopTitle(jsonObjectContent.optString("shop_title"));
+                    good.setGoodsTitle(jsonObjectContent.optString("title"));
+                    good.setVolume(jsonObjectContent.optInt("volume"));
+                    good.setGoodsFinalPrice(jsonObjectContent.optString("zk_final_price"));
+                    goodsList.add(good);
+                }
+                lastCount = jsonArray.length();
+            } else {
+                T.showShort(this, R.string.get_goods_failed);
+//                reloadNoDataList();
+                return null;
+            }
+        } catch (JSONException e) {
+            T.showShort(this, R.string.get_goods_failed);
+//            reloadNoDataList();
+            e.printStackTrace();
+        }
+        return  goodsList;
+    }
+
 
     /**
      * @author tanyadong

@@ -350,7 +350,14 @@ public class MfrmHomeController extends BaseFragmentController implements
 		}
 	}
 
-	private void analyzeFavoriteGroup(String result){
+	/**
+	 * @param result 获取到的数据
+	 * @author yuanxueyuan
+	 * @Title: analyzeFavoriteGroup
+	 * @Description: 解析选品库
+	 * @date 2018/1/29 22:38
+	 */
+	private void analyzeFavoriteGroup(String result) {
 		if (result == null) {
 			T.showShort(context, "");
 			return;

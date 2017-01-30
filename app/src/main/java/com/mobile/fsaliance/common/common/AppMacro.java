@@ -10,7 +10,7 @@ public class AppMacro {
 	public static final String CRASH_MESSAGE_PATH = APP_PATH + "CrashMeaasge/";
 	public static final String PHOTO_PATH = APP_PATH + "photo/";
 	public static final String REQUEST_URL = "http://221.238.227.82:10086/rest";//接口
-	public static final String REQUEST_IP_PORT = "http://192.168.0.103:8080";//接口
+	public static final String REQUEST_IP_PORT = "http://39.107.106.248:3389";//接口http://39.107.106.248
 	public static final String REQUEST_GOODS_PATH = "/FSAlliance/rest";//接口
 	public static final int RESPONCESUCCESS = 200; //请求接口能调通
 
@@ -18,6 +18,7 @@ public class AppMacro {
 	public static final String REQUEST_FAVORITE_LIST = "/Goods/favoriteGroup";//获取选品库列表
 	public static final String REQUEST_FAVORITE_ITEMS = "/Goods/favoriteItem";//获取选品库中的数据
 	public static final String REQUEST_GET_GOOD_CODE = "/Goods/code";//获取选品库中的数据
+	public static final String REQUEST_SEARCH_GOOD = "/Goods/searchGoods";//搜索商品
 
 	//淘宝联盟所需常量
 	public static final int PLATFORM = 2;//链接形式：1：PC，2：无线，默认：１

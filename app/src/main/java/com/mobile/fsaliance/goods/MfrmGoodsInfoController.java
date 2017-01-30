@@ -132,7 +132,12 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
         request.cancelBySign(cancelObject);
         request.add("userId", "128556731");
         request.add("text", good.getGoodsTitle());
-        request.add("url", good.getCouponClickUrl());//编码
+        String clickUrl = good.getCouponClickUrl();
+        if (good.getCouponClickUrl() == null || "".equals(good.getCouponClickUrl())) {
+            clickUrl = good.getItemUrl();
+        }
+        L.i("QQQQQQQQQ","clickUrl: "+clickUrl);
+        request.add("url", clickUrl);//编码
         request.add("logo", good.getGoodsImg());
         request.add("ext", "");
         L.i("QQQQQQQQQQ", "url: " + request.url());
