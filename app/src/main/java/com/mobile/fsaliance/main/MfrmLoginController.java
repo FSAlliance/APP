@@ -42,14 +42,11 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
 
     @Override
     protected void onCreateFunc(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_login_controller);
-        if (Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-            decorView.setSystemUiVisibility(option);
-            StatusBarUtil.setStatusBarColor(this, Color.TRANSPARENT);
-            StatusBarUtil.StatusBarLightMode(this);
+        int result = StatusBarUtil.StatusBarLightMode(this);
+        if (result != 0) {
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
         }
+        setContentView(R.layout.activity_login_controller);
         mfrmLoginView = (MfrmLoginView) findViewById(R.id.activity_login_view);
         mfrmLoginView.setDelegate(this);
         queue = NoHttp.newRequestQueue();

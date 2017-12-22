@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FSAliance.iml" filepath="$PROJECT_DIR$/FSAliance.iml" />
+      <module fileurl="file://F:\My\Android\FSAliance\FSAliance.iml" filepath="F:\My\Android\FSAliance\FSAliance.iml" />
       <module fileurl="file://F:\My\Android\FSAliance\TdAsset.iml" filepath="F:\My\Android\FSAliance\TdAsset.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
