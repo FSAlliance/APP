@@ -76,6 +76,20 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
     public void onClickBack() {
         finish();
     }
+    
+    /**
+     * @author tanyadong
+     * @Title: onClickToLogin
+     * @Description: 点击登录
+     * @date 2017/12/22 0022 23:59
+     */
+    
+    @Override
+    public void onClickToLogin() {
+        Intent intent = new Intent(this, MfrmLoginController.class);
+        startActivity(intent);
+        finish();
+    }
 
 
     @Override

@@ -92,7 +92,7 @@ public class MfrmLoginView extends BaseView {
      */
     private boolean checkInfo(String jobId, String password) {
         if (null == jobId || "".equals(jobId)) {
-            T.showShort(context, R.string.job_num_is_empty);
+            T.showShort(context, R.string.username_is_empty);
             return false;
         }
         if (null == password || "".equals(password)) {
