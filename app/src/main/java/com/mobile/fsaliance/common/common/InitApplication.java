@@ -9,9 +9,9 @@ import java.util.List;
 import android.app.Application;
 import android.util.Log;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.T;
-import com.mobile.tiandy.asset.R;
 
 import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;

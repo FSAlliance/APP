@@ -10,7 +10,7 @@ import android.util.TypedValue;
 import android.widget.TextView;
 
 
-import com.mobile.tiandy.asset.R;
+import com.mobile.fsaliance.R;
 
 import java.util.ArrayList;
 import java.util.List;

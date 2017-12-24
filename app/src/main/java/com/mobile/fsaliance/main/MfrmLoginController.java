@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
@@ -13,7 +14,6 @@ import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
-import com.mobile.tiandy.asset.R;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;

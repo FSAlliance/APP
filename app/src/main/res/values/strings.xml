@@ -67,6 +67,27 @@
     <string name="common_dialog_hint">提示</string>
     <string name="common_dialog_cancel">取消</string>
     <string name="common_dialog_ok">确认</string>
+    <!--更多-->
+    <string name="morte_scan">扫一扫</string>
+    <string name="morte_about">关于</string>
+    <string name="logoff_hint">确定要退出登录吗？</string>
+    <string name="app_version_mark">版本号：V</string>
+    <string name="company_name">天地伟业技术有限公司</string>
+    <string name="company_introduce">\t\t\t\t码上资产通是天地伟业技术有限公司基于高效的、方便的管理与统计公司内部的固定资产而研发的一个应用程序，它是通过扫描固定资产的二维码或条码来验证固定资产的相关信息</string>
+    <string name="asset_check_coid">所属工号:</string>
+    <string name="asset_person">认证人员:</string>
+    <string name="asset_immediate_authentication">立即认证</string>
+    <string name="asset_info">资产信息</string>
+    <string name="asset_input_person_name">请输入认证人员姓名</string>
+    <string name="asset_search_place">请选择地点</string>
+    <string name="asset_position">资产位置:</string>
+
+    <!--商品详情-->
+    <string name="goods_info_title">商品详情</string>
+    <string name="goods_info_use_explain">使用说明</string>
+    <string name="goods_info_use_explain_info">复制文字或者点击一键复制按钮，打开[手淘APP]领卷下单</string>
+    <string name="goods_info_one_key_copy">一键复制</string>
+
     <!--我的界面-->
     <string name="mine_money_balance">余额</string>
     <string name="mine_money_in_the_present">提现中</string>

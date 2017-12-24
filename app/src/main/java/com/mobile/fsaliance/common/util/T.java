@@ -6,7 +6,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.mobile.tiandy.asset.BuildConfig;
+import com.mobile.fsaliance.BuildConfig;
+
 
 /**
  * Toast统一管理类

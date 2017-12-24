@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
-import com.mobile.tiandy.asset.R;
 
 /**
  * @author tanyadong

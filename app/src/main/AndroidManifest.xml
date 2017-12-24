@@ -55,5 +55,9 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <activity
+            android:name="com.mobile.fsaliance.goods.MfrmGoodsInfoController"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 </manifest>

@@ -1,16 +1,18 @@
 package com.mobile.fsaliance.supervoucher;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Asset;
-import com.mobile.tiandy.asset.R;
+import com.mobile.fsaliance.goods.MfrmGoodsInfoController;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -176,12 +178,12 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 
 	@Override
 	public void onClickToDetail(Asset asset) {
-//		Intent intent = new Intent();
-//		Bundle bundle = new Bundle();
-//		intent.setClass(context, MfrmAssetDetailController.class);
-//		bundle.putSerializable("asset", asset);
-//		intent.putExtras(bundle);
-//		startActivity(intent);
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		intent.setClass(context, MfrmGoodsInfoController.class);
+		//TODO 填写具体的参数
+		intent.putExtras(bundle);
+		startActivity(intent);
 	}
 
 

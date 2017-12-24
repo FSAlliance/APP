@@ -1,14 +1,13 @@
 package com.mobile.fsaliance.mine;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
-import com.mobile.tiandy.asset.R;
+
 
 
 /**

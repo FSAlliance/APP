@@ -11,9 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Asset;
-import com.mobile.tiandy.asset.R;
 
 import java.util.List;
 

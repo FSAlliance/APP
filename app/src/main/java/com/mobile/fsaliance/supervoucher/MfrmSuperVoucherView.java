@@ -1,25 +1,19 @@
 package com.mobile.fsaliance.supervoucher;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Asset;
-import com.mobile.fsaliance.home.MfrmHomeView;
-import com.mobile.tiandy.asset.R;
 
 
 import java.util.List;

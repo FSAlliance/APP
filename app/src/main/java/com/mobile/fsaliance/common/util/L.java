@@ -3,7 +3,7 @@ package com.mobile.fsaliance.common.util;
 
 import android.util.Log;
 
-import com.mobile.tiandy.asset.BuildConfig;
+import com.mobile.fsaliance.BuildConfig;
 
 
 /**
