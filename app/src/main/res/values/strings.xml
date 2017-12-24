@@ -6,6 +6,8 @@
     <string name="mainframe_whethertoquit">再按一次退出</string>
     <!-- loading 加载 -->
     <string name="text_gif_loading">加载中</string>
+    <string name="hint_input_job_num">请输入工号</string>
+    <string name="hint_input_goods_keywords">请输入商品关键字</string>
     <string name="hint_input_phone_num">请输入手机号</string>
     <string name="hint_input_name">请输入用户名</string>
     <string name="name_is_empty">用户名不能为空</string>

@@ -106,14 +106,48 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 	}
 
 	@Override
-	public void onClickLogoff() {
+	public void onClickSearch() {
+
 	}
 
 	@Override
-	public void onClickSearch(String strSearch) {
-		refreshList = false;
-		loadMoreList = false;
-		getSearchAssetData(strSearch, FIRST_PAGE);
+	public void onClickOne() {
+
+	}
+
+	@Override
+	public void onClickTwo() {
+
+	}
+
+	@Override
+	public void onClickThree() {
+
+	}
+
+	@Override
+	public void onClickFour() {
+
+	}
+
+	@Override
+	public void onClickFive() {
+
+	}
+
+	@Override
+	public void onClickSix() {
+
+	}
+
+	@Override
+	public void onClickSeven() {
+
+	}
+
+	@Override
+	public void onClickEight() {
+
 	}
 
 	/**

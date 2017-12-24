@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity
 
         list_fragment = new ArrayList<>();
 
-        list_fragment.add(mfrmHomeController);
         list_fragment.add(mfrmSuperVoucherController);
+        list_fragment.add(mfrmHomeController);
         list_fragment.add(mfrmMineController);
 
         MainFragmentAdapter m1 = new MainFragmentAdapter(getSupportFragmentManager(),list_fragment);
