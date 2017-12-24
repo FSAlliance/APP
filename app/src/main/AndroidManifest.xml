@@ -54,9 +54,15 @@
             android:name="com.mobile.fsaliance.main.MfrmRegisterController"
             android:screenOrientation="portrait" >
         </activity>
-
+        <!--商品详情-->
         <activity
             android:name="com.mobile.fsaliance.goods.MfrmGoodsInfoController"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!--搜索商品-->
+        <activity
+            android:name="com.mobile.fsaliance.goods.MfrmSearchGoodsController"
             android:screenOrientation="portrait" >
         </activity>
     </application>

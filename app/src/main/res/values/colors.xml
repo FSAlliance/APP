@@ -18,4 +18,5 @@
     <color name="xml_bg">#F6F7FE</color>
     <color name="asset_child">#666666</color>
     <color name="read">#FEF70418</color>
+    <color name="good_search">#fef5f2f2</color>
 </resources>

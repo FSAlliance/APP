@@ -81,4 +81,7 @@
     <string name="goods_info_use_explain_info">复制文字或者点击一键复制按钮，打开[手淘APP]领卷下单</string>
     <string name="goods_info_one_key_copy">一键复制</string>
 
+
+    <!--商品搜索-->
+    <string name="goods_search">商品搜索</string>
 </resources>

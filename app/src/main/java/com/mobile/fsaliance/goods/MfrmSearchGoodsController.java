@@ -4,12 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 
-public class MfrmGoodsInfoController extends BaseController implements View.OnClickListener {
+public class MfrmSearchGoodsController extends BaseController implements View.OnClickListener {
+
+    private EditText searchEdt;
+    private TextView searchText;
     private ImageView backImg;
 
     @Override
@@ -23,32 +29,35 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
     protected void onCreateFunc(Bundle savedInstanceState) {
         //取消标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_goods_info_controller);
+        setContentView(R.layout.activity_search_goods_controller);
 
         initView();
 
         addListener();
-
     }
+
 
     /**
      * @author yuanxueyuan
      * @Title: initView
-     * @Description: 初始化界面布局
-     * @date 2017/12/24 23:00
+     * @Description: 初始化界面
+     * @date 2017/12/24 22:41
      */
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.goods_info_back_img);
+        searchEdt = (EditText) findViewById(R.id.search_goods_edt);
+        searchText = (TextView) findViewById(R.id.search_goods_btn);
+        backImg = (ImageView) findViewById(R.id.search_goods_back_img);
     }
 
-     /**
-     * @author  yuanxueyuan
-     * @Title:  addListener
-     * @Description: 添加监听事件
-     * @date 2017/12/24 23:02
+    /**
+     * @author yuanxueyuan
+     * @Title: addListener
+     * @Description: 添加监听方法
+     * @date 2017/12/24 22:41
      */
-    private void addListener(){
+    private void addListener() {
         backImg.setOnClickListener(this);
+        searchText.setOnClickListener(this);
     }
 
 
@@ -61,8 +70,12 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             //返回键
-            case R.id.goods_info_back_img:
+            case R.id.search_goods_back_img:
                 finish();
+                break;
+            //搜索按钮
+            case R.id.search_goods_btn:
+                //TODO 跳转列表界面
                 break;
             default:
                 break;

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--最上方搜索-->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent">
+
+        <ImageView
+            android:id="@+id/search_goods_back_img"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/goback_write" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/goods_search"
+            android:textColor="@color/white"
+            android:textSize="@dimen/about_text_size" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/good_search">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_one_key_copy"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/search_goods_edt"
+                android:textSize="13dp"
+                android:singleLine="true"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_input_goods_keywords"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textColorHint="@color/common_txt_bg"
+                android:paddingLeft="5dp"
+                android:drawableLeft="@drawable/home_top_search"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/search_goods_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_one_key_copy_text"
+                android:text="搜索"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
