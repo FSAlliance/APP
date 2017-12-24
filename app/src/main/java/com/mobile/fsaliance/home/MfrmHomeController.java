@@ -85,7 +85,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 		if (user == null) {
 			return;
 		}
-		getMyAsset(user.getJobId());
+//		getMyAsset(user.getJobId());
 	}
 
 
@@ -127,118 +127,77 @@ public class MfrmHomeController extends BaseFragmentController implements
 	*/
 	@Override
 	public void pullDownRefresh() {
-		isRefresh = true;
-		if (user == null) {
-			mfrmHomeView.endRefreshLayout();
-			return;
-		}
-		getMyAsset(user.getJobId());
+//		isRefresh = true;
+//		if (user == null) {
+//			mfrmHomeView.endRefreshLayout();
+//			return;
+//		}
+//		getMyAsset(user.getJobId());
 	}
 
 	@Override
 	public void onStart(int i) {
-		if (isRefresh) {
-			return;
-		}
-		if (mfrmHomeView.circleProgressBarView != null) {
-			mfrmHomeView.circleProgressBarView.showProgressBar();
-		}
+//		if (isRefresh) {
+//			return;
+//		}
+//		if (mfrmHomeView.circleProgressBarView != null) {
+//			mfrmHomeView.circleProgressBarView.showProgressBar();
+//		}
 	}
 
 	@Override
 	public void onSucceed(int i, Response response) {
-		if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
-			if (assetList != null && assetList.size() > 0) {
-				assetList.clear();
-			}
-			String result = (String) response.get();
-			if (result == null || "".equals(result)) {
-				T.showShort(context, R.string.get_myasset_failed);
-				mfrmHomeView.setNoDataView(true);
-				return;
-			}
-			assetList = analyzeMyAssetData(result);
-			mfrmHomeView.showMyAssetList(assetList);
-		}
+//		if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
+//			if (assetList != null && assetList.size() > 0) {
+//				assetList.clear();
+//			}
+//			String result = (String) response.get();
+//			if (result == null || "".equals(result)) {
+//				T.showShort(context, R.string.get_myasset_failed);
+//				mfrmHomeView.setNoDataView(true);
+//				return;
+//			}
+//			assetList = analyzeMyAssetData(result);
+//			mfrmHomeView.showMyAssetList(assetList);
+//		}
+//	}
+//
+//	@Override
+//	public void onFailed(int i, Response response) {
+//		mfrmHomeView.circleProgressBarView.hideProgressBar();
+//		if (assetList != null && assetList.size() != 0) {
+//			assetList.clear();
+//		}
+//		mfrmHomeView.setNoDataView(true);
+//		Exception exception = response.getException();
+//		if (exception instanceof NetworkError) {
+//			T.showShort(context, R.string.network_error);
+//			return;
+//		}
+//		if (exception instanceof UnKnownHostError) {
+//			T.showShort(context, R.string.network_unknown_host_error);
+//			return;
+//		}
+//		if (exception instanceof SocketTimeoutException) {
+//			T.showShort(context, R.string.network_socket_timeout_error);
+//			return;
+//		}
+//		T.showShort(context, R.string.get_myasset_failed);
 	}
 
 	@Override
 	public void onFailed(int i, Response response) {
-		mfrmHomeView.circleProgressBarView.hideProgressBar();
-		if (assetList != null && assetList.size() != 0) {
-			assetList.clear();
-		}
-		mfrmHomeView.setNoDataView(true);
-		Exception exception = response.getException();
-		if (exception instanceof NetworkError) {
-			T.showShort(context, R.string.network_error);
-			return;
-		}
-		if (exception instanceof UnKnownHostError) {
-			T.showShort(context, R.string.network_unknown_host_error);
-			return;
-		}
-		if (exception instanceof SocketTimeoutException) {
-			T.showShort(context, R.string.network_socket_timeout_error);
-			return;
-		}
-		T.showShort(context, R.string.get_myasset_failed);
+
 	}
 
 	@Override
 	public void onFinish(int i) {
-		isRefresh = false;
-		mfrmHomeView.endRefreshLayout();
-		if (mfrmHomeView.circleProgressBarView != null) {
-			mfrmHomeView.circleProgressBarView.hideProgressBar();
-		}
+//		isRefresh = false;
+//		mfrmHomeView.endRefreshLayout();
+//		if (mfrmHomeView.circleProgressBarView != null) {
+//			mfrmHomeView.circleProgressBarView.hideProgressBar();
+//		}
 	}
 
-	/**
-	  * @author tanyadong
-	  * @Title analyzeMyAssetData
-	  * @Description 解析我的资产
-	  * @date 2017/9/9 19:55
-	*/
-	private List<Asset> analyzeMyAssetData(String result) {
-		List<Asset> assetList = new ArrayList<>();
-		if (result == null || result.equals("")) {
-			T.showShort(context, R.string.get_myasset_failed);
-			mfrmHomeView.setNoDataView(true);
-			return null;
-		}
-		try {
-			JSONObject jsonObject = new JSONObject(result);
-			if (jsonObject.has("code") && jsonObject.optInt("code") == 0) {
-				JSONArray jsonArray = jsonObject.getJSONArray("content");
-				if (jsonArray.length() <= 0) {
-					mfrmHomeView.setNoDataView(true);
-					return null;
-				} else {
-					mfrmHomeView.setNoDataView(false);
-				}
-				for (int i = 0; i < jsonArray.length(); i++) {
-					Asset asset = new Asset();
-					JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
-					asset.setState(jsonObjectContent.getInt("state"));
-					asset.setType(jsonObjectContent.getString("type"));
-					asset.setCodeId(jsonObjectContent.getString("codeId"));
-					asset.setJobId(jsonObjectContent.getString("jobId"));
-					asset.setName(jsonObjectContent.getString("name"));
-					asset.setRealPlace(jsonObjectContent.getString("realPlace"));
-					asset.setRealSaver(jsonObjectContent.getString("realSaver"));
-					assetList.add(asset);
-				}
-			} else {
-				T.showShort(context, R.string.get_myasset_failed);
-				mfrmHomeView.setNoDataView(true);
-				return null;
-			}
-		} catch (JSONException e) {
-			T.showShort(context, R.string.get_myasset_failed);
-			mfrmHomeView.setNoDataView(true);
-			e.printStackTrace();
-		}
-		return assetList;
-	}
+
 }

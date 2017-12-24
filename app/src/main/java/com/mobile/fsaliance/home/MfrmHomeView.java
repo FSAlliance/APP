@@ -49,46 +49,30 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 
 	@Override
 	protected void initViews() {
-		assetListNoDataTxt = (TextView) findViewById(R.id.txt_asset_list_no_data);
-		circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
-		titleLiftLl = (LinearLayout) findViewById(R.id.ll_title_left);
-		titleRightLl = (LinearLayout) findViewById(R.id.ll_title_right);
-		scanQrcordImg = (ImageView) findViewById(R.id.img_right);
-		scanQrcordImg.setImageResource(R.drawable.title_qrcode_img);
-		userImg = (ImageView) findViewById(R.id.img_back);
-		userImg.setImageResource(R.drawable.user_img);
-		titleTxt = (TextView) findViewById(R.id.txt_title);
-		titleTxt.setText(getResources().getString(R.string.my_asset));
-		expandableListView = (ListView) findViewById(R.id.expandablelistview);
-		bgaRefreshLayout = (BGARefreshLayout) findViewById(R.id.bgaRefreshLayout);
-		initFresh();
+//		assetListNoDataTxt = (TextView) findViewById(R.id.txt_asset_list_no_data);
+//		circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
+//		titleLiftLl = (LinearLayout) findViewById(R.id.ll_title_left);
+//		titleRightLl = (LinearLayout) findViewById(R.id.ll_title_right);
+//		userImg = (ImageView) findViewById(R.id.img_back);
+//		userImg.setImageResource(R.drawable.user_img);
+//		titleTxt = (TextView) findViewById(R.id.txt_title);
+//		titleTxt.setText(getResources().getString(R.string.my_asset));
+//		initFresh();
 	}
 
 
 
 	@Override
 	protected void addListener() {
-		titleLiftLl.setOnClickListener(this);
-		titleRightLl.setOnClickListener(this);
-		userImg.setOnClickListener(this);
-		scanQrcordImg.setOnClickListener(this);
+//		titleLiftLl.setOnClickListener(this);
+//		titleRightLl.setOnClickListener(this);
+//		userImg.setOnClickListener(this);
+//		scanQrcordImg.setOnClickListener(this);
 	}
 
 	@Override
 	protected void onClickListener(View v) {
 		switch (v.getId()) {
-			case R.id.ll_title_left:
-			case R.id.img_back:
-				if (super.delegate instanceof MfrmMineAssetDelegate) {
-					((MfrmMineAssetDelegate) super.delegate).onClickLogoff();
-				}
-				break;
-			case R.id.ll_title_right:
-			case R.id.img_right:
-				if (super.delegate instanceof MfrmMineAssetDelegate) {
-					((MfrmMineAssetDelegate) super.delegate).onClickToQRCode();
-				}
-				break;
 		default:
 			break;
 		}

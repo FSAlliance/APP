@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.tiandy.asset.R;
@@ -18,10 +17,6 @@ import com.mobile.tiandy.asset.R;
  * &*/
 
 public class MfrmMineView extends BaseView {
-    private ImageView backL;
-    private TextView appDescritionTv;
-    private String versionName;
-    private TextView versionTv, titleTxt;
     public MfrmMineView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -37,48 +32,23 @@ public class MfrmMineView extends BaseView {
         if (data == null) {
             return;
         }
-        versionName = (String) data[0];
-        if (versionName != null || !"".equals(versionName)) {
-            //设置版本号
-            initVersionText();
-        }
+
 
     }
 
-    private void initVersionText() {
-        String[] temp = versionName.split("\\.");
-        if (temp.length < 3) {
-            versionTv.setText(this.getResources().getText(R.string.app_version_mark) + versionName + ".0");
-        } else {
-            versionTv.setText(this.getResources().getText(R.string.app_version_mark) + versionName);
-        }
 
-    }
 
     @Override
     protected void initViews() {
-        backL = (ImageView) findViewById(R.id.img_back);
-        titleTxt = (TextView) findViewById(R.id.txt_title);
-        titleTxt.setText(getResources().getString(R.string.morte_about));
-        backL.setImageResource(R.drawable.goback);
-        versionTv = (TextView) findViewById(R.id.txt_app_version);
-        appDescritionTv = (TextView) findViewById(R.id.txt_about_content);
-        appDescritionTv.setText(getResources().getString(R.string.company_introduce));
     }
 
     @Override
     protected void addListener() {
-        backL.setOnClickListener(this);
     }
 
     @Override
     protected void onClickListener(View v) {
         switch (v.getId()) {
-            case R.id.img_back:
-                if (super.delegate instanceof AboutViewDelegate) {
-                    ((AboutViewDelegate) super.delegate).onClickBack();
-                }
-                break;
             default:
                 break;
         }
