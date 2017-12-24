@@ -10,13 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.home.MfrmHomeController;
 import com.mobile.fsaliance.mine.MfrmMineController;
 import com.mobile.fsaliance.supervoucher.MfrmSuperVoucherController;
-import com.mobile.tiandy.asset.R;
 
 
 import java.util.ArrayList;

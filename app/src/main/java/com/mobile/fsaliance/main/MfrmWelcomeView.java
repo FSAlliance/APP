@@ -5,8 +5,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
-import com.mobile.tiandy.asset.R;
 
 
 public class MfrmWelcomeView extends BaseView {

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
-import com.mobile.tiandy.asset.R;
+import com.mobile.fsaliance.R;
 
 public class CircleProgressBarView extends LinearLayout {
 	/*

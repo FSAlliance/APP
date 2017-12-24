@@ -1,18 +1,16 @@
 package com.mobile.fsaliance.main;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.vo.User;
-import com.mobile.tiandy.asset.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

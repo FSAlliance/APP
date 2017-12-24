@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.tiandy.asset.R;
 
 import java.util.List;
 

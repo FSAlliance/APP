@@ -1,9 +1,9 @@
 package com.mobile.fsaliance.supervoucher;
 
 import com.bumptech.glide.Glide;
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Asset;
-import com.mobile.tiandy.asset.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

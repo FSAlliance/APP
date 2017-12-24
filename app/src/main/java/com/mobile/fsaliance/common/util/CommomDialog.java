@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mobile.tiandy.asset.R;
+import com.mobile.fsaliance.R;
 
 
 public class CommomDialog extends Dialog implements View.OnClickListener{
