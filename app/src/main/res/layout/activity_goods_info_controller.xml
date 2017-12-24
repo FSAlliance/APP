@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--最上方搜索-->
+    <RelativeLayout
+        android:id="@+id/home_top_search"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/goback_write" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/goods_info_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/about_text_size" />
+    </RelativeLayout>
+
+    <!--商品的图片-->
+    <ImageView
+        android:id="@+id/goods_info_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/goods_price_discount"
+        android:layout_gravity="center"/>
+
+    <!--使用说明-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <View
+            android:background="@color/common_txt_bg"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/goods_info_use_explain"/>
+        <View
+            android:background="@color/common_txt_bg"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="0.5dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:text="@string/goods_info_use_explain_info"/>
+
+    <View
+        android:background="@color/common_txt_bg"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="0.5dp"/>
+
+    <TextView
+        android:id="@+id/goods_info_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="50dp"
+        android:textColor="@color/qrcode_transparent_bg"
+        android:text="sdjskdksf"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_one_key_copy"
+        android:text="@string/goods_info_one_key_copy"/>
+
+</LinearLayout>
