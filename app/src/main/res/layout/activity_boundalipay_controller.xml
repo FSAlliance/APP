@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.mobile.fsaliance.mine.MfrmUserInfoView
-        android:id="@+id/activity_userinfo_view"
+    <com.mobile.fsaliance.mine.MfrmBoundAlipayView
+        android:id="@+id/activity_boundalipay_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 </LinearLayout>

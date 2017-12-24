@@ -11,9 +11,9 @@ import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 
 
-public class MfrmUserInfoController extends BaseController implements MfrmUserInfoView.MfrmUserInfoViewDelegate {
+public class MfrmWalletController extends BaseController implements MfrmWalletView.MfrmWalletViewDelegate {
 
-    private MfrmUserInfoView mfrmUserInfoView;
+    private MfrmWalletView mfrmWalletView;
     private Object cancelObject = new Object();
     private RequestQueue queue;
     private User user;
@@ -28,15 +28,15 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
         if (result != 0) {
             StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
         }
-        setContentView(R.layout.activity_user_info_controller);
-        mfrmUserInfoView = (MfrmUserInfoView) findViewById(R.id.activity_userinfo_view);
-        mfrmUserInfoView.setDelegate(this);
+        setContentView(R.layout.activity_wallet_controller);
+        mfrmWalletView = (MfrmWalletView) findViewById(R.id.activity_wallet_view);
+        mfrmWalletView.setDelegate(this);
         queue = NoHttp.newRequestQueue();
         user = LoginUtils.getUserInfo(this);
         if (user == null) {
             return;
         }
-        mfrmUserInfoView.initData(user);
+        mfrmWalletView.initData(user);
     }
 
 
@@ -51,28 +51,4 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
     }
 
 
-    @Override
-    public void onClickModifyHeadImg() {
-
-    }
-
-    @Override
-    public void onClickModifyNickName() {
-
-    }
-
-    @Override
-    public void onClickModifyPassword() {
-
-    }
-
-    @Override
-    public void onClickBoundAlipay() {
-
-    }
-
-    @Override
-    public void onClickClickOff() {
-
-    }
 }

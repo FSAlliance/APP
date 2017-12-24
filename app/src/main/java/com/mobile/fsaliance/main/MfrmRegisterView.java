@@ -1,8 +1,6 @@
 package com.mobile.fsaliance.main;
 
 import android.content.Context;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;

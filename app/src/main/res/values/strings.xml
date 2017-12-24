@@ -98,4 +98,16 @@
     <string name="mine_immediate_cash">立即提现</string>
     <string name="ming_share">分享</string>
     <string name="ming_bound_alipay">绑定</string>
+    <string name="ming_user_img">头像</string>
+    <string name="ming_user_nickname">昵称</string>
+    <string name="mine_user_alipay">支付宝账号</string>
+    <string name="mine_user_unbound">未绑定</string>
+    <string name="mine_user_bound">已绑定</string>
+    <string name="mine_user_info">个人信息</string>
+    <string name="mine_bound_alipay">设置支付宝</string>
+    <string name="mine_bound_alipay_ok">确定</string>
+    <string name="mine_bound_alipay_hint">请输入正确的支付宝账号,错误的账号将收不到返利!</string>
+    <string name="mine_wallet">钱包</string>
+    <string name="my_money_balance">我的余额</string>
+    <string name="mine_wallet_present">提现</string>
 </resources>

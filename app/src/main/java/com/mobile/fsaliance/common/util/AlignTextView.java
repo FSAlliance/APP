@@ -1,5 +1,6 @@
 package com.mobile.fsaliance.common.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -20,6 +21,7 @@ import java.util.List;
  *
  * @author YD
  */
+@SuppressLint("AppCompatCustomView")
 public class AlignTextView extends TextView {
     private float textHeight; // 单行文字高度
     private float textLineSpaceExtra = 0; // 额外的行间距

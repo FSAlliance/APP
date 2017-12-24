@@ -5,6 +5,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
@@ -17,6 +20,11 @@ import com.mobile.fsaliance.common.base.BaseView;
  * &*/
 
 public class MfrmMineView extends BaseView {
+    private LinearLayout userNameLl, userBalanceLl, inPresentLl, hasBalanceLl;
+    private TextView userAccountIdTxt, userBalanceTxt, inPresentTxt, hasBalanceTxt;
+    private ImageView userHeadImg; //头像
+    private RelativeLayout mineOrderRl, mineRecordIncomeRl, presentRecordRl, immediateCashRl, mineShareRl,
+    boundAlipayRl;
     public MfrmMineView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -40,24 +48,90 @@ public class MfrmMineView extends BaseView {
 
     @Override
     protected void initViews() {
+        userNameLl = (LinearLayout) findViewById(R.id.ll_username);
+        userAccountIdTxt = (TextView) findViewById(R.id.txt_account_id);
+        userHeadImg = (ImageView) findViewById(R.id.img_user);
+        userBalanceLl = (LinearLayout) findViewById(R.id.ll_balance);
+        inPresentLl = (LinearLayout) findViewById(R.id.ll_in_the_present);
+        hasBalanceLl = (LinearLayout) findViewById(R.id.ll_has_balance);
+
+        userBalanceTxt = (TextView) findViewById(R.id.txt_balance);
+        inPresentTxt = (TextView) findViewById(R.id.txt_in_the_present);
+        hasBalanceTxt = (TextView) findViewById(R.id.txt_has_balance);
+
+        mineOrderRl = (RelativeLayout) findViewById(R.id.rl_mine_order);
+        mineRecordIncomeRl = (RelativeLayout) findViewById(R.id.rl_record_of_income);
+        mineShareRl = (RelativeLayout) findViewById(R.id.rl_share);
+        presentRecordRl = (RelativeLayout) findViewById(R.id.rl_present_record);
+        boundAlipayRl = (RelativeLayout) findViewById(R.id.rl_bound_alipay);
+        immediateCashRl = (RelativeLayout) findViewById(R.id.rl_immediate_cash);
     }
 
     @Override
     protected void addListener() {
+        userNameLl.setOnClickListener(this);
+        userBalanceLl.setOnClickListener(this);
+        inPresentLl.setOnClickListener(this);
+        hasBalanceLl.setOnClickListener(this);
+
+        mineOrderRl.setOnClickListener(this);
+        mineRecordIncomeRl.setOnClickListener(this);
+        mineShareRl.setOnClickListener(this);
+        presentRecordRl.setOnClickListener(this);
+        boundAlipayRl.setOnClickListener(this);
+        immediateCashRl.setOnClickListener(this);
     }
 
     @Override
     protected void onClickListener(View v) {
         switch (v.getId()) {
+            case R.id.ll_username:
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickToUserInfo();
+                }
+                break;
+            case R.id.rl_bound_alipay:
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickBoundAlipay();
+                }
+                break;
+            case R.id.rl_immediate_cash:
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickImmediateCash();
+                }
+                break;
+            case R.id.rl_present_record:
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickPresentRecord();
+                }
+                break;
+            case R.id.rl_share:
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickShare();
+                }
+                break;
+            case R.id.rl_mine_order:
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickMyOrder();
+                }
+                break;
             default:
                 break;
         }
 
     }
 
-    public interface AboutViewDelegate {
+    public interface MfrmMineViewDelegate {
+        void onClickToUserInfo();
 
-        void onClickBack();//点击返回
+        void onClickMyOrder(); //我的订单
 
+        void onClickBoundAlipay();  //绑定支付宝
+
+        void onClickShare(); //分享
+
+        void onClickPresentRecord();//提现记录
+
+        void onClickImmediateCash();//立即提现
     }
 }

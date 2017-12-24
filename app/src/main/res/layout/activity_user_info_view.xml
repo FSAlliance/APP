@@ -1,29 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/login_bg"
     android:orientation="vertical"
     >
-    <include layout="@layout/include_toolbar_title"/>
-    <LinearLayout
+    <include android:id="@+id/title_include"
+        layout="@layout/include_toolbar_title"/>
+    <!--头像-->
+    <RelativeLayout
+        android:id="@+id/rl_user_info_head_portrait"
+        android:background="@color/white"
+        android:layout_below="@+id/title_include"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
-        <Tre
-
-    </LinearLayout>
-    <LinearLayout
+        android:layout_height="100dp">
+        <TextView
+            android:id="@+id/txt_user_info_img"
+            android:layout_marginLeft="10dp"
+            android:text="@string/ming_user_img"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/img_user_info_head_portrait"
+            android:src="@mipmap/bga_refresh_loading"
+            android:layout_toLeftOf="@+id/img_user_info_head_portrait_right"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+        <ImageView
+            android:id="@+id/img_user_info_head_portrait_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_width="@dimen/remote_setting_menu_btn_width"
+            android:layout_height="@dimen/remote_setting_menu_btn_height"
+            android:layout_centerVertical="true"
+            android:background="@drawable/more_list_about" />
+    </RelativeLayout>
+    <!--昵称-->
+    <RelativeLayout
+        android:layout_below="@+id/rl_user_info_head_portrait"
+        android:id="@+id/rl_user_nickname"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="50dp">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:text="@string/ming_user_nickname"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/txt_user_nickname"
+            android:layout_toLeftOf="@+id/img_user_nickname_right"
+            android:gravity="center"
+            android:layout_marginRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/img_user_nickname_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_width="@dimen/remote_setting_menu_btn_width"
+            android:layout_height="@dimen/remote_setting_menu_btn_height"
+            android:layout_centerVertical="true"
+            android:background="@drawable/more_list_about" />
+    </RelativeLayout>
+    <!--支付宝账号-->
+    <RelativeLayout
+        android:id="@+id/rl_user_alipay"
+        android:layout_below="@+id/rl_user_nickname"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:text="@string/mine_user_alipay"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/txt_user_alipay"
+            android:layout_toLeftOf="@+id/img_user_alipay_right"
+            android:gravity="center"
+            android:text="@string/mine_user_unbound"
+            android:layout_marginRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/img_user_alipay_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_width="@dimen/remote_setting_menu_btn_width"
+            android:layout_height="@dimen/remote_setting_menu_btn_height"
+            android:layout_centerVertical="true"
+            android:background="@drawable/more_list_about" />
+    </RelativeLayout>
+    <!--密码-->
+    <RelativeLayout
+        android:id="@+id/rl_user_password"
+        android:layout_below="@+id/rl_user_alipay"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:text="@string/ming_user_nickname"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/img_user_pass_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_width="@dimen/remote_setting_menu_btn_width"
+            android:layout_height="@dimen/remote_setting_menu_btn_height"
+            android:layout_centerVertical="true"
+            android:background="@drawable/more_list_about" />
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/txt_login_off"
+        android:layout_alignParentBottom="true"
+        android:text="@string/log_off"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textColor="@color/white"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/bg_logoff_corner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
-        <com.mobile.fsaliance.common.common.CircleProgressBarView
-            android:id="@+id/circleProgressBarView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

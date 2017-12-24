@@ -9,13 +9,10 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.LoginUtils;
-import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.fsaliance.common.vo.User;
 
 import com.yanzhenjie.nohttp.NoHttp;
-import com.yanzhenjie.nohttp.error.NetworkError;
-import com.yanzhenjie.nohttp.error.UnKnownHostError;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;

@@ -4,25 +4,22 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
-import com.mobile.fsaliance.common.common.CircleProgressBarView;
-import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
-import com.mobile.tiandy.asset.R;
+
 
 
 public class MfrmUserInfoView extends BaseView {
-
-    private TextView loginTxt;
-    private EditText usernameEditTxt;
-    private EditText passwordEditTxt;
-    private LinearLayout registerLl;
-
-    public CircleProgressBarView circleProgressBarView;
+    private ImageView userInfoBackImg;
+    private TextView titleTxt, logOffTxt;
+    private LinearLayout titleLiftLl, titleRightLl;
+    private RelativeLayout userInfoHeadPortraitRl, userNickNameRl, userPasswordRl, userAlipayRl;
 
     public MfrmUserInfoView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -31,7 +28,7 @@ public class MfrmUserInfoView extends BaseView {
     @Override
     protected void setInflate() {
         LayoutInflater inflater = LayoutInflater.from(context);
-        view = inflater.inflate(R.layout.activity_login_view, this);
+        view = inflater.inflate(R.layout.activity_user_info_view, this);
     }
 
     @Override
@@ -40,78 +37,79 @@ public class MfrmUserInfoView extends BaseView {
         if (user == null) {
             return;
         }
-        usernameEditTxt.setText(user.getJobId());
-        passwordEditTxt.setText(user.getPassword());
     }
 
 
     @Override
     protected void initViews() {
-        circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
-        loginTxt= (TextView) findViewById(R.id.txt_login);
-        registerLl = (LinearLayout) findViewById(R.id.rl_trgister);
-        usernameEditTxt = (EditText) findViewById(R.id.edit_user_name);
-        passwordEditTxt = (EditText) findViewById(R.id.edit_password);
+        titleLiftLl = (LinearLayout) findViewById(R.id.ll_title_left);
+        titleRightLl = (LinearLayout) findViewById(R.id.ll_title_right);
+        titleRightLl.setVisibility(INVISIBLE);
+        userInfoBackImg = (ImageView) findViewById(R.id.img_back);
+        userInfoBackImg.setImageResource(R.drawable.goback);
+        titleTxt = (TextView) findViewById(R.id.txt_title);
+        titleTxt.setText(getResources().getString(R.string.mine_user_info));
+
+        userInfoHeadPortraitRl = (RelativeLayout) findViewById(R.id.rl_user_info_head_portrait);
+        userNickNameRl = (RelativeLayout) findViewById(R.id.rl_user_nickname);
+        userAlipayRl = (RelativeLayout) findViewById(R.id.rl_user_alipay);
+        userPasswordRl = (RelativeLayout) findViewById(R.id.rl_user_password);
+        logOffTxt = (TextView) findViewById(R.id.txt_login_off);
     }
 
     @Override
     protected void addListener() {
-        loginTxt.setOnClickListener(this);
-        registerLl.setOnClickListener(this);
+        titleLiftLl.setOnClickListener(this);
+        userInfoHeadPortraitRl.setOnClickListener(this);
+        userPasswordRl.setOnClickListener(this);
+        userAlipayRl.setOnClickListener(this);
+        userNickNameRl.setOnClickListener(this);
+        logOffTxt.setOnClickListener(this);
     }
 
     @Override
     protected void onClickListener(View v) {
         switch (v.getId()) {
-            case R.id.txt_login:
-                String jobId = usernameEditTxt.getText().toString().trim();
-                String password = passwordEditTxt.getText().toString().trim();
-
-                if (!checkInfo(jobId, password)) {
-                    return;
-                }
-                if (super.delegate instanceof MfrmLoginViewDelegate) {
-                    ((MfrmLoginViewDelegate) super.delegate).onClickLogin(jobId, password);
+            case R.id.rl_user_info_head_portrait:
+                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
+                    ((MfrmUserInfoViewDelegate) super.delegate).onClickModifyHeadImg();
                 }
                 break;
-            case R.id.rl_trgister:
-                if (super.delegate instanceof MfrmLoginViewDelegate) {
-                    ((MfrmLoginViewDelegate) super.delegate).onClickRegister();
+            case R.id.rl_user_alipay:
+                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
+                    ((MfrmUserInfoViewDelegate) super.delegate).onClickBoundAlipay();
                 }
+                break;
+            case R.id.rl_user_password:
+                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
+                    ((MfrmUserInfoViewDelegate) super.delegate).onClickModifyPassword();
+                }
+                break;
+            case R.id.rl_user_nickname:
+                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
+                    ((MfrmUserInfoViewDelegate) super.delegate).onClickModifyNickName();
+                }
+                break;
+            case R.id.txt_login_off:
                 break;
             default:
                 break;
         }
     }
-
-    /**
-     * @author tanyadong
-     * @Description: 检验输入字段
-     * @date 2017.0.23
-     */
-    private boolean checkInfo(String jobId, String password) {
-        if (null == jobId || "".equals(jobId)) {
-            T.showShort(context, R.string.username_is_empty);
-            return false;
-        }
-        if (null == password || "".equals(password)) {
-            T.showShort(context, R.string.password_is_empty);
-            return false;
-        }
-        return true;
-    }
-
-
     /**
       * @date 创建时间 2017/9/6
       * @author tanyadong
       * @Description 登录代理页
     */
-    public interface MfrmLoginViewDelegate {
-        //点击登入
-        void onClickLogin(String jobId, String password);
+    public interface MfrmUserInfoViewDelegate {
+        void onClickModifyHeadImg(); //修改头像
 
-        //点击注册跳转到注册界面
-        void onClickRegister();
+        void onClickModifyNickName(); //修改昵称
+
+        void onClickModifyPassword();//修改密码
+
+        void onClickBoundAlipay();//绑定支付宝
+
+        void onClickClickOff();//推出登录
     }
 }

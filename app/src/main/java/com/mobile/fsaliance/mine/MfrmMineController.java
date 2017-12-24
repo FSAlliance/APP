@@ -1,4 +1,6 @@
 package com.mobile.fsaliance.mine;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +11,11 @@ import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 
 
-
 /**
- * Created by chenziqiang on 17/5/15.
+ * Created by tanyadong on 17/5/15.
  */
 
-public class MfrmMineController extends BaseFragmentController implements MfrmMineView.AboutViewDelegate {
+public class MfrmMineController extends BaseFragmentController implements MfrmMineView.MfrmMineViewDelegate {
     private MfrmMineView mfrmMineView;
 
     @Override
@@ -48,10 +49,38 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
     }
 
 
-
     @Override
-    public void onClickBack() {
+    public void onClickToUserInfo() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", "");
+        intent.putExtras(bundle);
+        intent.setClass(context, MfrmUserInfoController.class);
+        startActivity(intent);
     }
 
+    @Override
+    public void onClickMyOrder() {
 
+    }
+
+    @Override
+    public void onClickBoundAlipay() {
+
+    }
+
+    @Override
+    public void onClickShare() {
+
+    }
+
+    @Override
+    public void onClickPresentRecord() {
+
+    }
+
+    @Override
+    public void onClickImmediateCash() {
+
+    }
 }

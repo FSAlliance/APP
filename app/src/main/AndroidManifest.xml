@@ -53,6 +53,24 @@
         <activity
             android:name="com.mobile.fsaliance.main.MfrmRegisterController"
             android:screenOrientation="portrait" >
+
+        </activity>
+
+        <activity
+            android:name="com.mobile.fsaliance.mine.MfrmWalletController"
+            android:screenOrientation="portrait" >
+
+        </activity>
+
+        <activity
+            android:name="com.mobile.fsaliance.mine.MfrmBoundAlipayController"
+            android:screenOrientation="portrait" >
+
+        </activity>
+        <activity
+            android:name="com.mobile.fsaliance.mine.MfrmUserInfoController"
+            android:screenOrientation="portrait" >
+
         </activity>
 
         <activity
