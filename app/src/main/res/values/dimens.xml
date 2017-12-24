@@ -17,4 +17,6 @@
     <dimen name="about_text_size">19sp</dimen>
     <dimen name="setting_text_size">17sp</dimen>
     <dimen name="description_text_size">15sp</dimen>
+
+    <dimen name="home_goods_price_text_size">20sp</dimen>
 </resources>

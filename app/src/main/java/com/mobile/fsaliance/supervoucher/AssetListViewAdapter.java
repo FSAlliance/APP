@@ -1,5 +1,6 @@
 package com.mobile.fsaliance.supervoucher;
 
+import com.bumptech.glide.Glide;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.tiandy.asset.R;
@@ -10,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -66,21 +70,23 @@ public class AssetListViewAdapter extends BaseAdapter {
 			view = layoutInflater.inflate(
 					R.layout.item_search_listview_adapter, null);
 			holder = new Holder();
-			holder.searchAssetId = (TextView) view.findViewById(R.id.srarch_assetnum_txt);
-			holder.searchAssetName = (TextView) view.findViewById(R.id.srarch_assetname_txt);
-			holder.searchJobNum = (TextView) view.findViewById(R.id.srarch_job_num_txt);
-			holder.listItemLl = (LinearLayout) view.findViewById(R.id.search_listview_ll);
-			holder.searchNameTxt = (TextView) view.findViewById(R.id.srarch_username_txt);
+			holder.goodsDescribeText = (TextView) view.findViewById(R.id.home_goods_describe);
+			holder.goodsPriceDiscountText = (TextView) view.findViewById(R.id.home_goods_price_discount);
+			holder.goodsPriceText = (TextView) view.findViewById(R.id.home_goods_price);
+			holder.goodsSaleNumText = (TextView) view.findViewById(R.id.home_goods_sale_num);
+			holder.goodsImg = (ImageView) view.findViewById(R.id.home_goods_img);
+			holder.goodsLL = (LinearLayout) view.findViewById(R.id.home_goods);
 			view.setTag(holder);
 		} else {
 			holder = (Holder) view.getTag();
 		}
 		if (assets != null) {
-			holder.searchAssetId.setText(assets.get(position).getCodeId()); //编号
-			holder.searchAssetName.setText(assets.get(position).getName() + ":"); //资产名称
-			holder.searchJobNum.setText(assets.get(position).getJobId()); //工号
-			holder.searchNameTxt.setText(assets.get(position).getUserName());
-			holder.listItemLl.setOnClickListener(new View.OnClickListener() {
+			holder.goodsDescribeText.setText("12121"); //描述
+			holder.goodsPriceDiscountText.setText("10"); //商品优惠卷价格
+			holder.goodsPriceText.setText("100"); //商品价格
+			holder.goodsSaleNumText.setText("12");//商品销量
+			Glide.with(context).load(R.drawable.register_username).into(holder.goodsImg);
+			holder.goodsLL.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					if (delegate != null) {
@@ -93,11 +99,12 @@ public class AssetListViewAdapter extends BaseAdapter {
 	}
 
 	private class Holder {
-		public TextView searchJobNum;
-		public TextView searchAssetName;
-		public TextView searchAssetId;
-		public LinearLayout listItemLl;
-		public TextView searchNameTxt;
+		private LinearLayout goodsLL;
+		private ImageView goodsImg;
+		private TextView goodsDescribeText;
+		private TextView goodsPriceDiscountText;
+		private TextView goodsPriceText;
+		private TextView goodsSaleNumText;
 	}
 
 

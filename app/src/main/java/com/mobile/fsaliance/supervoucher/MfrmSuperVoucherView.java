@@ -18,6 +18,7 @@ import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.home.MfrmHomeView;
 import com.mobile.tiandy.asset.R;
 
 
@@ -33,17 +34,15 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
   * @Description 搜索
 */
 public class MfrmSuperVoucherView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate,AssetListViewAdapter.AssetListViewAdapterDelegate, AbsListView.OnScrollListener {
-	private ImageView searchImg;
-	private ImageView userImg;
-	private TextView titleTxt;
-	private LinearLayout titleLiftLl, titleRightLl;
-	private EditText searchEditTxt;
 	private ListView searchListView;
 	private TextView assetListNoDataTxt;
 	private AssetListViewAdapter assetListViewAdapter;
 	public CircleProgressBarView circleProgressBarView;
-	private ImageView searchDeleteImg;
 	private BGARefreshLayout mRefreshLayout;
+
+	private LinearLayout searchTopLL, oneMiddleLL, twoMiddleLL, threeMiddleLL, fourMiddleLL,
+			fiveMiddleLL, sixMiddleLL, sevenMiddleLL, eightMiddleLL;
+
 	public boolean isLoadMore;
 	public MfrmSuperVoucherView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -57,16 +56,22 @@ public class MfrmSuperVoucherView extends BaseView implements BGARefreshLayout.B
 
 	@Override
 	protected void initViews() {
-		titleLiftLl = (LinearLayout) findViewById(R.id.ll_title_left);
-		titleRightLl = (LinearLayout) findViewById(R.id.ll_title_right);
-		searchImg = (ImageView) findViewById(R.id.img_search);
-		searchImg.setImageResource(R.drawable.bottom_search_normol);
-		userImg = (ImageView) findViewById(R.id.img_back);
-		userImg.setImageResource(R.drawable.user_img);
-		searchEditTxt = (EditText) findViewById(R.id.edit_search);
+		//搜索部分
+		searchTopLL = (LinearLayout) findViewById(R.id.home_top_search);
+
+		//中间部分
+		oneMiddleLL = (LinearLayout) findViewById(R.id.home_middle_one);
+		twoMiddleLL = (LinearLayout) findViewById(R.id.home_middle_two);
+		threeMiddleLL = (LinearLayout) findViewById(R.id.home_middle_three);
+		fourMiddleLL = (LinearLayout) findViewById(R.id.home_middle_four);
+		fiveMiddleLL = (LinearLayout) findViewById(R.id.home_middle_five);
+		sixMiddleLL = (LinearLayout) findViewById(R.id.home_middle_six);
+		sevenMiddleLL = (LinearLayout) findViewById(R.id.home_middle_seven);
+		eightMiddleLL = (LinearLayout) findViewById(R.id.home_middle_eight);
+
+		//商品列表
 		searchListView = (ListView) findViewById(R.id.search_asset_listview);
 		assetListNoDataTxt = (TextView) findViewById(R.id.txt_asset_list_no_data);
-		searchDeleteImg = (ImageView) findViewById(R.id.search_delete_imgview);
 		circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
 		mRefreshLayout = (BGARefreshLayout) findViewById(R.id.mRefreshLayout);
 		initFresh();
@@ -95,12 +100,17 @@ public class MfrmSuperVoucherView extends BaseView implements BGARefreshLayout.B
 
 	@Override
 	protected void addListener() {
-		titleLiftLl.setOnClickListener(this);
-		userImg.setOnClickListener(this);
-		searchImg.setOnClickListener(this);
-		titleRightLl.setOnClickListener(this);
-		searchEditTxt.addTextChangedListener(new EditChangedListener());
-		searchDeleteImg.setOnClickListener(this);
+		searchTopLL.setOnClickListener(this);
+
+		oneMiddleLL.setOnClickListener(this);
+		twoMiddleLL.setOnClickListener(this);
+		threeMiddleLL.setOnClickListener(this);
+		fourMiddleLL.setOnClickListener(this);
+		fiveMiddleLL.setOnClickListener(this);
+		sixMiddleLL.setOnClickListener(this);
+		sevenMiddleLL.setOnClickListener(this);
+		eightMiddleLL.setOnClickListener(this);
+
 		searchListView.setOnScrollListener(this);
 	}
 	/**
@@ -112,7 +122,7 @@ public class MfrmSuperVoucherView extends BaseView implements BGARefreshLayout.B
 	@Override
 	public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
 		if (super.delegate instanceof  MfrmSearchDelegate) {
-			((MfrmSearchDelegate) super.delegate).onClickPullDown(searchEditTxt.getText().toString().trim());
+			((MfrmSearchDelegate) super.delegate).onClickPullDown("");
 		}
 	}
 	/**
@@ -124,22 +134,12 @@ public class MfrmSuperVoucherView extends BaseView implements BGARefreshLayout.B
 	@Override
 	public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
 		if (super.delegate instanceof  MfrmSearchDelegate) {
-			 ((MfrmSearchDelegate) super.delegate).onClickLoadMore(searchEditTxt.getText().toString().trim());
+			 ((MfrmSearchDelegate) super.delegate).onClickLoadMore("");
 		}
 		return isLoadMore;
 	}
 
 
-	/**
-	  * @author tanyadong
-	  * @Title closeKeyBord
-	  * @Description 关闭软键盘
-	  * @date 2017/9/17 15:21
-	*/
-	private void closeKeyBord(EditText editText) {
-		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0) ;
-	}
 
 	@Override
 	public void onClickItem(Asset asset) {
@@ -165,52 +165,57 @@ public class MfrmSuperVoucherView extends BaseView implements BGARefreshLayout.B
 	}
 
 
-
-	class EditChangedListener implements TextWatcher {
-
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-		}
-
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-		}
-
-		@Override
-		public void afterTextChanged(Editable s) {
-			if (s.toString().equals("")) {
-				searchDeleteImg.setVisibility(GONE);
-			} else if (!s.toString().equals("") && s.toString().length() > 0){
-				searchDeleteImg.setVisibility(VISIBLE);
-
-			}
-		}
-	};
 	@Override
 	protected void onClickListener(View v) {
 		switch (v.getId()) {
-			case R.id.ll_title_left:
-			case R.id.img_back:
+			//搜索
+			case R.id.home_top_search:
 				if (super.delegate instanceof MfrmSearchDelegate) {
-					((MfrmSearchDelegate) super.delegate).onClickLogoff();
+					((MfrmSearchDelegate) super.delegate).onClickSearch();
 				}
 				break;
-			case R.id.ll_title_right:
-			case R.id.img_search:
-				String searchTxt = searchEditTxt.getText().toString().trim();
-				closeKeyBord(searchEditTxt);
+			case R.id.home_middle_one:
 				if (super.delegate instanceof MfrmSearchDelegate) {
-					((MfrmSearchDelegate) super.delegate).onClickSearch(searchTxt);
+					((MfrmSearchDelegate) super.delegate).onClickOne();
 				}
 				break;
-			case R.id.search_delete_imgview:
-				searchEditTxt.setText("");
-				searchDeleteImg.setVisibility(GONE);
+			case R.id.home_middle_two:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickTwo();
+				}
 				break;
-		default:
-			break;
+			case R.id.home_middle_three:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickThree();
+				}
+				break;
+			case R.id.home_middle_four:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickFour();
+				}
+				break;
+			case R.id.home_middle_five:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickFive();
+				}
+				break;
+			case R.id.home_middle_six:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickSix();
+				}
+				break;
+			case R.id.home_middle_seven:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickSeven();
+				}
+				break;
+			case R.id.home_middle_eight:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickEight();
+				}
+				break;
+			default:
+				break;
 		}
 	}
 	/**
@@ -266,9 +271,16 @@ public class MfrmSuperVoucherView extends BaseView implements BGARefreshLayout.B
 	*/
 	public interface MfrmSearchDelegate {
 
-		void onClickLogoff();
+		void  onClickSearch();//搜索
 
-		void  onClickSearch(String searchTxt);
+		void  onClickOne();//第1个
+		void  onClickTwo();//第2个
+		void  onClickThree();//第3个
+		void  onClickFour();//第4个
+		void  onClickFive();//第5个
+		void  onClickSix();//第6个
+		void  onClickSeven();//第7个
+		void  onClickEight();//第8个
 
 		void onClickPullDown(String searchTxt); //下拉刷新
 

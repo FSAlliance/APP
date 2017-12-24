@@ -3,102 +3,145 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
         <View
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_color"/>
         <LinearLayout
-            android:layout_toLeftOf="@+id/asset_img"
-            android:orientation="vertical"
-            android:id="@+id/search_listview_ll"
+            android:id="@+id/home_goods"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/job_num_txt"
-                    android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="@string/job_number"
-                    android:textColor="@color/optiontext_color_black"
-                    android:layout_marginLeft="15dp"
-                    android:layout_height="match_parent" />
-                <TextView
-                    android:id="@+id/srarch_job_num_txt"
-                    android:layout_width="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/optiontext_color_black"
-                    android:gravity="center_vertical"
-                    android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/optiontext_color_black"
-                    android:layout_marginLeft="30dp"
-                    android:singleLine="true"
-                    android:text="@string/username"
-                    android:gravity="center_vertical"
-                    android:layout_height="match_parent" />
-                <TextView
-                    android:id="@+id/srarch_username_txt"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textColor="@color/optiontext_color_black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/asset_name_and_num"
-                android:orientation="horizontal"
-                android:background="@color/white"
-                android:layout_weight="1"
+            <ImageView
+                android:id="@+id/home_goods_img"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="50dp"
+                android:src="@drawable/home_top_search"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_weight="3"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
                 <TextView
-                    android:id="@+id/srarch_assetname_txt"
+                    android:id="@+id/home_goods_describe"
                     android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textColor="@color/optiontext_color_black"
-                    android:layout_marginLeft="15dp"
-                    android:layout_height="match_parent" />
-                <TextView
-                    android:id="@+id/srarch_assetnum_txt"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textColor="@color/optiontext_color_black"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:maxEms="202"
+                    android:ellipsize="start"
+                    android:layout_marginTop="10dp"
+                    android:text="描述描述描述描述描述描述描描述描述描述描述描述描述描描述描述描述描述描述描述描描述描述描述描述描述描述描描述描述描描述描述描述描述描述描述描述描述描述描述描"/>
+
+                <!--优惠卷-->
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/goods_price_discount"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="优惠"/>
+                        <TextView
+                            android:id="@+id/home_goods_price_discount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/read"
+                            android:textSize="@dimen/home_goods_price_text_size"
+                            android:layout_gravity="center"
+                            android:text="10"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="元"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--现价以及销量-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <!--现价-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="券后价"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/read"
+                            android:text="￥"/>
+                        <TextView
+                            android:id="@+id/home_goods_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/read"
+                            android:textSize="@dimen/home_goods_price_text_size"
+                            android:text="34.00"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/read"
+                            android:text="元"/>
+                    </LinearLayout>
+
+                    <!--销量-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/hint_text_color"
+                            android:layout_gravity="center"
+                            android:text="月销"/>
+
+                        <TextView
+                            android:id="@+id/home_goods_sale_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/hint_text_color"
+                            android:text="200"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/hint_text_color"
+                            android:text="件"/>
+                    </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="13dp"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/asset_img"
-            android:src="@drawable/moredetails_arrow"/>
         <View
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_color"/>
-    </RelativeLayout>
 
 </RelativeLayout>
