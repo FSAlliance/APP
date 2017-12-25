@@ -85,6 +85,7 @@
         android:textColor="@color/qrcode_transparent_bg"
         android:text="sdjskdksf"/>
     <TextView
+        android:id="@+id/goods_info_copy_one_key"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"

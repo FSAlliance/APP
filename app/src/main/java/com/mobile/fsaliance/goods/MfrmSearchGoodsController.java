@@ -1,10 +1,8 @@
 package com.mobile.fsaliance.goods;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,9 +18,6 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
 
     @Override
     protected void getBundleData() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        //TODO 具体参数
     }
 
     @Override
@@ -51,6 +46,29 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
 
     /**
      * @author yuanxueyuan
+     * @Title: initValues
+     * @Description: 初始化数据
+     * @date 2017/12/25 21:12
+     */
+    private void initValues() {
+        //TODO 本地获取搜索记录
+    }
+
+    /**
+     * @author yuanxueyuan
+     * @Title: getValues
+     * @Description: 获取搜索的数据
+     * @date 2017/12/25 21:13
+     */
+    private String getValues() {
+        if (searchEdt == null) {
+            return "";
+        }
+        return searchEdt.getText().toString().trim();
+    }
+
+    /**
+     * @author yuanxueyuan
      * @Title: addListener
      * @Description: 添加监听方法
      * @date 2017/12/24 22:41
@@ -75,7 +93,8 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
                 break;
             //搜索按钮
             case R.id.search_goods_btn:
-                //TODO 跳转列表界面
+                String searchString = getValues();
+                //TODO 根据用户输入的搜索数据 进行搜索
                 break;
             default:
                 break;

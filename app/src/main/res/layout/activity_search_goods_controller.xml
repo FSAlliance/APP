@@ -35,7 +35,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_one_key_copy"
+            android:background="@drawable/bg_search_goods"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_marginRight="10dp"
