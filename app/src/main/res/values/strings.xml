@@ -113,4 +113,7 @@
     <string name="mine_wallet">钱包</string>
     <string name="my_money_balance">我的余额</string>
     <string name="mine_wallet_present">提现</string>
+    <string name="present_moneny">提现金额</string>
+    <string name="present_all">全部提现</string>
+    <string name="please_input_present_moneny">请输入要提现的金额</string>
 </resources>

@@ -78,6 +78,11 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <activity
+            android:name="com.mobile.fsaliance.mine.MfrmWithdrawalsController"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!--搜索商品-->
         <activity
             android:name="com.mobile.fsaliance.goods.MfrmSearchGoodsController"
