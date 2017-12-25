@@ -13,6 +13,7 @@ import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.fsaliance.goods.MfrmGoodsInfoController;
+import com.mobile.fsaliance.goods.MfrmSearchGoodsController;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -109,7 +110,9 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 
 	@Override
 	public void onClickSearch() {
-
+		Intent intent = new Intent();
+		intent.setClass(context, MfrmSearchGoodsController.class);
+		startActivity(intent);
 	}
 
 	@Override

@@ -1,75 +1,81 @@
 package com.mobile.fsaliance.goods;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 
-public class MfrmGoodsInfoController extends BaseController implements View.OnClickListener {
+public class MfrmSearchGoodsController extends BaseController implements View.OnClickListener {
 
+    private EditText searchEdt;
+    private TextView searchText;
     private ImageView backImg;
-    private TextView oneKeyCopyText, goodsInfoCodeText;
-    private ImageView goodsInfoImg;
-
 
     @Override
     protected void getBundleData() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        //TODO 具体参数
-        initValues();
     }
 
     @Override
     protected void onCreateFunc(Bundle savedInstanceState) {
         //取消标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_goods_info_controller);
+        setContentView(R.layout.activity_search_goods_controller);
 
         initView();
 
         addListener();
-
     }
+
 
     /**
      * @author yuanxueyuan
      * @Title: initView
-     * @Description: 初始化界面布局
-     * @date 2017/12/24 23:00
+     * @Description: 初始化界面
+     * @date 2017/12/24 22:41
      */
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.goods_info_back_img);
-        oneKeyCopyText = (TextView) findViewById(R.id.goods_info_copy_one_key);
-        goodsInfoImg = (ImageView) findViewById(R.id.goods_info_img);
-        goodsInfoCodeText = (TextView) findViewById(R.id.goods_info_code);
+        searchEdt = (EditText) findViewById(R.id.search_goods_edt);
+        searchText = (TextView) findViewById(R.id.search_goods_btn);
+        backImg = (ImageView) findViewById(R.id.search_goods_back_img);
     }
 
     /**
      * @author yuanxueyuan
      * @Title: initValues
      * @Description: 初始化数据
-     * @date 2017/12/25 21:07
+     * @date 2017/12/25 21:12
      */
     private void initValues() {
-        goodsInfoImg.setImageResource(R.drawable.goods_price_discount);
-        goodsInfoCodeText.setText("&USIHDASHDIASD");
+        //TODO 本地获取搜索记录
+    }
+
+    /**
+     * @author yuanxueyuan
+     * @Title: getValues
+     * @Description: 获取搜索的数据
+     * @date 2017/12/25 21:13
+     */
+    private String getValues() {
+        if (searchEdt == null) {
+            return "";
+        }
+        return searchEdt.getText().toString().trim();
     }
 
     /**
      * @author yuanxueyuan
      * @Title: addListener
-     * @Description: 添加监听事件
-     * @date 2017/12/24 23:02
+     * @Description: 添加监听方法
+     * @date 2017/12/24 22:41
      */
     private void addListener() {
         backImg.setOnClickListener(this);
-        oneKeyCopyText.setOnClickListener(this);
+        searchText.setOnClickListener(this);
     }
 
 
@@ -82,12 +88,13 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             //返回键
-            case R.id.goods_info_back_img:
+            case R.id.search_goods_back_img:
                 finish();
                 break;
-            //一键复制
-            case R.id.goods_info_copy_one_key:
-                //TODO 一键复制
+            //搜索按钮
+            case R.id.search_goods_btn:
+                String searchString = getValues();
+                //TODO 根据用户输入的搜索数据 进行搜索
                 break;
             default:
                 break;
