@@ -61,7 +61,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:background="@drawable/bg_one_key_copy_text"
+                android:background="@drawable/selector_goods_search_btn"
                 android:text="搜索"/>
         </LinearLayout>
     </LinearLayout>

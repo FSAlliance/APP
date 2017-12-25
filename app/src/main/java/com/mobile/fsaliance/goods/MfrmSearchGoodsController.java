@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
+import com.mobile.fsaliance.common.util.L;
 
 public class MfrmSearchGoodsController extends BaseController implements View.OnClickListener {
 
+    private final String TAG = "MfrmSearchGoodsController";
     private EditText searchEdt;
     private TextView searchText;
     private ImageView backImg;
@@ -94,6 +96,7 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
             //搜索按钮
             case R.id.search_goods_btn:
                 String searchString = getValues();
+                L.i(TAG,"searchString: "+searchString);
                 //TODO 根据用户输入的搜索数据 进行搜索
                 break;
             default:
