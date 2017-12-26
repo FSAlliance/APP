@@ -44,4 +44,32 @@
             android:layout_height="0dp">
         </ListView>
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/txt_search_good_list_no_data"
+            android:textSize="13dp"
+            android:visibility="gone"
+            android:textColor="@color/optiontext_color_black"
+            android:text="@string/asset_list_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <com.mobile.fsaliance.common.common.CircleProgressBarView
+            android:id="@+id/search_good_list_circleProgressBarView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </LinearLayout>
 </LinearLayout>

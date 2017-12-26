@@ -1,5 +1,6 @@
 package com.mobile.fsaliance.goods;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -98,6 +99,12 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
                 String searchString = getValues();
                 L.i(TAG,"searchString: "+searchString);
                 //TODO 根据用户输入的搜索数据 进行搜索
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putString("search_goods", searchString);
+                intent.putExtras(bundle);
+                intent.setClass(this,MfrmSearchGoodListController.class);
+                startActivity(intent);
                 break;
             default:
                 break;
