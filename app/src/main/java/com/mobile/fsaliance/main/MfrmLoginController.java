@@ -1,10 +1,7 @@
 package com.mobile.fsaliance.main;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
