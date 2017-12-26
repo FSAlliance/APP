@@ -88,5 +88,10 @@
             android:name="com.mobile.fsaliance.goods.MfrmSearchGoodsController"
             android:screenOrientation="portrait" >
         </activity>
+        <!--搜索出来的商品列表-->
+        <activity
+            android:name="com.mobile.fsaliance.goods.MfrmSearchGoodListController"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 </manifest>

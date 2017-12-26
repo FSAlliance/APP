@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
+import com.mobile.fsaliance.common.util.T;
 
 public class MfrmGoodsInfoController extends BaseController implements View.OnClickListener {
 
@@ -22,7 +23,6 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         //TODO 具体参数
-        initValues();
     }
 
     @Override
@@ -31,9 +31,14 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_goods_info_controller);
 
+        //初始化界面
         initView();
 
+        //添加监听事件
         addListener();
+
+        //初始化数据
+        initValues();
 
     }
 
@@ -59,6 +64,19 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
     private void initValues() {
         goodsInfoImg.setImageResource(R.drawable.goods_price_discount);
         goodsInfoCodeText.setText("&USIHDASHDIASD");
+    }
+
+     /**
+     * @author  yuanxueyuan
+     * @Title:  getGoodCode
+     * @Description: 获取商品优惠卷的
+     * @date 2017/12/25 22:15
+     */
+    private String getGoodCode(){
+        if (goodsInfoCodeText == null) {
+            return "";
+        }
+        return goodsInfoCodeText.getText().toString().trim();
     }
 
     /**
@@ -87,7 +105,11 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
                 break;
             //一键复制
             case R.id.goods_info_copy_one_key:
-                //TODO 一键复制
+                String goodCode = getGoodCode();
+                if ("".equals(goodCode)) {
+                    T.showShort(this, "出现错误啦");
+                }
+                //TODO 复制到剪切板
                 break;
             default:
                 break;
