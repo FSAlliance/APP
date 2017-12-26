@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--最上方搜索-->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent">
+
+        <ImageView
+            android:id="@+id/search_goods_list_back_img"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/goback_write" />
+
+        <TextView
+            android:id="@+id/search_goods_list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/goods_search"
+            android:textColor="@color/white"
+            android:textSize="@dimen/about_text_size" />
+    </RelativeLayout>
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/search_goods_list_back_refreshLayout"
+        android:background="@color/xml_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/home_top_text">
+        <ListView
+            android:id="@+id/search_goods_list_back_list_view"
+            android:scrollbars="none"
+            android:layout_weight="1"
+            android:headerDividersEnabled="true"
+            android:divider="@color/xml_bg"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+        </ListView>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+</LinearLayout>
