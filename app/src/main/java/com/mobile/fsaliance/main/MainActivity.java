@@ -14,9 +14,9 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
-import com.mobile.fsaliance.home.MfrmHomeController;
+import com.mobile.fsaliance.supers.MfrmSuperVouchersController;
 import com.mobile.fsaliance.mine.MfrmMineController;
-import com.mobile.fsaliance.supervoucher.MfrmSuperVoucherController;
+import com.mobile.fsaliance.home.MfrmHomeController;
 
 
 import java.util.ArrayList;
@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity
     private TextView mineTxt, searchTxt, moreTxt;
 
     private int id;
+    private MfrmSuperVouchersController mfrmSuperVouchersController = null;
     private MfrmHomeController mfrmHomeController = null;
-    private MfrmSuperVoucherController mfrmSuperVoucherController = null;
     private MfrmMineController mfrmMineController = null;
     // 上一次点击物理返回按键的时间
     private long lastCall_ACTION_BACT_Time = 0L;
@@ -98,14 +98,14 @@ public class MainActivity extends AppCompatActivity
         this.searchImg = (ImageView) findViewById(R.id.img_search);
         this.moreImg = (ImageView) findViewById(R.id.img_more);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        mfrmHomeController = new MfrmHomeController();
+        mfrmSuperVouchersController = new MfrmSuperVouchersController();
         mfrmMineController = new MfrmMineController();
-        mfrmSuperVoucherController = new MfrmSuperVoucherController();
+        mfrmHomeController = new MfrmHomeController();
 
         list_fragment = new ArrayList<>();
 
-        list_fragment.add(mfrmSuperVoucherController);
         list_fragment.add(mfrmHomeController);
+        list_fragment.add(mfrmSuperVouchersController);
         list_fragment.add(mfrmMineController);
 
         MainFragmentAdapter m1 = new MainFragmentAdapter(getSupportFragmentManager(),list_fragment);
@@ -115,12 +115,6 @@ public class MainActivity extends AppCompatActivity
         viewPager.setOffscreenPageLimit(1);
         //关闭预加载，默认一次只加载一个Fragment
         showHome();
-    }
-    /**
-     * 初始化数据
-     */
-    private void initValues() {
-
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.mobile.fsaliance.supervoucher;
+package com.mobile.fsaliance.supers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Asset;
+
 import com.mobile.fsaliance.goods.MfrmGoodsInfoController;
-import com.mobile.fsaliance.goods.MfrmSearchGoodsController;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -32,31 +32,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MfrmSuperVoucherController extends BaseFragmentController implements
-		MfrmSuperVoucherView.MfrmSearchDelegate, OnResponseListener {
-	private MfrmSuperVoucherView mfrmSuperVoucherView;
+public class MfrmSuperVouchersController extends BaseFragmentController implements
+		MfrmSuperVouchersView.MfrmMineAssetDelegate, OnResponseListener {
+	private MfrmSuperVouchersView mfrmSuperVouchersView;
 	private RequestQueue queue;
-	private static final int SEARCH_ASSET_LIST = 1;
+	private static final int GET_ASSET_LIST = 0;
+	private Object cancelObject = new Object();
 	private List<Asset> assetList;
-	private int pageNo = 0;
-	private static final int PAGE_SIZE = 10;//每页数据条数
-	private static final int FIRST_PAGE = 0;//第几页
 	private boolean refreshList = false;
 	private boolean loadMoreList = false;
-	private Object cancelObject = new Object();
-	private int lastCount = 0;//上次请求数据个数
 	private boolean mHasLoadedOnce;
-
 	private boolean isPrepared;
+
+	private static final int PAGE_SIZE = 10;//每页数据条数
+	private static final int FIRST_PAGE = 0;//第几页
+	private int pageNo = 0;
+	private int lastCount = 0;//上次请求数据个数
+
 	@Override
 	protected View onCreateViewFunc(LayoutInflater inflater,
 									ViewGroup container, Bundle savedInstanceState) {
-		View view = null;
-		view = inflater.inflate(R.layout.fragment_supervoucher_controller,
-				null);
-		mfrmSuperVoucherView = (MfrmSuperVoucherView) view
-				.findViewById(R.id.mfrm_supervoucher_view);
-		mfrmSuperVoucherView.setDelegate(this);
+		View view = inflater.inflate(R.layout.fragment_super_vouchers_controller,null);
+		mfrmSuperVouchersView = (MfrmSuperVouchersView) view.findViewById(R.id.mfrm_super_vouchers_view);
+		mfrmSuperVouchersView.setDelegate(this);
 		queue = NoHttp.newRequestQueue();
 		assetList = new ArrayList<>();
 		isPrepared = true;
@@ -66,12 +64,6 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 		return view;
 	}
 
-	/**
-	  * @author tanyadong
-	  * @Title getSearchAssetData
-	  * @Description 获取搜索数据
-	  * @date 2017/9/9 10:42
-	*/
 	private void getSearchAssetData(String param, int pageNo) {
 		String uri = AppMacro.REQUEST_URL + "/asset/query";
 		Request<String> request = NoHttp.createStringRequest(uri);
@@ -79,11 +71,12 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 		request.add("param", param);
 		request.add("page", pageNo);
 		request.add("limit", PAGE_SIZE);
-		queue.add(SEARCH_ASSET_LIST, request, this);
+		queue.add(GET_ASSET_LIST, request, this);
 	}
 
 	@Override
 	protected void getBundleData() {
+
 	}
 
 	@Override
@@ -95,12 +88,18 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 		mHasLoadedOnce = true;
 	}
 
+
+	/**
+	 * @author tanyadong
+	 * @Title: onResume
+	 * @Description: 生命周期重进入
+	 * @date 2016-9-19 下午6:57:28
+	 */
 	@Override
 	public void onResume() {
 		super.onResume();
+		lazyLoad();
 	}
-
-
 
 	@Override
 	public void onDestroy() {
@@ -108,112 +107,71 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 		queue.cancelBySign(cancelObject);
 	}
 
-	@Override
-	public void onClickSearch() {
-		Intent intent = new Intent();
-		intent.setClass(context, MfrmSearchGoodsController.class);
-		startActivity(intent);
-	}
-
-	@Override
-	public void onClickOne() {
-
-	}
-
-	@Override
-	public void onClickTwo() {
-
-	}
-
-	@Override
-	public void onClickThree() {
-
-	}
-
-	@Override
-	public void onClickFour() {
-
-	}
-
-	@Override
-	public void onClickFive() {
-
-	}
-
-	@Override
-	public void onClickSix() {
-
-	}
-
-	@Override
-	public void onClickSeven() {
-
-	}
-
-	@Override
-	public void onClickEight() {
-
-	}
-
 	/**
-	  * @author tanyadong
-	  * @Title onClickPullDown
-	  * @Description 下拉刷新
-	  * @date 2017/9/16 14:10
-	*/
-	@Override
-	public void onClickPullDown(String strSearch) {
-		refreshList = true;
-		getSearchAssetData(strSearch, FIRST_PAGE);
-	}
-
-	/**
-	 * @author tanyadong
-	 * @Title onClickLoadMore
-	 * @Description 上啦加载
-	 * @date 2017/9/16 14:10
+	 * @param asset 数据
+	 * @author yuanxueyuan
+	 * @Title: onClickToDetail
+	 * @Description: 点击详情
+	 * @date 2017/12/26 22:08
 	 */
-	@Override
-	public void onClickLoadMore(String strSearch) {
-		loadMoreList = true;
-		getSearchAssetData(strSearch, pageNo);
-	}
-
 	@Override
 	public void onClickToDetail(Asset asset) {
 		Intent intent = new Intent();
-		Bundle bundle = new Bundle();
-		intent.setClass(context, MfrmGoodsInfoController.class);
-		//TODO 填写具体的参数
-		intent.putExtras(bundle);
+		intent.setClass(this.getContext(), MfrmGoodsInfoController.class);
 		startActivity(intent);
 	}
 
+
+	 /**
+	 * @author  yuanxueyuan
+	 * @Title:  pullDownRefresh
+	 * @Description: 下拉刷新
+	 * @date 2017/12/26 22:09
+	 */
+	@Override
+	public void pullDownRefresh() {
+		refreshList = true;
+		getSearchAssetData("", FIRST_PAGE);
+	}
+
+
+	/**
+	 * @author yuanxueyuan
+	 * @Title: onClickLoadMore
+	 * @Description: 上拉加载更多
+	 * @date 2017/12/26 22:09
+	 */
+	@Override
+	public void onClickLoadMore() {
+		loadMoreList = true;
+		getSearchAssetData("", pageNo);
+	}
 
 	@Override
 	public void onStart(int i) {
 		if (refreshList == true || loadMoreList == true) {
 			return;
 		}
-		mfrmSuperVoucherView.circleProgressBarView.showProgressBar();
+		if (mfrmSuperVouchersView.circleProgressBarView != null) {
+			mfrmSuperVouchersView.circleProgressBarView.showProgressBar();
+		}
 	}
 
 	@Override
 	public void onSucceed(int i, Response response) {
-
 		if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
 			String result = (String) response.get();
 			assetList = analyzeAssetsData(result);
-			mfrmSuperVoucherView.showSearchAssetList(assetList);
+			mfrmSuperVouchersView.showMyAssetList(assetList);
 		}
 	}
 
 	/**
-	  * @author tanyadong
-	  * @Title analyzeAssetsData
-	  * @Description 解析查询到的资产
-	  * @date 2017/9/9 20:57
-	*/
+	 * @author tanyadong
+	 * @Title analyzeAssetsData
+	 * @Description 解析查询到的资产
+	 * @date 2017/9/9 20:57
+	 */
 	private List<Asset> analyzeAssetsData(String result) {
 		if (!loadMoreList) {
 			if (assetList != null) {
@@ -221,7 +179,7 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 			}
 		}
 		if (null == result || "".equals(result)) {
-			T.showShort(context, R.string.get_myasset_failed);
+			T.showShort(this.getContext(), R.string.get_myasset_failed);
 			reloadNoDataList();
 			L.e("result == null");
 			return null;
@@ -230,17 +188,17 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 			JSONObject jsonObject = new JSONObject(result);
 			if (jsonObject.has("code") && jsonObject.optInt("code") == 0) {
 				JSONArray jsonArray = jsonObject.optJSONArray("content");
-				mfrmSuperVoucherView.isLoadMore = true;
+				mfrmSuperVouchersView.isLoadMore = true;
 				if (jsonArray.length() <= 0) {
 					if (loadMoreList) {
-						mfrmSuperVoucherView.isLoadMore = false;
-						T.showShort(getActivity(), R.string.check_asset_no_more);
+						mfrmSuperVouchersView.isLoadMore = false;
+						T.showShort(this.getContext(), R.string.check_asset_no_more);
 					} else {
 						reloadNoDataList();
 					}
 					return null;
 				} else {
-					mfrmSuperVoucherView.setNoDataView(false);
+					mfrmSuperVouchersView.setNoDataView(false);
 				}
 				if (assetList == null){
 					assetList = new ArrayList<>();
@@ -301,30 +259,32 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 				}
 				lastCount = jsonArray.length();
 			} else {
-				T.showShort(context, R.string.get_myasset_failed);
+				T.showShort(this.getContext(), R.string.get_myasset_failed);
 				reloadNoDataList();
 				return null;
 			}
 		} catch (JSONException e) {
-			T.showShort(context, R.string.get_myasset_failed);
+			T.showShort(this.getContext(), R.string.get_myasset_failed);
 			reloadNoDataList();
 			e.printStackTrace();
 		}
 		return  assetList;
 	}
 
+
 	/**
-	  * @author tanyadong
-	  * @Title reloadNoDataList
-	  * @Description 无数据刷新列表
-	  * @date 2017/9/9 20:59
-	*/
+	 * @author tanyadong
+	 * @Title reloadNoDataList
+	 * @Description 无数据刷新列表
+	 * @date 2017/9/9 20:59
+	 */
 	private void reloadNoDataList() {
 		if (assetList == null || assetList.size() <= 0) {
-			mfrmSuperVoucherView.setNoDataView(true);
-			mfrmSuperVoucherView.showSearchAssetList(assetList);
+			mfrmSuperVouchersView.setNoDataView(true);
+			mfrmSuperVouchersView.showMyAssetList(assetList);
 		}
 	}
+
 
 	@Override
 	public void onFailed(int i, Response response) {
@@ -336,29 +296,31 @@ public class MfrmSuperVoucherController extends BaseFragmentController implement
 		Exception exception = response.getException();
 		reloadNoDataList();
 		if (exception instanceof NetworkError) {
-			T.showShort(context, R.string.network_error);
+			T.showShort(this.getContext(), R.string.network_error);
 			return;
 		}
 		if (exception instanceof UnKnownHostError) {
-			T.showShort(context, R.string.network_unknown_host_error);
+			T.showShort(this.getContext(), R.string.network_unknown_host_error);
 			return;
 		}
 		if (exception instanceof SocketTimeoutException) {
-			T.showShort(context, R.string.network_socket_timeout_error);
+			T.showShort(this.getContext(), R.string.network_socket_timeout_error);
 			return;
 		}
 		if (exception instanceof ConnectException) {
-			T.showShort(context, R.string.network_error);
+			T.showShort(this.getContext(), R.string.network_error);
 			return;
 		}
-		T.showShort(context, R.string.login_failed);
+		T.showShort(this.getContext(), R.string.login_failed);
 	}
 
 	@Override
 	public void onFinish(int i) {
-		mfrmSuperVoucherView.circleProgressBarView.hideProgressBar();
-		mfrmSuperVoucherView.endRefreshLayout();
+		mfrmSuperVouchersView.circleProgressBarView.hideProgressBar();
+		mfrmSuperVouchersView.endRefreshLayout();
 		refreshList = false;
 		loadMoreList = false;
 	}
+
+
 }

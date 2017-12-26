@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,18 +25,19 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 /**
   * @date 创建时间 2017/9/5
   * @author tanyadong
-  * @Description 我的资产
+  * @Description 搜索
 */
-public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate {
-	private ImageView scanQrcordImg;
-	private ImageView userImg;
-	private TextView titleTxt;
-	private LinearLayout titleLiftLl, titleRightLl;
-	private ListView expandableListView;
-	private MyAssetListViewAdapter expandableListViewAdapter;
-	public CircleProgressBarView circleProgressBarView;
+public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate,AssetListViewAdapter.AssetListViewAdapterDelegate, AbsListView.OnScrollListener {
+	private ListView searchListView;
 	private TextView assetListNoDataTxt;
-	private BGARefreshLayout bgaRefreshLayout;
+	private AssetListViewAdapter assetListViewAdapter;
+	public CircleProgressBarView circleProgressBarView;
+	private BGARefreshLayout mRefreshLayout;
+
+	private LinearLayout searchTopLL, oneMiddleLL, twoMiddleLL, threeMiddleLL, fourMiddleLL,
+			fiveMiddleLL, sixMiddleLL, sevenMiddleLL, eightMiddleLL;
+
+	public boolean isLoadMore;
 	public MfrmHomeView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
@@ -49,32 +50,187 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 
 	@Override
 	protected void initViews() {
-//		assetListNoDataTxt = (TextView) findViewById(R.id.txt_asset_list_no_data);
-//		circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
-//		titleLiftLl = (LinearLayout) findViewById(R.id.ll_title_left);
-//		titleRightLl = (LinearLayout) findViewById(R.id.ll_title_right);
-//		userImg = (ImageView) findViewById(R.id.img_back);
-//		userImg.setImageResource(R.drawable.user_img);
-//		titleTxt = (TextView) findViewById(R.id.txt_title);
-//		titleTxt.setText(getResources().getString(R.string.my_asset));
-//		initFresh();
+		//搜索部分
+		searchTopLL = (LinearLayout) findViewById(R.id.home_top_search);
+
+		//中间部分
+		oneMiddleLL = (LinearLayout) findViewById(R.id.home_middle_one);
+		twoMiddleLL = (LinearLayout) findViewById(R.id.home_middle_two);
+		threeMiddleLL = (LinearLayout) findViewById(R.id.home_middle_three);
+		fourMiddleLL = (LinearLayout) findViewById(R.id.home_middle_four);
+		fiveMiddleLL = (LinearLayout) findViewById(R.id.home_middle_five);
+		sixMiddleLL = (LinearLayout) findViewById(R.id.home_middle_six);
+		sevenMiddleLL = (LinearLayout) findViewById(R.id.home_middle_seven);
+		eightMiddleLL = (LinearLayout) findViewById(R.id.home_middle_eight);
+
+		//商品列表
+		searchListView = (ListView) findViewById(R.id.search_asset_listview);
+		assetListNoDataTxt = (TextView) findViewById(R.id.txt_asset_list_no_data);
+		circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
+		mRefreshLayout = (BGARefreshLayout) findViewById(R.id.mRefreshLayout);
+		initFresh();
+	}
+
+	/**
+	  * @author tanyadong
+	  * @Title endRefreshLayout
+	  * @Description 停止刷新
+	  * @date 2017/9/12 17:28
+	*/
+	public void endRefreshLayout() {
+		mRefreshLayout.endRefreshing();
+		mRefreshLayout.endLoadingMore();
+
+	}
+	/**
+	 * 初始化上下拉刷新控件
+	 */
+	private void initFresh() {
+		mRefreshLayout.setDelegate(this);
+		//true代表开启上拉加载更多
+		BGANormalRefreshViewHolder bgaNormalRefreshViewHolder = new BGANormalRefreshViewHolder(getContext(), true);
+		mRefreshLayout.setRefreshViewHolder(bgaNormalRefreshViewHolder);
+	}
+
+	@Override
+	protected void addListener() {
+		searchTopLL.setOnClickListener(this);
+
+		oneMiddleLL.setOnClickListener(this);
+		twoMiddleLL.setOnClickListener(this);
+		threeMiddleLL.setOnClickListener(this);
+		fourMiddleLL.setOnClickListener(this);
+		fiveMiddleLL.setOnClickListener(this);
+		sixMiddleLL.setOnClickListener(this);
+		sevenMiddleLL.setOnClickListener(this);
+		eightMiddleLL.setOnClickListener(this);
+
+		searchListView.setOnScrollListener(this);
+	}
+	/**
+	  * @author tanyadong
+	  * @Title
+	  * @Description  下拉
+	  * @date 2017/9/16 14:08
+	*/
+	@Override
+	public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+		if (super.delegate instanceof  MfrmSearchDelegate) {
+			((MfrmSearchDelegate) super.delegate).onClickPullDown("");
+		}
+	}
+	/**
+	 * @author tanyadong
+	 * @Title onBGARefreshLayoutBeginLoadingMore
+	 * @Description  上拉
+	 * @date 2017/9/16 14:08
+	 */
+	@Override
+	public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+		if (super.delegate instanceof  MfrmSearchDelegate) {
+			 ((MfrmSearchDelegate) super.delegate).onClickLoadMore("");
+		}
+		return isLoadMore;
 	}
 
 
 
 	@Override
-	protected void addListener() {
-//		titleLiftLl.setOnClickListener(this);
-//		titleRightLl.setOnClickListener(this);
-//		userImg.setOnClickListener(this);
-//		scanQrcordImg.setOnClickListener(this);
+	public void onClickItem(Asset asset) {
+		if (super.delegate instanceof MfrmSearchDelegate) {
+			((MfrmSearchDelegate) super.delegate).onClickToDetail(asset);
+		}
 	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+	}
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+		//有更多
+		if(totalItemCount > visibleItemCount){
+			//不满一屏
+			isLoadMore = true;
+		}else{
+			isLoadMore = false;
+		}
+	}
+
 
 	@Override
 	protected void onClickListener(View v) {
 		switch (v.getId()) {
-		default:
-			break;
+			//搜索
+			case R.id.home_top_search:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickSearch();
+				}
+				break;
+			case R.id.home_middle_one:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickOne();
+				}
+				break;
+			case R.id.home_middle_two:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickTwo();
+				}
+				break;
+			case R.id.home_middle_three:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickThree();
+				}
+				break;
+			case R.id.home_middle_four:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickFour();
+				}
+				break;
+			case R.id.home_middle_five:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickFive();
+				}
+				break;
+			case R.id.home_middle_six:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickSix();
+				}
+				break;
+			case R.id.home_middle_seven:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickSeven();
+				}
+				break;
+			case R.id.home_middle_eight:
+				if (super.delegate instanceof MfrmSearchDelegate) {
+					((MfrmSearchDelegate) super.delegate).onClickEight();
+				}
+				break;
+			default:
+				break;
+		}
+	}
+	/**
+	 * @author tanyadong
+	 * @Title showSearchAssetList
+	 * @Description 刷新并显示数据
+	 * @date 2017/9/8 14:44
+	 */
+	public void showSearchAssetList(List<Asset> myAssetList) {
+		if (myAssetList == null) {
+			L.e("myAssetList == null");
+			return;
+		}
+		if (assetListViewAdapter == null) {
+			assetListViewAdapter = new AssetListViewAdapter(context,
+					myAssetList);
+			searchListView.setAdapter(assetListViewAdapter);
+			assetListViewAdapter.setDelegate(this);
+		} else {
+			assetListViewAdapter.update(myAssetList);
+			assetListViewAdapter.notifyDataSetChanged();
 		}
 	}
 	/**
@@ -90,82 +246,41 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 			assetListNoDataTxt.setVisibility(GONE);
 		}
 	}
-
 	/**
-	 * 初始化上下拉刷新控件
+	 * @author liuchenghe
+	 * @Title: initData
+	 * @Description: 初始化数据（并没有使用该方法，使用update方法）
+	 * @date 2016-9-19 下午7:57:20
 	 */
-	private void initFresh() {
-		bgaRefreshLayout.setDelegate(this);
-		//true代表开启上拉加载更多
-		BGANormalRefreshViewHolder bgaNormalRefreshViewHolder = new BGANormalRefreshViewHolder(getContext(), false);
-		bgaRefreshLayout.setRefreshViewHolder(bgaNormalRefreshViewHolder);
-	}
-	/**
-	  * @author tanyadong
-	  * @Title showMyAssetList
-	  * @Description 刷新并显示数据
-	  * @date 2017/9/8 14:44
-	*/
-	public void showMyAssetList(List<Asset> myAssetList) {
-		if (myAssetList == null) {
-			L.e("myAssetList == null");
-			return;
-		}
-		if (expandableListViewAdapter == null) {
-			expandableListViewAdapter = new MyAssetListViewAdapter(context,
-					myAssetList);
-			expandableListView.setAdapter(expandableListViewAdapter);
-		} else {
-			expandableListViewAdapter.update(myAssetList);
-			expandableListViewAdapter.notifyDataSetChanged();
-		}
-	}
-
-
-/**
-  * @author tanyadong
-  * @Title initData
-  * @Description 初始化数据
-  * @date 2017/9/5 21:29
-*/
 	@Override
 	public void initData(Object... data) {
 
-	}
-
-	@Override
-	public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-		if (super.delegate instanceof MfrmMineAssetDelegate) {
-			((MfrmMineAssetDelegate) super.delegate).pullDownRefresh();
-		}
-	}
-	/**
-	 * @author tanyadong
-	 * @Title endRefreshLayout
-	 * @Description 停止刷新
-	 * @date 2017/9/12 17:28
-	 */
-	public void endRefreshLayout() {
-		bgaRefreshLayout.endRefreshing();
-	}
-	@Override
-	public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-		return false;
 	}
 
 
 	/**
 	  * @date 创建时间 2017/9/5
 	  * @author tanyadong
-	  * @Description ”我的“  代理
+	  * @Description 查找
 	*/
-	public interface MfrmMineAssetDelegate {
+	public interface MfrmSearchDelegate {
 
-		void onClickLogoff(); // 退出登录
+		void  onClickSearch();//搜索
 
-		void onClickToQRCode();
+		void  onClickOne();//第1个
+		void  onClickTwo();//第2个
+		void  onClickThree();//第3个
+		void  onClickFour();//第4个
+		void  onClickFive();//第5个
+		void  onClickSix();//第6个
+		void  onClickSeven();//第7个
+		void  onClickEight();//第8个
 
-		void pullDownRefresh(); //下拉刷新
-	}
+		void onClickPullDown(String searchTxt); //下拉刷新
+
+		void onClickLoadMore(String searchTxt); //上拉加载
+
+		void onClickToDetail(Asset asset); //上啦加载
+ 	}
 
 }

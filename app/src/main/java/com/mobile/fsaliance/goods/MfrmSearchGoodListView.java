@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,7 +14,7 @@ import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Asset;
-import com.mobile.fsaliance.supervoucher.AssetListViewAdapter;
+import com.mobile.fsaliance.home.AssetListViewAdapter;
 
 import java.util.List;
 
@@ -87,7 +86,6 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
     public void endRefreshLayout() {
         mRefreshLayout.endRefreshing();
         mRefreshLayout.endLoadingMore();
-
     }
 
     /**

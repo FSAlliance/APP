@@ -1,4 +1,4 @@
-package com.mobile.fsaliance.supervoucher;
+package com.mobile.fsaliance.home;
 
 import com.bumptech.glide.Glide;
 import com.mobile.fsaliance.R;
@@ -14,8 +14,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
