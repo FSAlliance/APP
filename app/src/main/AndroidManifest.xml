@@ -93,5 +93,16 @@
             android:name="com.mobile.fsaliance.goods.MfrmSearchGoodListController"
             android:screenOrientation="portrait" >
         </activity>
+        <!--收入记录列表-->
+        <activity
+            android:name="com.mobile.fsaliance.mine.MfrmIncomeListController"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!--提现记录列表-->
+        <activity
+            android:name="com.mobile.fsaliance.mine.MfrmPresentRecordListController"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 </manifest>

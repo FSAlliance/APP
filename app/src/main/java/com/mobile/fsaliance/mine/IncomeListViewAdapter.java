@@ -84,6 +84,8 @@ public class IncomeListViewAdapter extends BaseAdapter implements View.OnClickLi
 		} else {
 			holder = (Holder) view.getTag();
 		}
+
+
 //		holder.assetId.setText("资产"+(position + 1) + ":");
 //		String codeId = assets.get(position).getCodeId();
 //		String coid = codeId.substring(codeId.lastIndexOf(".") + 1, codeId.length());
