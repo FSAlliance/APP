@@ -29,6 +29,10 @@ public class IncomeListViewAdapter extends BaseAdapter implements View.OnClickLi
 	private List<Asset> assets;
 	private LayoutInflater layoutInflater;
 
+
+
+
+
 	public IncomeListViewAdapter(Context context, List<Asset> assetList) {
 		super();
 		this.context = context;
