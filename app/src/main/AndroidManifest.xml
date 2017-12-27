@@ -88,6 +88,10 @@
             android:screenOrientation="portrait" />
         <activity android:name=".share.ShareActivity" />
         <activity android:name=".share.ShareToInviteActivity"></activity>
+
+        <activity
+            android:name=".mine.MfrmMyOrderActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

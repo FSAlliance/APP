@@ -34,7 +34,7 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
  */
-public class InitApplication extends Application implements OnResponseListener<String> {
+public class InitApplication extends Application {
 	private static InitApplication instance;
 	private RequestQueue queue;
 	private Object cancelObject = new Object();
@@ -61,16 +61,8 @@ public class InitApplication extends Application implements OnResponseListener<S
 		}
 		queue = NoHttp.newRequestQueue();
 		listPlace = new ArrayList<>();
-
-		getAssetPlace();
 	}
 
-	private void getAssetPlace() {
-		String uri = AppMacro.REQUEST_URL + "/place/list";
-		Request<String> request = NoHttp.createStringRequest(uri);
-		request.cancelBySign(cancelObject);
-		queue.add(0, request, this);
-	}
 
 	public boolean FilePathInit() {
 
@@ -118,65 +110,6 @@ public class InitApplication extends Application implements OnResponseListener<S
 		);
 	}
 
-	@Override
-	public void onStart(int i) {
 
-	}
 
-	@Override
-	public void onSucceed(int i, Response<String> response) {
-		if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
-			String result = (String) response.get();
-			if (result == null || "".equals(result)) {
-				T.showShort(this, R.string.asset_check_failed);
-				return;
-			}
-			try {
-				JSONObject jsonObject = new JSONObject(result);
-				if (jsonObject.has("code") && jsonObject.getInt("code") == 0) {
-					JSONArray jsonArray  = jsonObject.getJSONArray("content");
-					listPlace.clear();
-					for (i = 0; i < jsonArray.length(); i++) {
-						JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
-						listPlace.add(jsonObject1.optString("placeName"));
-					}
-					LoginUtils.saveAssetPlace(this, listPlace);
-				} else if (jsonObject.getInt("code") == -1) {
-					if (jsonObject.has("message")) {
-						T.showShort(this, jsonObject.getString("message"));
-					}
-				} else {
-					T.showShort(this, R.string.asset_check_failed);
-				}
-			} catch (JSONException e) {
-				T.showShort(this, R.string.asset_check_failed);
-				e.printStackTrace();
-			}
-		} else {
-			T.showShort(this, R.string.asset_check_failed);
-		}
-	}
-
-	@Override
-	public void onFailed(int i, Response<String> response) {
-		Exception exception = response.getException();
-		if (exception instanceof NetworkError) {
-			T.showShort(this, R.string.network_error);
-			return;
-		}
-		if (exception instanceof UnKnownHostError) {
-			T.showShort(this, R.string.network_unknown_host_error);
-			return;
-		}
-		if (exception instanceof SocketTimeoutException) {
-			T.showShort(this, R.string.network_socket_timeout_error);
-			return;
-		}
-		T.showShort(this, R.string.asset_check_failed);
-	}
-
-	@Override
-	public void onFinish(int i) {
-
-	}
 }
