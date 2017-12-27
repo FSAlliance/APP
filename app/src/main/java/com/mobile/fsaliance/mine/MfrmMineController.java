@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
+import com.mobile.fsaliance.share.ShareActivity;
 
 
 /**
@@ -71,7 +72,9 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
 
     @Override
     public void onClickShare() {
-
+        Intent intent = new Intent();
+        intent.setClass(context, ShareActivity.class);
+        startActivity(intent);
     }
 
     @Override

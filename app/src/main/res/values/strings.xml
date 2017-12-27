@@ -96,4 +96,13 @@
     <string name="present_moneny">提现金额</string>
     <string name="present_all">全部提现</string>
     <string name="please_input_present_moneny">请输入要提现的金额</string>
+
+    <!--分享界面-->
+    <string name="share_title">分享</string>
+    <string name="share_app">分享APP</string>
+    <string name="share_to_invite">分享推荐码</string>
+    <string name="share_to_invite_title">邀请码</string>
+    <string name="share_to_invite_code">邀请码:</string>
+    <string name="share_to_invite_code_copy">复制邀请码</string>
+    <string name="share_to_invite_code_description">赶紧邀请你的好友加入吧，你的好友使用此邀请码进行注册，你能得到更多积分哦</string>
 </resources>
