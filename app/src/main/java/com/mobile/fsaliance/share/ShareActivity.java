@@ -84,6 +84,7 @@ public class ShareActivity extends Activity implements View.OnClickListener {
         switch (view.getId()) {
             //分享APP
             case R.id.rl_share_app:
+                intent.setClass(this,ShareAppActivity.class);
                 break;
             //分享赚钱
             case R.id.rl_share_to_invite:

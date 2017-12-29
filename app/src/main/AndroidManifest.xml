@@ -87,7 +87,8 @@
             android:name=".mine.MfrmPresentRecordListController"
             android:screenOrientation="portrait" />
         <activity android:name=".share.ShareActivity" />
-        <activity android:name=".share.ShareToInviteActivity"></activity>
+        <activity android:name=".share.ShareToInviteActivity" />
+        <activity android:name=".share.ShareAppActivity"></activity>
     </application>
 
 </manifest>
