@@ -106,4 +106,9 @@
     <string name="share_to_invite_code_copy">复制邀请码</string>
     <string name="share_to_invite_code_description">赶紧邀请你的好友加入吧，你的好友使用此邀请码进行注册，你能得到更多积分哦</string>
     <string name="share_app_description">分享APP的下载连接,方便好友下载,请注意:\n1、微信需转到浏览器下载\n2、在APP注册需要填写推荐人,即填写好友分享的推荐码</string>
+
+
+    <string name="my_order_get_failed">获取订单失败</string>
+    <string name="my_order_id">订单编号:</string>
+    <string name="my_order_time">下单时间:</string>
 </resources>
