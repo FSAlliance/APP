@@ -12,6 +12,7 @@ import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.common.InitApplication;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.T;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
@@ -83,7 +84,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         if (!isPrepared || !isVisible || mHasLoadedOnce) {
             return;
         }
-        getPublicData();
+        getOrderData();
     }
 
     @Override
@@ -91,7 +92,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         super.onResume();
         flag = true;
         index = 0;
-        getPublicData();
+        getOrderData();
     }
 
     private void initView() {
@@ -126,8 +127,9 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
      * @Description: $获取公共视界初始化数据
      * @date ${tags}
      */
-    public void getPublicData() {
- String uri = AppMacro.REQUEST_URL + "/asset/query";
+    public void getOrderData() {
+        L.e("tyd--"+typeId);
+        String uri = AppMacro.REQUEST_URL + "/asset/query";
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
 //        request.add("param", param);
@@ -191,7 +193,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
 //        publics.clear();
         flag = true;
         index = 0;
-        getPublicData();
+        getOrderData();
     }
 
     @Override

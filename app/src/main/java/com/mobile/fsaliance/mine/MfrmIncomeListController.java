@@ -11,7 +11,8 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
-import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.IncomeRecord;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
     @Override
     protected void onResume() {
         super.onResume();
-        List<Asset> list = new ArrayList<>();
+        List<IncomeRecord> list = new ArrayList<>();
         showIncomeList(list);
     }
 
@@ -76,18 +77,18 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
      * @Description 刷新并显示数据
      * @date 2017/9/8 14:44
      */
-    public void showIncomeList(List<Asset> myAssetList) {
-        if (myAssetList == null) {
+    public void showIncomeList(List<IncomeRecord> incomeRecordList) {
+        if (incomeRecordList == null) {
             L.e("myAssetList == null");
             return;
         }
         if (incomeListViewAdapter == null) {
             incomeListViewAdapter = new IncomeListViewAdapter(this,
-                    myAssetList);
+                    incomeRecordList);
             incomeListView.setAdapter(incomeListViewAdapter);
 //            incomeListViewAdapter.setDelegate(this);
         } else {
-            incomeListViewAdapter.update(myAssetList);
+            incomeListViewAdapter.update(incomeRecordList);
             incomeListViewAdapter.notifyDataSetChanged();
         }
     }

@@ -1,5 +1,6 @@
 package com.mobile.fsaliance.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.mobile.fsaliance.R;
@@ -7,6 +8,7 @@ import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.vo.User;
+import com.mobile.fsaliance.main.MfrmLoginController;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 
@@ -73,6 +75,9 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
 
     @Override
     public void onClickClickOff() {
-
+        Intent intent = new Intent();
+        intent.setClass(this, MfrmLoginController.class);
+        startActivity(intent);
+        finish();
     }
 }

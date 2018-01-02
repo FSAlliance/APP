@@ -12,6 +12,7 @@ import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.PresentRecord;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
         if (result != 0) {
             StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
         }
-        setContentView(R.layout.activity_incomelist_controller);
+        setContentView(R.layout.activity_presentlist_controller);
         initView();
         addListener();
     }
@@ -48,7 +49,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
     @Override
     protected void onResume() {
         super.onResume();
-        List<Asset> list = new ArrayList<>();
+        List<PresentRecord> list = new ArrayList<>();
         showPresentRecordList(list);
     }
 
@@ -81,18 +82,18 @@ public class MfrmPresentRecordListController extends BaseController implements V
      * @Description 刷新并显示数据
      * @date 2017/9/8 14:44
      */
-    public void showPresentRecordList(List<Asset> myAssetList) {
-        if (myAssetList == null) {
+    public void showPresentRecordList(List<PresentRecord> presentRecordList) {
+        if (presentRecordList == null) {
             L.e("myAssetList == null");
             return;
         }
         if (presentRecordListViewAdapter == null) {
             presentRecordListViewAdapter = new PresentRecordListViewAdapter(this,
-                    myAssetList);
+                    presentRecordList);
             presentReccordListview.setAdapter(presentRecordListViewAdapter);
 //            incomeListViewAdapter.setDelegate(this);
         } else {
-            presentRecordListViewAdapter.update(myAssetList);
+            presentRecordListViewAdapter.update(presentRecordList);
             presentRecordListViewAdapter.notifyDataSetChanged();
         }
     }

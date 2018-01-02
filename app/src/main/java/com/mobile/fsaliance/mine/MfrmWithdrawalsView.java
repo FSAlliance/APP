@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
+import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
 
 
@@ -19,6 +20,7 @@ public class MfrmWithdrawalsView extends BaseView {
     private TextView titleTxt, presentmMonenyTxt, allPresentTxt;
     private LinearLayout titleLiftLl, titleRightLl;
     private EditText presentCountEdit;
+    private TextView presentOkTxt; //确认提现
     public MfrmWithdrawalsView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -50,18 +52,34 @@ public class MfrmWithdrawalsView extends BaseView {
         presentmMonenyTxt = (TextView) findViewById(R.id.txt_money_count);
         allPresentTxt = (TextView) findViewById(R.id.txt_present_all);
         presentCountEdit = (EditText) findViewById(R.id.edit_input_money);
+        presentOkTxt = (TextView) findViewById(R.id.txt_present_ok);
     }
 
     @Override
     protected void addListener() {
         titleLiftLl.setOnClickListener(this);
         allPresentTxt.setOnClickListener(this);
+        presentOkTxt.setOnClickListener(this);
     }
 
     @Override
     protected void onClickListener(View v) {
         switch (v.getId()) {
             case R.id.txt_present_all:
+                presentCountEdit.setText(presentmMonenyTxt.getText().toString());
+                break;
+            case R.id.txt_present_ok:
+                if (presentCountEdit.getText().toString().trim() == "" || presentCountEdit.getText().toString().equals("")) {
+                    T.showShort(context, context.getResources().getString(R.string.please_input_present_moneny));
+                    return;
+                }
+                if (Integer.parseInt(presentCountEdit.getText().toString().trim()) > Integer.parseInt( presentmMonenyTxt.getText().toString().trim())) {
+                    T.showShort(context, context.getResources().getString(R.string.present_moneny_overrun));
+                    return;
+                }
+                if (super.delegate instanceof MfrmWithdrawalsViewDelegate) {
+                    ((MfrmWithdrawalsViewDelegate) super.delegate).onClickPresent(presentCountEdit.getText().toString().trim());
+                }
                 break;
             default:
                 break;
@@ -73,7 +91,7 @@ public class MfrmWithdrawalsView extends BaseView {
       * @Description 提现
     */
     public interface MfrmWithdrawalsViewDelegate {
-
+        void onClickPresent(String presentMoneny); //提现
 
     }
 }

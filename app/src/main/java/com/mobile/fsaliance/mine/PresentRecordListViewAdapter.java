@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.PresentRecord;
 
 import java.util.List;
 
@@ -26,37 +27,37 @@ import java.util.List;
 
 public class PresentRecordListViewAdapter extends BaseAdapter implements View.OnClickListener {
 	private Context context;
-	private List<Asset> assets;
+	private List<PresentRecord> presentRecords;
 	private LayoutInflater layoutInflater;
 
-	public PresentRecordListViewAdapter(Context context, List<Asset> assetList) {
+	public PresentRecordListViewAdapter(Context context, List<PresentRecord> presentRecordList) {
 		super();
 		this.context = context;
 		this.layoutInflater = LayoutInflater.from(context);
-		this.assets = assetList;
+		this.presentRecords = presentRecordList;
 	}
 
-	public void update(List<Asset> data) {
+	public void update(List<PresentRecord> data) {
 		if (data == null) {
 			L.e("data = null!");
 			return;
 		}
-		this.assets = data;
+		this.presentRecords = data;
 	}
 
 
 	@Override
 	public int getCount() {
-		if (assets == null) {
+		if (presentRecords == null) {
 			L.e("data = null!");
 			return 0;
 		}
-		return assets.size();
+		return presentRecords.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return assets.get(position);
+		return presentRecords.get(position);
 	}
 
 	@Override
@@ -71,12 +72,25 @@ public class PresentRecordListViewAdapter extends BaseAdapter implements View.On
 			view = layoutInflater.inflate(
 					R.layout.present_record_list, null);
 			holder = new Holder();
-
+			holder.presentRecordImg = (ImageView) view.findViewById(R.id.img_present_record);
+			holder.presentRecordMoneyTxt = (TextView) view.findViewById(R.id.txt_present_record_count);
+			holder.presentRecordSymbolTxt = (TextView) view.findViewById(R.id.txt_present_record_symbol);
+			holder.presentRecordTimeTxt = (TextView) view.findViewById(R.id.txt_present_record_time);
+			holder.presentRecordTypeTxt = (TextView) view.findViewById(R.id.txt_present_record_type);
             view.setTag(holder);
 		} else {
 			holder = (Holder) view.getTag();
 		}
-
+		PresentRecord presentRecord = presentRecords.get(position);
+		if (presentRecord.getState() == 0) { //提现中
+			holder.presentRecordTypeTxt.setText(R.string.mine_money_in_the_present);
+			holder.presentRecordImg.setImageResource(R.drawable.register_job_id);
+		} else {
+			holder.presentRecordTypeTxt.setText(R.string.mine_money_has_present);
+			holder.presentRecordImg.setImageResource(R.drawable.register_at_once);
+		}
+		holder.presentRecordMoneyTxt.setText(presentRecord.getPresentMoneny());
+		holder.presentRecordTimeTxt.setText(presentRecord.getPresentTime());
 		return view;
 	}
 
@@ -88,20 +102,11 @@ public class PresentRecordListViewAdapter extends BaseAdapter implements View.On
 	}
 
 	private class Holder {
-//		TextView assetId;
-//		TextView assetName;
-//		ImageView assetProcessState;
-//
-//		TextView assetNumTxt;
-//		TextView assetNameTxt;
-//		TextView assetStateTxt;
-//		TextView assetPlaceTxt;
-//		RelativeLayout parentItemRl;
-//		LinearLayout childItemLl;
-//		ImageView parentItemLineView;
-//		View bottomLineView;
-//		ImageView qrcodeImg;
-//		LinearLayout qrcodeLl;
+		ImageView presentRecordImg; //图片
+		TextView presentRecordTypeTxt;//类型  被动收入  主动收入
+		TextView presentRecordTimeTxt; // 日期
+		TextView presentRecordSymbolTxt; //加减符号
+		TextView presentRecordMoneyTxt; // 钱数
 	}
 
 }
