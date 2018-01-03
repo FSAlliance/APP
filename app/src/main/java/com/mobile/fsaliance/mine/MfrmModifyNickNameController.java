@@ -2,11 +2,14 @@ package com.mobile.fsaliance.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
-import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
@@ -25,15 +28,15 @@ import org.json.JSONObject;
 
 import java.net.SocketTimeoutException;
 
-/**
- * 提现界面
- */
-public class MfrmWithdrawalsController extends BaseController implements MfrmWithdrawalsView.MfrmWithdrawalsViewDelegate, OnResponseListener<String> {
 
-    private MfrmWithdrawalsView mfrmWithdrawalsView;
+public class MfrmModifyNickNameController extends BaseController implements OnResponseListener<String>, View.OnClickListener {
+
     private Object cancelObject = new Object();
     private RequestQueue queue;
     private User user;
+    private ImageView userInfoBackImg;
+    private TextView titleTxt, modifyNickNameOkTxt;
+    private LinearLayout titleLiftLl, titleRightLl;
     @Override
     protected void getBundleData() {
 
@@ -45,20 +48,29 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
         if (result != 0) {
             StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
         }
-        setContentView(R.layout.activity_withdrawals_controller);
-        mfrmWithdrawalsView = (MfrmWithdrawalsView) findViewById(R.id.activity_withdrawals_view);
-        mfrmWithdrawalsView.setDelegate(this);
+        setContentView(R.layout.activity_modify_nickname_controller);
+        initView();
+        addLinister();
         queue = NoHttp.newRequestQueue();
         user = LoginUtils.getUserInfo(this);
-        if (user == null) {
-            return;
-    }
-        mfrmWithdrawalsView.initData(user);
+
     }
 
+    private void addLinister() {
+        modifyNickNameOkTxt.setOnClickListener(this);
+        titleLiftLl.setOnClickListener(this);
+    }
 
-
-
+    private void initView() {
+        titleLiftLl = (LinearLayout) findViewById(R.id.ll_title_left);
+        titleRightLl = (LinearLayout) findViewById(R.id.ll_title_right);
+        titleRightLl.setVisibility(View.VISIBLE);
+        userInfoBackImg = (ImageView) findViewById(R.id.img_back);
+        userInfoBackImg.setImageResource(R.drawable.goback);
+        titleTxt = (TextView) findViewById(R.id.txt_title);
+        titleTxt.setText(getResources().getString(R.string.modify_nickname));
+        modifyNickNameOkTxt = (TextView) findViewById(R.id.txt_confirm_modify);
+    }
 
 
     @Override
@@ -68,22 +80,12 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
     }
 
 
-    @Override
-    public void onClickPresent(String presentMoneny) {
-        user = LoginUtils.getUserInfo(this);
-        if (user == null) {
-            user = new User();
-        }
-        String uri = AppMacro.REQUEST_URL + "/user/login";
-        Request<String> request = NoHttp.createStringRequest(uri);
-        request.setCancelSign(cancelObject);
-        request.add("presentMoneny", presentMoneny);
-        queue.add(0, request, this);
-    }
+
+
+
 
     @Override
     public void onStart(int i) {
-
     }
 
     @Override
@@ -91,25 +93,29 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
         if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
             String result = (String) response.get();
             if (result == null || "".equals(result)) {
-                T.showShort(this, R.string.present_fail);
+                T.showShort(this, R.string.bound_fail);
                 return;
             }
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("code") && jsonObject.getInt("code") == 0) {
                     JSONObject jsonUser = jsonObject.optJSONObject("content");
-//                    Intent intent = new Intent(this, MainActivity.class);
-//                    startActivity(intent);
-//                    finish();
+                    if (user == null) {
+                        user = new User();
+                    }
+                    LoginUtils.saveUserInfo(this, user);
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
-                    T.showShort(this, R.string.present_fail);
+                    T.showShort(this, R.string.bound_fail);
                 }
             } catch (JSONException e) {
-                T.showShort(this, R.string.present_fail);
+                T.showShort(this, R.string.bound_fail);
                 e.printStackTrace();
             }
         } else {
-            T.showShort(this, R.string.present_fail);
+            T.showShort(this, R.string.bound_fail);
         }
     }
 
@@ -128,11 +134,36 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
             T.showShort(this, R.string.network_socket_timeout_error);
             return;
         }
-        T.showShort(this, R.string.present_fail);
+        T.showShort(this, R.string.bound_fail);
     }
 
     @Override
     public void onFinish(int i) {
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txt_confirm_modify:
+                user = LoginUtils.getUserInfo(this);
+                if (user == null) {
+                    user = new User();
+                }
+                LoginUtils.saveUserInfo(this, user);
+
+                String uri = AppMacro.REQUEST_URL + "/user/login";
+                Request<String> request = NoHttp.createStringRequest(uri);
+                request.setCancelSign(cancelObject);
+                request.add("user", user.getId());
+                request.add("alipayAcount", "");
+                queue.add(0, request, this);
+                break;
+            case R.id.ll_title_left:
+                finish();
+                break;
+            default:
+                break;
+        }
 
     }
 }

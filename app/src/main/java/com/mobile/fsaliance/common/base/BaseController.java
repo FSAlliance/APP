@@ -6,9 +6,10 @@ package com.mobile.fsaliance.common.base;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
-public abstract class BaseController extends Activity {
+public abstract class BaseController extends AppCompatActivity {
 	
 	public int bussFd = -1;
 	private FrameLayout frameLayout;

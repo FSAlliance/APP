@@ -1,16 +1,20 @@
-package com.mobile.fsaliance.main;
+package com.mobile.fsaliance.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
-import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
+import com.mobile.fsaliance.main.MainActivity;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -25,13 +29,15 @@ import org.json.JSONObject;
 import java.net.SocketTimeoutException;
 
 
-public class MfrmLoginController extends BaseController implements MfrmLoginView.MfrmLoginViewDelegate, OnResponseListener<String> {
+public class MfrmModifyPasswordController extends BaseController implements OnResponseListener<String>, View.OnClickListener {
 
-    private MfrmLoginView mfrmLoginView;
     private Object cancelObject = new Object();
     private RequestQueue queue;
-    private static final int LOGON_IN = 0;
+    private static final int MODIFY_PWD = 0;
     private User user;
+    private EditText originalPwdEdit, newPwdEdit, confirmPwdEdit;
+    private TextView confirmModifyTxt;
+    private CircleProgressBarView circleProgressBarView;
     @Override
     protected void getBundleData() {
 
@@ -43,59 +49,31 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
         if (result != 0) {
             StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
         }
-        setContentView(R.layout.activity_login_controller);
-        mfrmLoginView = (MfrmLoginView) findViewById(R.id.activity_login_view);
-        mfrmLoginView.setDelegate(this);
+        setContentView(R.layout.activity_modify_password_controller);
+        initView();
+        addLinster();
         queue = NoHttp.newRequestQueue();
         user = LoginUtils.getUserInfo(this);
         if (user == null) {
             return;
         }
-        mfrmLoginView.initData(user);
     }
 
-    /**
-      * @author tanyadong
-      * @Title onClickLogin
-      * @Description 点击登录
-      * @date 2017/9/6 22:16
-    */
-    @Override
-    public void onClickLogin(String jobId, String password) {
-        user = LoginUtils.getUserInfo(this);
-        if (user == null) {
-            user = new User();
-        }
-        user.setPassword(password);
-        user.setUserName(jobId);
-        LoginUtils.saveUserInfo(this, user);
-        if (jobId == null || "".equals(jobId) || password == null || "".equals(password)) {
-            L.e("username == null || password == null");
-            return;
-        }
-        String uri = AppMacro.REQUEST_URL + "/user/login";
-        Request<String> request = NoHttp.createStringRequest(uri);
-        request.setCancelSign(cancelObject);
-        request.add("jobid", jobId);
-        request.add("password", password);
-        queue.add(LOGON_IN, request, this);
+    private void addLinster() {
+        confirmModifyTxt.setOnClickListener(this);
     }
-    /**
-      * @author tanyadong
-      * @Title onClickRegister
-      * @Description 点击注册
-      * @date 2017/9/6 22:15
-    */
-    @Override
-    public void onClickRegister() {
-        Intent intent = new Intent(this, MfrmRegisterController.class);
-        startActivity(intent);
+
+    private void initView() {
+        originalPwdEdit = (EditText) findViewById(R.id.edit_user_original_pwd);
+        newPwdEdit = (EditText) findViewById(R.id.edit_user_new_pwd);
+        confirmPwdEdit = (EditText) findViewById(R.id.edit_user_confirm_pwd);
+        confirmModifyTxt = (TextView) findViewById(R.id.txt_confirm_modify);
+        circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
     }
 
 
     @Override
     public void onFailed(int i, Response response) {
-        mfrmLoginView.circleProgressBarView.hideProgressBar();
         Exception exception = response.getException();
         if (exception instanceof NetworkError) {
             T.showShort(this, R.string.network_error);
@@ -122,9 +100,7 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
 
     @Override
     public void onStart(int i) {
-        if (mfrmLoginView.circleProgressBarView != null) {
-            mfrmLoginView.circleProgressBarView.showProgressBar();
-        }
+        circleProgressBarView.showProgressBar();
     }
 
     @Override
@@ -163,8 +139,40 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
 
     @Override
     public void onFinish(int i) {
-        if (mfrmLoginView.circleProgressBarView != null) {
-            mfrmLoginView.circleProgressBarView.hideProgressBar();
+        circleProgressBarView.hideProgressBar();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.txt_confirm_modify) {
+            String originalPwd = originalPwdEdit.getText().toString().trim();
+            String newPwd = newPwdEdit.getText().toString().trim();
+            String confirmPwd = confirmPwdEdit.getText().toString().trim();
+            if (checkPwd(originalPwd, newPwd, confirmPwd)) {
+                String uri = AppMacro.REQUEST_URL + "/user/login";
+                Request<String> request = NoHttp.createStringRequest(uri);
+                request.setCancelSign(cancelObject);
+                queue.add(MODIFY_PWD, request, this);
+            }
         }
+    }
+
+    /**
+     * @author tanyadong
+     * @Title: checkPwd
+     * @Description: 校验参数
+     * @date 2018/1/2 0002 22:27
+     */
+
+    private boolean checkPwd(String originalPwd, String newPwd, String confirmPwd) {
+        if (!user.getPassword().equals(originalPwd)) {
+            T.showShort(this,R.string.original_pwd_is_error);
+            return false;
+        }
+        if (!newPwd.equals(confirmPwd)) {
+            T.showShort(this, R.string.new_pwd_is_error);
+            return false;
+        }
+        return true;
     }
 }

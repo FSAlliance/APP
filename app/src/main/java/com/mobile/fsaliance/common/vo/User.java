@@ -1,13 +1,17 @@
 package com.mobile.fsaliance.common.vo;
 
+import java.io.Serializable;
+
 /**
  * Created by 78326 on 2017.9.9.
  */
-public class User {
+public class User implements Serializable{
     private Long id;//序号
-    private String jobId;//工号
-    private String name;//姓名
+    private String userName;//用户名。昵称
     private String password;//密码
+    private String userHead; //头像
+    private String aliPayAccount; //支付宝账号
+    private String  shareCode; //推荐码
 
     public Long getId() {
         return id;
@@ -17,20 +21,12 @@ public class User {
         this.id = id;
     }
 
-    public String getJobId() {
-        return jobId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setJobId(String jobId) {
-        this.jobId = jobId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -39,5 +35,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserHead() {
+        return userHead;
+    }
+
+    public void setUserHead(String userHead) {
+        this.userHead = userHead;
+    }
+
+    public String getAliPayAccount() {
+        return aliPayAccount;
+    }
+
+    public void setAliPayAccount(String aliPayAccount) {
+        this.aliPayAccount = aliPayAccount;
+    }
+
+    public String getShareCode() {
+        return shareCode;
+    }
+
+    public void setShareCode(String shareCode) {
+        this.shareCode = shareCode;
     }
 }

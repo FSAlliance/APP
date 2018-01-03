@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 
+import com.mobile.fsaliance.common.vo.Order;
 
 import org.json.JSONException;
 

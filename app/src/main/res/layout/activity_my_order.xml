@@ -7,16 +7,17 @@
     android:orientation="vertical"
     tools:context=".mine.MfrmMyOrderActivity"
     >
-
+    <include android:id="@+id/title_include"
+        layout="@layout/include_toolbar_title"/>
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_FindFragment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/read"
-        app:tabIndicatorColor="@color/white"
+        android:background="@color/white"
+        app:tabIndicatorColor="@color/login_btn_color"
         app:tabIndicatorHeight="2sp"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/white" />
+        app:tabSelectedTextColor="@color/login_btn_color"
+        app:tabTextColor="@color/optiontext_color_black" />
 
     <!--<android.support.v4.view.ViewPager-->
         <!--android:id="@+id/vp_FindFragment_pager"-->

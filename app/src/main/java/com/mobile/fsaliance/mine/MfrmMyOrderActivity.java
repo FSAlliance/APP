@@ -1,11 +1,9 @@
 package com.mobile.fsaliance.mine;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
+
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
 
@@ -16,18 +14,22 @@ import com.mobile.fsaliance.common.util.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MfrmMyOrderActivity extends FragmentActivity {
+public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnPageChangeListener{
 
     private TabLayout tab_FindFragment_title; //定义TabLayout
     private ViewPager vp_FindFragment_pager; //定义viewPager
-    private MyOrder_tab_Adapter fAdapter; //定义adapter
+    private FragmentAdapter fAdapter; //定义adapter
     private List<Fragment> list_fragment; //定义要装fragment的列表
     private List<String> list_title; //tab名称列表
-
+    private int position;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void getBundleData() {
+
+    }
+
+    @Override
+    protected void onCreateFunc(Bundle savedInstanceState) {
         int result = StatusBarUtil.StatusBarLightMode(this);
         if (result != 0) {
             StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
@@ -35,16 +37,6 @@ public class MfrmMyOrderActivity extends FragmentActivity {
         setContentView(R.layout.activity_my_order);
         initControls();
     }
-
-//    @Override
-//    protected void onCreateFunc(Bundle savedInstanceState) {
-//        int result = StatusBarUtil.StatusBarLightMode(this);
-//        if (result != 0) {
-//            StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
-//        }
-//        setContentView(R.layout.activity_my_order);
-//        initControls();
-//    }
 
     /**
      * 初始化各控件
@@ -54,14 +46,14 @@ public class MfrmMyOrderActivity extends FragmentActivity {
 
         vp_FindFragment_pager = (ViewPager)findViewById(R.id.vp_FindFragment_pager);
         //关闭预加载，默认一次只加载一个Fragment
-        vp_FindFragment_pager.setOffscreenPageLimit(3);
+//        vp_FindFragment_pager.setOffscreenPageLimit(3);
         //初始化各fragment
 //        myOrderAllFragment = new MyOrderAllFragment();
 //        myOrderUnPaymenFragment = new MyOrderUnPaymenFragment();
 //        myOrderUnSendFragment=new MyOrderUnSendFragment();
 //        myOrderUnDeliveryFragment=new MyOrderUnDeliveryFragment();
         //将fragment装进列表中
-//        list_fragment = new ArrayList<>();
+        list_fragment = new ArrayList<>();
 //        list_fragment.add(myOrderAllFragment);
 //        list_fragment.add(myOrderUnPaymenFragment);
 //        list_fragment.add(myOrderUnSendFragment);
@@ -84,9 +76,24 @@ public class MfrmMyOrderActivity extends FragmentActivity {
         for(int i = 0; i < list_title.size(); i++){
             list_fragment.add(TabFragment.newInstance(list_title.get(i)));
         }
-        fAdapter = new MyOrder_tab_Adapter(getSupportFragmentManager(),list_fragment , list_title);
+        fAdapter = new FragmentAdapter(this, getSupportFragmentManager(),list_fragment , list_title);
         vp_FindFragment_pager.setAdapter(fAdapter);//给ViewPager设置适配器
         tab_FindFragment_title.setupWithViewPager(vp_FindFragment_pager);//将TabLayout和ViewPager关联起来
         tab_FindFragment_title.setTabMode(TabLayout.MODE_FIXED);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        this.position = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

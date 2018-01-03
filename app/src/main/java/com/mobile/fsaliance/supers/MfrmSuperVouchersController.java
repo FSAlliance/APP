@@ -117,7 +117,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	@Override
 	public void onClickToDetail(Asset asset) {
 		Intent intent = new Intent();
-		intent.setClass(this.getContext(), MfrmGoodsInfoController.class);
+		intent.setClass(context, MfrmGoodsInfoController.class);
 		startActivity(intent);
 	}
 
@@ -179,7 +179,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 			}
 		}
 		if (null == result || "".equals(result)) {
-			T.showShort(this.getContext(), R.string.get_myasset_failed);
+			T.showShort(context, R.string.get_myasset_failed);
 			reloadNoDataList();
 			L.e("result == null");
 			return null;
@@ -192,7 +192,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 				if (jsonArray.length() <= 0) {
 					if (loadMoreList) {
 						mfrmSuperVouchersView.isLoadMore = false;
-						T.showShort(this.getContext(), R.string.check_asset_no_more);
+						T.showShort(context, R.string.check_asset_no_more);
 					} else {
 						reloadNoDataList();
 					}
@@ -259,12 +259,12 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 				}
 				lastCount = jsonArray.length();
 			} else {
-				T.showShort(this.getContext(), R.string.get_myasset_failed);
+				T.showShort(context, R.string.get_myasset_failed);
 				reloadNoDataList();
 				return null;
 			}
 		} catch (JSONException e) {
-			T.showShort(this.getContext(), R.string.get_myasset_failed);
+			T.showShort(context, R.string.get_myasset_failed);
 			reloadNoDataList();
 			e.printStackTrace();
 		}
@@ -296,22 +296,22 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 		Exception exception = response.getException();
 		reloadNoDataList();
 		if (exception instanceof NetworkError) {
-			T.showShort(this.getContext(), R.string.network_error);
+			T.showShort(context, R.string.network_error);
 			return;
 		}
 		if (exception instanceof UnKnownHostError) {
-			T.showShort(this.getContext(), R.string.network_unknown_host_error);
+			T.showShort(context, R.string.network_unknown_host_error);
 			return;
 		}
 		if (exception instanceof SocketTimeoutException) {
-			T.showShort(this.getContext(), R.string.network_socket_timeout_error);
+			T.showShort(context, R.string.network_socket_timeout_error);
 			return;
 		}
 		if (exception instanceof ConnectException) {
-			T.showShort(this.getContext(), R.string.network_error);
+			T.showShort(context, R.string.network_error);
 			return;
 		}
-		T.showShort(this.getContext(), R.string.login_failed);
+		T.showShort(context, R.string.login_failed);
 	}
 
 	@Override

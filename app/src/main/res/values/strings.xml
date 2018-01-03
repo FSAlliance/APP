@@ -96,7 +96,28 @@
     <string name="present_moneny">提现金额</string>
     <string name="present_all">全部提现</string>
     <string name="please_input_present_moneny">请输入要提现的金额</string>
-
+   <string name="please_input_alipayaccount">请输入支付宝账号</string>
+    <string name="bound_fail">绑定失败</string>
+    <string name="present_fail">提现失败</string>
+    <string name="present_ok">确认提现</string>
+    <string name="present_moneny_overrun">转出金额超限</string>
+    <!--修改密码-->
+    <string name="modify_password">修改密码</string>
+    <string name="user_original_pwd">原密码:</string>
+    <string name="user_new_pwd">新密码:</string>
+    <string name="user_confirm_pwd">确认密码:</string>
+    <string name="user_confirm_modify">确认修改</string>
+    <string name="hint_input_original_pwd">请输入原密码</string>
+    <string name="hint_input_new_pwd">请输入新密码</string>
+    <string name="original_pwd_is_error">原密码有误</string>
+    <string name="new_pwd_is_error">两次密码不一致</string>
+    <!--修改用户名-->
+    <string name="hint_input_nickname">请输入用户名</string>
+    <string name="modify_nickname">修改用户名</string>
+    <!--订单-->
+    <string name="my_order_get_failed">获取订单失败</string>
+    <string name="my_order_id">订单编号:</string>
+    <string name="my_order_time">下单时间:</string>
     <!--分享界面-->
     <string name="share_title">分享</string>
     <string name="share_app">分享APP</string>

@@ -62,12 +62,16 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
 
     @Override
     public void onClickMyOrder() {
-
+        Intent intent = new Intent();
+        intent.setClass(context, MfrmMyOrderActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onClickBoundAlipay() {
-
+        Intent intent = new Intent();
+        intent.setClass(context, MfrmBoundAlipayController.class);
+        startActivity(intent);
     }
 
     @Override
@@ -79,11 +83,15 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
 
     @Override
     public void onClickPresentRecord() {
-
+        Intent intent = new Intent();
+        intent.setClass(context, MfrmPresentRecordListController.class);
+        startActivity(intent);
     }
 
     @Override
     public void onClickImmediateCash() {
-
+        Intent intent = new Intent();
+        intent.setClass(context, MfrmIncomeListController.class);
+        startActivity(intent);
     }
 }

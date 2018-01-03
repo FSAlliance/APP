@@ -7,11 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
+import com.mobile.fsaliance.common.common.CircleProgressBarView;
+import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
 
 
@@ -20,6 +21,7 @@ public class MfrmBoundAlipayView extends BaseView {
     private TextView titleTxt, boundOkTxt;
     private LinearLayout titleLiftLl, titleRightLl;
     private EditText alipayAcountEdit;
+    public CircleProgressBarView circleProgressBarView;
     public MfrmBoundAlipayView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -50,6 +52,7 @@ public class MfrmBoundAlipayView extends BaseView {
         titleTxt.setText(getResources().getString(R.string.mine_bound_alipay));
         boundOkTxt = (TextView) findViewById(R.id.txt_bound_ok);
         alipayAcountEdit = (EditText) findViewById(R.id.edit_alipay_acount);
+        circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
     }
 
     @Override
@@ -62,8 +65,18 @@ public class MfrmBoundAlipayView extends BaseView {
     protected void onClickListener(View v) {
         switch (v.getId()) {
             case R.id.txt_bound_ok:
+                String alipayAcount = alipayAcountEdit.getText().toString().trim();
+                if (alipayAcount== "" || alipayAcount.equals("")) {
+                    T.showShort(context, context.getResources().getString(R.string.please_input_alipayaccount));
+                    return;
+                }
                 if (super.delegate instanceof MfrmBoundAlipayViewDelegate) {
-                    ((MfrmBoundAlipayViewDelegate) super.delegate).onClickBoundAlipay();
+                    ((MfrmBoundAlipayViewDelegate) super.delegate).onClickBoundAlipay(alipayAcount);
+                }
+                break;
+            case R.id.ll_title_left:
+                if (super.delegate instanceof MfrmBoundAlipayViewDelegate) {
+                    ((MfrmBoundAlipayViewDelegate) super.delegate).onClickBack();
                 }
                 break;
             default:
@@ -77,7 +90,9 @@ public class MfrmBoundAlipayView extends BaseView {
     */
     public interface MfrmBoundAlipayViewDelegate {
 
-        void onClickBoundAlipay();//绑定支付宝
+        void onClickBoundAlipay(String alipay);//绑定支付宝
+
+        void onClickBack();
 
     }
 }

@@ -41,8 +41,6 @@ public class MfrmLoginView extends BaseView {
         if (user == null) {
             return;
         }
-        usernameEditTxt.setText(user.getJobId());
-        passwordEditTxt.setText(user.getPassword());
     }
 
 

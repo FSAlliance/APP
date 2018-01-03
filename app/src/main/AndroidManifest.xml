@@ -93,6 +93,18 @@
             android:name=".mine.MfrmMyOrderActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".share.ShareAppActivity"></activity>
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
+            android:name=".mine.MfrmModifyNickNameController"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
+            android:name=".mine.MfrmModifyPasswordController"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>
