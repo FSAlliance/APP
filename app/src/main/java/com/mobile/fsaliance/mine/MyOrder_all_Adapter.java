@@ -95,14 +95,14 @@ public class MyOrder_all_Adapter extends BaseAdapter{
 
 
 
-        //未付款未取消订单
-        if(list.get(position).tag==1 && list.get(position).cancleOrNot==0){
-            //未取消订单
-            vh.myOrderStateTxt.setText("等待付款");
-        }
-        if(list.get(position).completeOrNot==1){ //已经完成
-            vh.myOrderStateTxt.setText("实付款");
-        }
+//        //未付款未取消订单
+//        if(list.get(position).tag==1 && list.get(position).cancleOrNot==0){
+//            //未取消订单
+//            vh.myOrderStateTxt.setText("等待付款");
+//        }
+//        if(list.get(position).completeOrNot==1){ //已经完成
+//            vh.myOrderStateTxt.setText("实付款");
+//        }
 
 
 

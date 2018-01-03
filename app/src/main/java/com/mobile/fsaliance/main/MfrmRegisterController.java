@@ -47,19 +47,19 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
     }
 
     /**
-      * @author tanyadong
-      * @Title onClickRegister
-      * @Description 点击注册
-      * @date 2017/9/6 22:15
-    */
+     * @author tanyadong
+     * @Title onClickRegister
+     * @Description 点击注册
+     * @date 2017/9/6 22:15
+     */
     @Override
     public void onClickRegister(String jobID, String userName, String password) {
         User user = LoginUtils.getUserInfo(this);
         if (user == null) {
             user = new User();
         }
-        user.setJobId(jobID);
-        user.setName(userName);
+//        user.setJobId(jobID);
+//        user.setName(userName);
         user.setPassword(password);
         LoginUtils.saveUserInfo(this, user);
         String uri = AppMacro.REQUEST_URL + "/user/register";
