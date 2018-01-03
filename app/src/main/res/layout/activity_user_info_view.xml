@@ -108,7 +108,7 @@
         android:layout_height="50dp">
         <TextView
             android:layout_marginLeft="10dp"
-            android:text="@string/ming_user_nickname"
+            android:text="@string/user_password"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />

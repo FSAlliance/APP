@@ -11,7 +11,6 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
-import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.fsaliance.common.vo.PresentRecord;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 
@@ -27,7 +26,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
     private RequestQueue queue;
     private ListView presentReccordListview;
     private ImageView incomeListBackImg;
-    private TextView titleTxt, boundOkTxt;
+    private TextView titleTxt;
     private LinearLayout titleLiftLl, titleRightLl;
     private PresentRecordListViewAdapter presentRecordListViewAdapter;
     @Override
@@ -84,7 +83,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
      */
     public void showPresentRecordList(List<PresentRecord> presentRecordList) {
         if (presentRecordList == null) {
-            L.e("myAssetList == null");
+            L.e("presentRecordList == null");
             return;
         }
         if (presentRecordListViewAdapter == null) {

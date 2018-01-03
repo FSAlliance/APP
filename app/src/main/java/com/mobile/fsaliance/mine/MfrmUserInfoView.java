@@ -51,7 +51,7 @@ public class MfrmUserInfoView extends BaseView {
         if (user == null) {
             return;
         }
-        if (!user.getAliPayAccount().equals("")) {
+        if (user.getAliPayAccount() != null && !user.getAliPayAccount().equals("")) {
             alipayAccountTxt.setText(user.getAliPayAccount());
         }
         userNickNameTxt.setText(user.getUserName());
@@ -177,7 +177,9 @@ public class MfrmUserInfoView extends BaseView {
 
                 break;
             case R.id.ll_title_left:
-
+                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
+                    ((MfrmUserInfoViewDelegate) super.delegate).onClickBack();
+                }
                 break;
             default:
                 break;

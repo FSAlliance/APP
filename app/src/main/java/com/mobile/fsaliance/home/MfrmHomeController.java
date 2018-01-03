@@ -84,6 +84,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 
 	@Override
 	protected void getBundleData() {
+
 	}
 
 	@Override

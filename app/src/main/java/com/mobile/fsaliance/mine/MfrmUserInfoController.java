@@ -68,17 +68,26 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
 
     @Override
     public void onClickModifyNickName() {
-
+        Intent intent = new Intent();
+        intent.setClass(this, MfrmModifyNickNameController.class);
+        //todo 参数
+        startActivity(intent);
     }
 
     @Override
     public void onClickModifyPassword() {
-
+        Intent intent = new Intent();
+        intent.setClass(this, MfrmModifyPasswordController.class);
+        //todo 参数
+        startActivity(intent);
     }
 
     @Override
     public void onClickBoundAlipay() {
-
+        Intent intent = new Intent();
+        intent.setClass(this, MfrmBoundAlipayController.class);
+        //todo 参数
+        startActivity(intent);
     }
 
     @Override

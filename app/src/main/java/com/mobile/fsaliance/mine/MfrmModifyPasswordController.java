@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
@@ -37,6 +40,8 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
     private User user;
     private EditText originalPwdEdit, newPwdEdit, confirmPwdEdit;
     private TextView confirmModifyTxt;
+    private LinearLayout titleLeftLl;
+    private ImageView titleLeftImg;
     private CircleProgressBarView circleProgressBarView;
     @Override
     protected void getBundleData() {
@@ -61,6 +66,7 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
 
     private void addLinster() {
         confirmModifyTxt.setOnClickListener(this);
+        titleLeftLl.setOnClickListener(this);
     }
 
     private void initView() {
@@ -69,6 +75,9 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
         confirmPwdEdit = (EditText) findViewById(R.id.edit_user_confirm_pwd);
         confirmModifyTxt = (TextView) findViewById(R.id.txt_confirm_modify);
         circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
+        titleLeftImg = (ImageView) findViewById(R.id.img_back);
+        titleLeftImg.setImageResource(R.drawable.goback);
+        titleLeftLl = (LinearLayout) findViewById(R.id.ll_title_left);
     }
 
 
@@ -87,7 +96,7 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
             T.showShort(this, R.string.network_socket_timeout_error);
             return;
         }
-        T.showShort(this, R.string.login_failed);
+        T.showShort(this, R.string.modify_pwd_fail);
     }
 
 
@@ -108,7 +117,7 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
         if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
             String result = (String) response.get();
             if (result == null || "".equals(result)) {
-                T.showShort(this, R.string.login_failed);
+                T.showShort(this, R.string.modify_pwd_fail);
                 return;
             }
             try {
@@ -125,14 +134,14 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
                     startActivity(intent);
                     finish();
                 } else {
-                    T.showShort(this, R.string.login_failed);
+                    T.showShort(this, R.string.modify_pwd_fail);
                 }
             } catch (JSONException e) {
-                T.showShort(this, R.string.login_failed);
+                T.showShort(this, R.string.modify_pwd_fail);
                 e.printStackTrace();
             }
         } else {
-            T.showShort(this, R.string.login_failed);
+            T.showShort(this, R.string.modify_pwd_fail);
         }
     }
 
@@ -144,17 +153,25 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.txt_confirm_modify) {
-            String originalPwd = originalPwdEdit.getText().toString().trim();
-            String newPwd = newPwdEdit.getText().toString().trim();
-            String confirmPwd = confirmPwdEdit.getText().toString().trim();
-            if (checkPwd(originalPwd, newPwd, confirmPwd)) {
-                String uri = AppMacro.REQUEST_URL + "/user/login";
-                Request<String> request = NoHttp.createStringRequest(uri);
-                request.setCancelSign(cancelObject);
-                queue.add(MODIFY_PWD, request, this);
-            }
+        switch (v.getId()) {
+            case R.id.ll_title_left:
+                finish();
+                break;
+            case R.id.txt_confirm_modify:
+                String originalPwd = originalPwdEdit.getText().toString().trim();
+                String newPwd = newPwdEdit.getText().toString().trim();
+                String confirmPwd = confirmPwdEdit.getText().toString().trim();
+                if (checkPwd(originalPwd, newPwd, confirmPwd)) {
+                    String uri = AppMacro.REQUEST_URL + "/user/login";
+                    Request<String> request = NoHttp.createStringRequest(uri);
+                    request.setCancelSign(cancelObject);
+                    queue.add(MODIFY_PWD, request, this);
+                }
+                break;
+                default:
+                    break;
         }
+
     }
 
     /**
@@ -165,10 +182,16 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
      */
 
     private boolean checkPwd(String originalPwd, String newPwd, String confirmPwd) {
+        if (originalPwd.equals("") || newPwd.equals("") || confirmPwd.equals("")) {
+            T.showShort(this,R.string.password_is_empty);
+            return false;
+        }
+        user.setPassword("aa");
         if (!user.getPassword().equals(originalPwd)) {
             T.showShort(this,R.string.original_pwd_is_error);
             return false;
         }
+
         if (!newPwd.equals(confirmPwd)) {
             T.showShort(this, R.string.new_pwd_is_error);
             return false;
