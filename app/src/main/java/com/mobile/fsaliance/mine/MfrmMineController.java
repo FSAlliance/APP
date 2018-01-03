@@ -61,6 +61,27 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
     }
 
     @Override
+    public void onClickMyBalance() {
+        Intent intent = new Intent();
+        intent.setClass(context, MfrmWalletController.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickInPresent() {
+        Intent intent = new Intent();
+        intent.setClass(context, MfrmWalletController.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickHasBalance() {
+        Intent intent = new Intent();
+        intent.setClass(context, MfrmWalletController.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onClickMyOrder() {
         Intent intent = new Intent();
         intent.setClass(context, MfrmMyOrderActivity.class);

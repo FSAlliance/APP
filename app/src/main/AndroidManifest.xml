@@ -87,12 +87,12 @@
             android:name=".mine.MfrmPresentRecordListController"
             android:screenOrientation="portrait" />
         <activity android:name=".share.ShareActivity" />
-        <activity android:name=".share.ShareToInviteActivity"></activity>
+        <activity android:name=".share.ShareToInviteActivity"/>
 
         <activity
             android:name=".mine.MfrmMyOrderActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".share.ShareAppActivity"></activity>
+        <activity android:name=".share.ShareAppActivity"
             android:screenOrientation="portrait" >
         </activity>
 

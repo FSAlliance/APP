@@ -115,6 +115,24 @@ public class MfrmMineView extends BaseView {
                     ((MfrmMineViewDelegate) super.delegate).onClickMyOrder();
                 }
                 break;
+            case R.id.ll_balance:
+                //我的余额
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickMyBalance();
+                }
+                break;
+            case R.id.ll_in_the_present:
+                //提现中
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickInPresent();
+                }
+                break;
+            case R.id.ll_has_balance:
+                //已提现
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickHasBalance();
+                }
+                break;
             default:
                 break;
         }
@@ -123,6 +141,12 @@ public class MfrmMineView extends BaseView {
 
     public interface MfrmMineViewDelegate {
         void onClickToUserInfo();
+
+        void onClickMyBalance();//我的余额
+
+        void onClickInPresent();//提现中
+
+        void onClickHasBalance();//已提现
 
         void onClickMyOrder(); //我的订单
 
