@@ -111,6 +111,9 @@
     <string name="hint_input_new_pwd">请输入新密码</string>
     <string name="original_pwd_is_error">原密码有误</string>
     <string name="new_pwd_is_error">两次密码不一致</string>
+    <!--修改用户名-->
+    <string name="hint_input_nickname">请输入用户名</string>
+    <string name="modify_nickname">修改用户名</string>
     <!--订单-->
     <string name="my_order_get_failed">获取订单失败</string>
     <string name="my_order_id">订单编号:</string>

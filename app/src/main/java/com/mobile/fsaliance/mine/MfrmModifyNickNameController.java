@@ -2,11 +2,14 @@ package com.mobile.fsaliance.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
-import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
@@ -26,13 +29,14 @@ import org.json.JSONObject;
 import java.net.SocketTimeoutException;
 
 
-public class MfrmBoundAlipayController extends BaseController implements MfrmBoundAlipayView.MfrmBoundAlipayViewDelegate, OnResponseListener<String> {
+public class MfrmModifyNickNameController extends BaseController implements OnResponseListener<String>, View.OnClickListener {
 
-    private MfrmBoundAlipayView mfrmBoundAlipayView;
     private Object cancelObject = new Object();
     private RequestQueue queue;
     private User user;
-    private String alipayAccount;
+    private ImageView userInfoBackImg;
+    private TextView titleTxt, modifyNickNameOkTxt;
+    private LinearLayout titleLiftLl, titleRightLl;
     @Override
     protected void getBundleData() {
 
@@ -44,20 +48,29 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
         if (result != 0) {
             StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
         }
-        setContentView(R.layout.activity_boundalipay_controller);
-        mfrmBoundAlipayView = (MfrmBoundAlipayView) findViewById(R.id.activity_boundalipay_view);
-        mfrmBoundAlipayView.setDelegate(this);
+        setContentView(R.layout.activity_modify_nickname_controller);
+        initView();
+        addLinister();
         queue = NoHttp.newRequestQueue();
         user = LoginUtils.getUserInfo(this);
-        if (user == null) {
-            return;
-        }
-        mfrmBoundAlipayView.initData(user);
+
     }
 
+    private void addLinister() {
+        modifyNickNameOkTxt.setOnClickListener(this);
+        titleLiftLl.setOnClickListener(this);
+    }
 
-
-
+    private void initView() {
+        titleLiftLl = (LinearLayout) findViewById(R.id.ll_title_left);
+        titleRightLl = (LinearLayout) findViewById(R.id.ll_title_right);
+        titleRightLl.setVisibility(View.VISIBLE);
+        userInfoBackImg = (ImageView) findViewById(R.id.img_back);
+        userInfoBackImg.setImageResource(R.drawable.goback);
+        titleTxt = (TextView) findViewById(R.id.txt_title);
+        titleTxt.setText(getResources().getString(R.string.modify_nickname));
+        modifyNickNameOkTxt = (TextView) findViewById(R.id.txt_confirm_modify);
+    }
 
 
     @Override
@@ -70,31 +83,9 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
 
 
 
-    @Override
-    public void onClickBoundAlipay(String alipayAcount) {
-        user = LoginUtils.getUserInfo(this);
-        alipayAccount = alipayAcount;
-        if (user == null) {
-            user = new User();
-        }
-        LoginUtils.saveUserInfo(this, user);
-
-        String uri = AppMacro.REQUEST_URL + "/user/login";
-        Request<String> request = NoHttp.createStringRequest(uri);
-        request.setCancelSign(cancelObject);
-        request.add("user", user.getId());
-        request.add("alipayAcount", alipayAcount);
-        queue.add(0, request, this);
-    }
-
-    @Override
-    public void onClickBack() {
-        finish();
-    }
 
     @Override
     public void onStart(int i) {
-        mfrmBoundAlipayView.circleProgressBarView.showProgressBar();
     }
 
     @Override
@@ -112,7 +103,6 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
                     if (user == null) {
                         user = new User();
                     }
-                    user.setAliPayAccount(alipayAccount);
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
@@ -131,7 +121,6 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
 
     @Override
     public void onFailed(int i, Response<String> response) {
-        mfrmBoundAlipayView.circleProgressBarView.hideProgressBar();
         Exception exception = response.getException();
         if (exception instanceof NetworkError) {
             T.showShort(this, R.string.network_error);
@@ -150,6 +139,31 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
 
     @Override
     public void onFinish(int i) {
-        mfrmBoundAlipayView.circleProgressBarView.hideProgressBar();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txt_confirm_modify:
+                user = LoginUtils.getUserInfo(this);
+                if (user == null) {
+                    user = new User();
+                }
+                LoginUtils.saveUserInfo(this, user);
+
+                String uri = AppMacro.REQUEST_URL + "/user/login";
+                Request<String> request = NoHttp.createStringRequest(uri);
+                request.setCancelSign(cancelObject);
+                request.add("user", user.getId());
+                request.add("alipayAcount", "");
+                queue.add(0, request, this);
+                break;
+            case R.id.ll_title_left:
+                finish();
+                break;
+            default:
+                break;
+        }
+
     }
 }

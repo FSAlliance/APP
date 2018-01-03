@@ -92,11 +92,16 @@
         <activity
             android:name=".mine.MfrmMyOrderActivity"
             android:screenOrientation="portrait" >
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+        </activity>
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+        <activity
+            android:name=".mine.MfrmModifyNickNameController"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
+            android:name=".mine.MfrmModifyPasswordController"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

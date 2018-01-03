@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_bg"
+    android:orientation="vertical"
+    >
+    <include android:id="@+id/title_include"
+        layout="@layout/include_toolbar_title"/>
+    <!-- 原密码 -->
+    <RelativeLayout
+        android:layout_below="@+id/title_include"
+        android:id="@+id/rl_user_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/edit_user_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:textColorHint="@color/hint_text_color"
+            android:hint="@string/hint_input_nickname"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:singleLine="true"
+            android:maxLength="6"
+            android:textColor="@color/optiontext_color_black"
+            android:textSize="15dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_color"/>
+    </RelativeLayout>
+
+    <!--确认修改-->
+    <TextView
+        android:id="@+id/txt_confirm_modify"
+        android:background="@drawable/bg_logoff_corner"
+        android:textColor="@color/white"
+        android:text="@string/user_confirm_modify"
+        android:layout_below="@+id/rl_user_nickname"
+        android:textSize="18dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <com.mobile.fsaliance.common.common.CircleProgressBarView
+            android:id="@+id/circleProgressBarView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </LinearLayout>
+</RelativeLayout>

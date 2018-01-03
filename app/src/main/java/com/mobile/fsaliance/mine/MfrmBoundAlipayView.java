@@ -74,6 +74,11 @@ public class MfrmBoundAlipayView extends BaseView {
                     ((MfrmBoundAlipayViewDelegate) super.delegate).onClickBoundAlipay(alipayAcount);
                 }
                 break;
+            case R.id.ll_title_left:
+                if (super.delegate instanceof MfrmBoundAlipayViewDelegate) {
+                    ((MfrmBoundAlipayViewDelegate) super.delegate).onClickBack();
+                }
+                break;
             default:
                 break;
         }
@@ -86,6 +91,8 @@ public class MfrmBoundAlipayView extends BaseView {
     public interface MfrmBoundAlipayViewDelegate {
 
         void onClickBoundAlipay(String alipay);//绑定支付宝
+
+        void onClickBack();
 
     }
 }
