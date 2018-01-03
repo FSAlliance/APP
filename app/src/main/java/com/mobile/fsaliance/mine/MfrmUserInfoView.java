@@ -1,19 +1,30 @@
 package com.mobile.fsaliance.mine;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.User;
 
+import java.util.ArrayList;
 
 
 public class MfrmUserInfoView extends BaseView {
@@ -21,7 +32,9 @@ public class MfrmUserInfoView extends BaseView {
     private TextView titleTxt, logOffTxt, alipayAccountTxt, userNickNameTxt;
     private LinearLayout titleLiftLl, titleRightLl;
     private RelativeLayout userInfoHeadPortraitRl, userNickNameRl, userPasswordRl, userAlipayRl;
-
+    private RelativeLayout selectPhotoRl;
+    private PopupWindow popupWindow;
+    private TextView tackPhoneBtn, pickPictureBtn, cancelBtn;
     public MfrmUserInfoView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -48,7 +61,12 @@ public class MfrmUserInfoView extends BaseView {
                 .into(userHeadPortraitImg);
     }
 
-
+    public void setSelectPhoto(Uri uri) {
+        Glide.with(context)
+                .load(uri)
+                .placeholder(R.drawable.register_job_id)
+                .into(userHeadPortraitImg);
+    }
     @Override
     protected void initViews() {
         titleLiftLl = (LinearLayout) findViewById(R.id.ll_title_left);
@@ -67,8 +85,36 @@ public class MfrmUserInfoView extends BaseView {
         userPasswordRl = (RelativeLayout) findViewById(R.id.rl_user_password);
         logOffTxt = (TextView) findViewById(R.id.txt_login_off);
         alipayAccountTxt = (TextView) findViewById(R.id.txt_user_alipay);
+        initPopupWindow();
     }
+    /**
+     * @author tanyadong
+     * @Title: initPopupWindow
+     * @Description: 初始化popupwindow
+     * @date 2017/12/2 0002 10:47
+     */
 
+    private void initPopupWindow() {
+        selectPhotoRl = (RelativeLayout) LayoutInflater.from(context).inflate(
+                R.layout.select_photo, null);
+        tackPhoneBtn = (TextView) selectPhotoRl.findViewById(R.id.picture_selector_take_photo_btn);
+        pickPictureBtn = (TextView) selectPhotoRl.findViewById(R.id.picture_selector_pick_picture_btn);
+        cancelBtn = (TextView) selectPhotoRl.findViewById(R.id.picture_selector_cancel_btn);
+        popupWindow = new PopupWindow(selectPhotoRl, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // 设置弹出窗体可点击
+        popupWindow.setAnimationStyle(R.style.take_photo_anim);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(false);
+        popupWindow.setWidth(LayoutParams.MATCH_PARENT);
+        //设置PopupWindow弹出窗体的高
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+
+            }
+        });
+    }
     @Override
     protected void addListener() {
         titleLiftLl.setOnClickListener(this);
@@ -77,15 +123,20 @@ public class MfrmUserInfoView extends BaseView {
         userAlipayRl.setOnClickListener(this);
         userNickNameRl.setOnClickListener(this);
         logOffTxt.setOnClickListener(this);
+
+        tackPhoneBtn.setOnClickListener(this);
+        pickPictureBtn.setOnClickListener(this);
+        cancelBtn.setOnClickListener(this);
     }
 
     @Override
     protected void onClickListener(View v) {
         switch (v.getId()) {
             case R.id.rl_user_info_head_portrait:
-                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
-                    ((MfrmUserInfoViewDelegate) super.delegate).onClickModifyHeadImg();
-                }
+//                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
+//                    ((MfrmUserInfoViewDelegate) super.delegate).onClickModifyHeadImg();
+//                }
+                showPopupWindow();
                 break;
             case R.id.rl_user_alipay:
                 if (super.delegate instanceof MfrmUserInfoViewDelegate) {
@@ -107,9 +158,53 @@ public class MfrmUserInfoView extends BaseView {
                     ((MfrmUserInfoViewDelegate) super.delegate).onClickClickOff();
                 }
                 break;
+            case R.id.picture_selector_cancel_btn:
+                dismissPopupWindow();
+                break;
+            case R.id.picture_selector_pick_picture_btn:
+                // TODO: 2018/1/3 0003 从相册选择
+                dismissPopupWindow();
+                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
+                    ((MfrmUserInfoViewDelegate) super.delegate).onClickPickPicture();
+                }
+                break;
+            case R.id.picture_selector_take_photo_btn:
+                // TODO: 2018/1/3 0003 拍照
+                dismissPopupWindow();
+                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
+                    ((MfrmUserInfoViewDelegate) super.delegate).onClickTackPhoto();
+                }
+
+                break;
+            case R.id.ll_title_left:
+
+                break;
             default:
                 break;
         }
+    }
+    /**
+     * 移除PopupWindow
+     */
+    public void dismissPopupWindow() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
+    }
+    /**
+     * @author tanyadong
+     * @Title: showPopupWindow
+     * @Description: 显示窗体
+     * @date 2017/12/2 0002 11:45
+     */
+
+    public void  showPopupWindow() {
+        // 设置弹出窗体显示时的动画，从底部向上弹出
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupWindow.showAtLocation(this, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+//        if (super.delegate instanceof MfrmAssetCheckDetailDelegate) {
+//            ((MfrmAssetCheckDetailDelegate) super.delegate).onClickSetAttributes((float) 0.5);
+//        }
     }
     /**
       * @date 创建时间 2017/9/6
@@ -117,7 +212,7 @@ public class MfrmUserInfoView extends BaseView {
       * @Description 登录代理页
     */
     public interface MfrmUserInfoViewDelegate {
-        void onClickModifyHeadImg(); //修改头像
+        void onClickBack(); //返回
 
         void onClickModifyNickName(); //修改昵称
 
@@ -125,6 +220,10 @@ public class MfrmUserInfoView extends BaseView {
 
         void onClickBoundAlipay();//绑定支付宝
 
-        void onClickClickOff();//推出登录
+        void onClickClickOff();//退出登录
+
+        void onClickTackPhoto(); //拍照
+
+        void onClickPickPicture(); //选择
     }
 }
