@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import com.mobile.fsaliance.R;
@@ -14,7 +18,7 @@ import com.mobile.fsaliance.common.util.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnPageChangeListener{
+public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
     private TabLayout tab_FindFragment_title; //定义TabLayout
     private ViewPager vp_FindFragment_pager; //定义viewPager
@@ -22,7 +26,9 @@ public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnP
     private List<Fragment> list_fragment; //定义要装fragment的列表
     private List<String> list_title; //tab名称列表
     private int position;
-
+    private LinearLayout titleLiftLl, titleRightLl;
+    private TextView titleTxt;
+    private ImageView titleLiftImg;
     @Override
     protected void getBundleData() {
 
@@ -36,12 +42,24 @@ public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnP
         }
         setContentView(R.layout.activity_my_order);
         initControls();
+        addLinister();
+    }
+
+    private void addLinister() {
+        titleLiftLl.setOnClickListener(this);
     }
 
     /**
      * 初始化各控件
      */
     private void initControls() {
+        titleLiftLl = (LinearLayout) findViewById(R.id.ll_title_left);
+        titleRightLl = (LinearLayout) findViewById(R.id.ll_title_right);
+        titleRightLl.setVisibility(View.INVISIBLE);
+        titleLiftImg = (ImageView) findViewById(R.id.img_back);
+        titleLiftImg.setImageResource(R.drawable.goback);
+        titleTxt = (TextView) findViewById(R.id.txt_title);
+        titleTxt.setText(getResources().getString(R.string.ming_my_order));
         tab_FindFragment_title = (TabLayout)findViewById(R.id.tab_FindFragment_title);
 
         vp_FindFragment_pager = (ViewPager)findViewById(R.id.vp_FindFragment_pager);
@@ -95,5 +113,16 @@ public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnP
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_title_left:
+                finish();
+                break;
+                default:
+                    break;
+        }
     }
 }
