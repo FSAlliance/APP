@@ -112,6 +112,7 @@
     </LinearLayout>
 
 
+
     <LinearLayout
         android:id="@+id/ll_share_to_invite_app_type"
         android:layout_width="match_parent"
@@ -137,25 +138,43 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center">
-            <ImageView
-                android:id="@+id/img_share_to_invite_qq"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
-                android:src="@drawable/search_delete"/>
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/img_share_to_invite_qq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/search_delete"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/share_qq"/>
+            </LinearLayout>
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
                 android:background="@color/common_txt_bg"
                 android:layout_margin="10dp"/>
-            <ImageView
-                android:id="@+id/img_share_to_invite_wechat"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
-                android:src="@drawable/search_delete"/>
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/img_share_to_invite_wechat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/search_delete"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/share_wechat"/>
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
 </RelativeLayout>

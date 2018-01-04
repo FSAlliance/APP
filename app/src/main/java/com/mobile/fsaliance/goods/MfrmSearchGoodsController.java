@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
@@ -17,7 +18,8 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
     private final String TAG = "MfrmSearchGoodsController";
     private EditText searchEdt;
     private TextView searchText;
-    private ImageView backImg;
+    private TextView titleTxt;
+    private LinearLayout backLL;
 
     @Override
     protected void getBundleData() {
@@ -42,9 +44,11 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
      * @date 2017/12/24 22:41
      */
     private void initView() {
+        titleTxt = (TextView) findViewById(R.id.txt_title_middle);
+        titleTxt.setText(R.string.goods_search);
         searchEdt = (EditText) findViewById(R.id.search_goods_edt);
         searchText = (TextView) findViewById(R.id.search_goods_btn);
-        backImg = (ImageView) findViewById(R.id.search_goods_back_img);
+        backLL = (LinearLayout) findViewById(R.id.ll_title_left);
     }
 
     /**
@@ -77,7 +81,7 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
      * @date 2017/12/24 22:41
      */
     private void addListener() {
-        backImg.setOnClickListener(this);
+        backLL.setOnClickListener(this);
         searchText.setOnClickListener(this);
     }
 
@@ -91,7 +95,7 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             //返回键
-            case R.id.search_goods_back_img:
+            case R.id.ll_title_left:
                 finish();
                 break;
             //搜索按钮

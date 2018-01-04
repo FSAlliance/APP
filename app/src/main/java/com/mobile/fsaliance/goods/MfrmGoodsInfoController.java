@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
@@ -13,9 +14,10 @@ import com.mobile.fsaliance.common.util.T;
 
 public class MfrmGoodsInfoController extends BaseController implements View.OnClickListener {
 
-    private ImageView backImg;
     private TextView oneKeyCopyText, goodsInfoCodeText;
     private ImageView goodsInfoImg;
+    private TextView titleTxt;
+    private LinearLayout backLL;
 
 
     @Override
@@ -49,7 +51,9 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
      * @date 2017/12/24 23:00
      */
     private void initView() {
-        backImg = (ImageView) findViewById(R.id.goods_info_back_img);
+        titleTxt = (TextView) findViewById(R.id.txt_title_middle);
+        titleTxt.setText(R.string.goods_info_title);
+        backLL = (LinearLayout) findViewById(R.id.ll_title_left);
         oneKeyCopyText = (TextView) findViewById(R.id.goods_info_copy_one_key);
         goodsInfoImg = (ImageView) findViewById(R.id.goods_info_img);
         goodsInfoCodeText = (TextView) findViewById(R.id.goods_info_code);
@@ -86,7 +90,7 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
      * @date 2017/12/24 23:02
      */
     private void addListener() {
-        backImg.setOnClickListener(this);
+        backLL.setOnClickListener(this);
         oneKeyCopyText.setOnClickListener(this);
     }
 
@@ -100,7 +104,7 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             //返回键
-            case R.id.goods_info_back_img:
+            case R.id.ll_title_left:
                 finish();
                 break;
             //一键复制

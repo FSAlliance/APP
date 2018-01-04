@@ -96,15 +96,24 @@ public class MfrmMineView extends BaseView {
                 }
                 break;
             case R.id.rl_immediate_cash:
+                //立即提现
                 if (super.delegate instanceof MfrmMineViewDelegate) {
                     ((MfrmMineViewDelegate) super.delegate).onClickImmediateCash();
                 }
                 break;
             case R.id.rl_present_record:
+                //提现记录
                 if (super.delegate instanceof MfrmMineViewDelegate) {
                     ((MfrmMineViewDelegate) super.delegate).onClickPresentRecord();
                 }
                 break;
+            case R.id.rl_record_of_income:
+                //收入记录
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickRecordOfIncome();
+                }
+                break;
+
             case R.id.rl_share:
                 if (super.delegate instanceof MfrmMineViewDelegate) {
                     ((MfrmMineViewDelegate) super.delegate).onClickShare();
@@ -157,5 +166,7 @@ public class MfrmMineView extends BaseView {
         void onClickPresentRecord();//提现记录
 
         void onClickImmediateCash();//立即提现
+
+        void onClickRecordOfIncome();//收入记录
     }
 }

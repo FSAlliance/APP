@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,11 +34,11 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
     public CircleProgressBarView circleProgressBarView;
     public boolean isLoadMore;
 
-
     private TextView titleText;
-    private ImageView backImg;
     private ListView searchGoodList;
     private BGARefreshLayout mRefreshLayout;
+    private LinearLayout backLL;
+
 
 
     public MfrmSearchGoodListView(Context context, AttributeSet attrs) {
@@ -52,8 +53,8 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
 
     @Override
     protected void initViews() {
-        titleText = (TextView) findViewById(R.id.search_goods_list_title);
-        backImg = (ImageView) findViewById(R.id.search_goods_list_back_img);
+        titleText = (TextView) findViewById(R.id.txt_title_middle);
+        backLL = (LinearLayout) findViewById(R.id.ll_title_left);
         searchGoodList = (ListView) findViewById(R.id.search_goods_list_back_list_view);
         mRefreshLayout = (BGARefreshLayout) findViewById(R.id.search_goods_list_back_refreshLayout);
         //商品列表
@@ -101,7 +102,7 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
     @Override
     protected void addListener() {
         searchGoodList.setOnScrollListener(this);
-        backImg.setOnClickListener(this);
+        backLL.setOnClickListener(this);
     }
 
     /**
@@ -160,7 +161,7 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
     protected void onClickListener(View v) {
         switch (v.getId()) {
             //返回键
-            case R.id.search_goods_list_back_img:
+            case R.id.ll_title_left:
                 if (super.delegate instanceof MfrmSearchGoodListDelegate) {
                     ((MfrmSearchGoodListDelegate) super.delegate).onClickBack();
                 }

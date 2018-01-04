@@ -1,6 +1,7 @@
 package com.mobile.fsaliance.share;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,7 @@ public class ShareAppActivity extends Activity implements View.OnClickListener {
 
     private TextView titleTxt;
     private LinearLayout backLL;
-    private ImageView shareToQQImg, shareToWeChatImg;
+    private ImageView QRCodeImg, shareToQQImg, shareToWeChatImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class ShareAppActivity extends Activity implements View.OnClickListener {
         backLL = (LinearLayout) findViewById(R.id.ll_title_left);
         shareToQQImg = (ImageView) findViewById(R.id.img_share_to_invite_qq);
         shareToWeChatImg = (ImageView) findViewById(R.id.img_share_to_invite_wechat);
+        QRCodeImg = (ImageView) findViewById(R.id.img_share_app_qr);
     }
 
      /**
@@ -61,6 +63,22 @@ public class ShareAppActivity extends Activity implements View.OnClickListener {
         }
         titleTxt.setText(R.string.share_app);
     }
+
+    /**
+     * @param bitmap 二维码
+     * @author yuanxueyuan
+     * @Title: setQRCodeImg
+     * @Description: 设置二维码
+     * @date 2018/1/4 20:46
+     */
+    private void setQRCodeImg(Bitmap bitmap) {
+        if (QRCodeImg == null || bitmap == null) {
+            L.e("QRCodeImg == null");
+            return;
+        }
+        QRCodeImg.setImageBitmap(bitmap);
+    }
+
     /**
      * @author yuanxueyuan
      * @Title: addListener

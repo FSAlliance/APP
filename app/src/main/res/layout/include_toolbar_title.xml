@@ -7,17 +7,16 @@
     <!-- 返回 -->
     <LinearLayout
         android:id="@+id/ll_title_left"
-        android:layout_width="45dp"
+        android:layout_width="50dp"
         android:layout_alignParentLeft="true"
         android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:gravity="center_vertical">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="match_parent"
+            android:layout_width="10dp"
             android:layout_height="match_parent"
-            android:padding="15dp"
+            android:src="@drawable/goback"
              />
     </LinearLayout>
     <TextView
@@ -27,7 +26,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:textColor="@color/optiontext_color_black"
-        android:textSize="16dp" />
+        android:textSize="@dimen/about_text_size" />
     <LinearLayout
         android:id="@+id/ll_title_right"
         android:layout_width="45dp"

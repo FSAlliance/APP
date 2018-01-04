@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 	private TextView superListNoDataTxt;
 	public CircleProgressBarView circleProgressBarView;
 	private BGARefreshLayout bgaRefreshLayout;
+	private TextView titleTxt;
+	private LinearLayout backLL;
 
 	private AssetListViewAdapter superListViewAdapter;
 
@@ -48,6 +51,10 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 		circleProgressBarView = (CircleProgressBarView) findViewById(R.id.super_good_list_circleProgressBarView);
 		bgaRefreshLayout = (BGARefreshLayout) findViewById(R.id.super_goods_list_back_refreshLayout);
 		superGoodListView = (ListView) findViewById(R.id.super_goods_list_back_list_view);
+		titleTxt = (TextView) findViewById(R.id.txt_title_middle);
+		backLL = (LinearLayout) findViewById(R.id.ll_title_left);
+		backLL.setVisibility(GONE);
+		titleTxt.setText(R.string.tabbar_bottom_super_voucher);
 		initFresh();
 	}
 

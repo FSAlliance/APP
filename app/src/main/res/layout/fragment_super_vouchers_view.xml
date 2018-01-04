@@ -5,19 +5,10 @@
     android:background="@color/xml_bg"
     android:orientation="vertical">
 
-    <!--最上方搜索-->
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:background="@color/login_btn_color">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/tabbar_bottom_super_voucher"
-            android:textColor="@color/white"
-            android:textSize="@dimen/about_text_size" />
-    </RelativeLayout>
+    <!--标题-->
+    <include
+        android:id="@+id/share_to_invite_title"
+        layout="@layout/activity_custome_title" />
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/super_goods_list_back_refreshLayout"

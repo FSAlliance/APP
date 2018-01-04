@@ -71,7 +71,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        queue.cancelBySign(cancelObject);
+//        queue.cancelBySign(cancelObject);
     }
 
 

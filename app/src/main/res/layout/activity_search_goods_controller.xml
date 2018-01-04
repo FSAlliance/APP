@@ -4,29 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--最上方搜索-->
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorAccent">
-
-        <ImageView
-            android:id="@+id/search_goods_back_img"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/goback_write" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/goods_search"
-            android:textColor="@color/white"
-            android:textSize="@dimen/about_text_size" />
-    </RelativeLayout>
-
+    <!--标题-->
+    <include
+        android:id="@+id/share_to_invite_title"
+        layout="@layout/activity_custome_title" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -112,6 +112,13 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
     @Override
     public void onClickImmediateCash() {
         Intent intent = new Intent();
+        intent.setClass(context, MfrmWithdrawalsController.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickRecordOfIncome() {
+        Intent intent = new Intent();
         intent.setClass(context, MfrmIncomeListController.class);
         startActivity(intent);
     }
