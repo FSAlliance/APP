@@ -116,7 +116,6 @@ public class ShareAppActivity extends Activity implements View.OnClickListener {
             L.e("imgPath == null || (imgPath.equals(''))");
             return;
         } else {
-
             if (FileUtils.isFileExists(imgPath)) {
                 File file = new File(imgPath);
                 intent.setType(imgFormat);
