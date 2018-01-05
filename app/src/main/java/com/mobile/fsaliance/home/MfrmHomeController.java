@@ -10,6 +10,7 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.fsaliance.goods.MfrmGoodsInfoController;
@@ -56,6 +57,10 @@ public class MfrmHomeController extends BaseFragmentController implements
 				null);
 		mfrmHomeView = (MfrmHomeView) view
 				.findViewById(R.id.mfrm_home_view);
+		int result = StatusBarUtil.StatusBarLightMode(getActivity());
+		if (result != 0) {
+			StatusBarUtil.initWindows(getActivity(), getResources().getColor(R.color.login_btn_color));
+		}
 		mfrmHomeView.setDelegate(this);
 		queue = NoHttp.newRequestQueue();
 		assetList = new ArrayList<>();

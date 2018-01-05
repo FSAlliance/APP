@@ -10,6 +10,7 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Asset;
 
@@ -52,9 +53,14 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	@Override
 	protected View onCreateViewFunc(LayoutInflater inflater,
 									ViewGroup container, Bundle savedInstanceState) {
+
 		View view = inflater.inflate(R.layout.fragment_super_vouchers_controller,null);
 		mfrmSuperVouchersView = (MfrmSuperVouchersView) view.findViewById(R.id.mfrm_super_vouchers_view);
 		mfrmSuperVouchersView.setDelegate(this);
+		int result = StatusBarUtil.StatusBarLightMode(getActivity());
+		if (result != 0) {
+			StatusBarUtil.initWindows(getActivity(), getResources().getColor(R.color.white));
+		}
 		queue = NoHttp.newRequestQueue();
 		assetList = new ArrayList<>();
 		isPrepared = true;

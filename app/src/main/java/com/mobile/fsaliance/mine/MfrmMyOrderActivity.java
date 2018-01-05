@@ -68,8 +68,8 @@ public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnP
         //初始化各fragment
 //        myOrderAllFragment = new MyOrderAllFragment();
 //        myOrderUnPaymenFragment = new MyOrderUnPaymenFragment();
-//        myOrderUnSendFragment=new MyOrderUnSendFragment();
-//        myOrderUnDeliveryFragment=new MyOrderUnDeliveryFragment();
+//        myOrderUnSendFragment = new MyOrderUnSendFragment();
+//        myOrderUnDeliveryFragment = new MyOrderUnDeliveryFragment();
         //将fragment装进列表中
         list_fragment = new ArrayList<>();
 //        list_fragment.add(myOrderAllFragment);
@@ -121,8 +121,8 @@ public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnP
             case R.id.ll_title_left:
                 finish();
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 }

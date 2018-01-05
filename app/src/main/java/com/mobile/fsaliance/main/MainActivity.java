@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         int result = StatusBarUtil.StatusBarLightMode(this);
         if (result != 0) {
-            StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
         }
         setContentView(R.layout.activity_main);
         //初始化界面

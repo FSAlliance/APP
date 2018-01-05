@@ -134,4 +134,6 @@
     <string name="share_app_description">分享APP的下载连接,方便好友下载,请注意:\n1、微信需转到浏览器下载\n2、在APP注册需要填写推荐人,即填写好友分享的推荐码</string>
     <string name="share_qq">QQ</string>
     <string name="share_wechat">微信</string>
+    <string name="share_please_install">请先安装</string>
+    <string name="device_share_msgTitle">可分享的应用</string>
 </resources>
