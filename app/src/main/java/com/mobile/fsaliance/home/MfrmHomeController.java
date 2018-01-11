@@ -14,7 +14,18 @@ import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.fsaliance.goods.MfrmGoodsInfoController;
+import com.mobile.fsaliance.goods.MfrmSearchGoodListController;
 import com.mobile.fsaliance.goods.MfrmSearchGoodsController;
+import com.taobao.api.ApiException;
+import com.taobao.api.Constants;
+import com.taobao.api.DefaultTaobaoClient;
+import com.taobao.api.TaobaoClient;
+import com.taobao.api.domain.TbkFavorites;
+import com.taobao.api.internal.util.StringUtils;
+import com.taobao.api.request.TbkUatmFavoritesGetRequest;
+import com.taobao.api.request.TbkUatmFavoritesItemGetRequest;
+import com.taobao.api.response.TbkUatmFavoritesGetResponse;
+import com.taobao.api.response.TbkUatmFavoritesItemGetResponse;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -123,41 +134,86 @@ public class MfrmHomeController extends BaseFragmentController implements
 
 	@Override
 	public void onClickOne() {
-
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putString("search_goods", "ONE");
+		intent.putExtras(bundle);
+		intent.setClass(context,MfrmSearchGoodListController.class);
+		startActivity(intent);
 	}
 
 	@Override
 	public void onClickTwo() {
-
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putString("search_goods", "TWO");
+		intent.putExtras(bundle);
+		intent.setClass(context,MfrmSearchGoodListController.class);
+		startActivity(intent);
 	}
 
 	@Override
 	public void onClickThree() {
-
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putString("search_goods", "THREE");
+		intent.putExtras(bundle);
+		intent.setClass(context,MfrmSearchGoodListController.class);
+		startActivity(intent);
 	}
 
 	@Override
 	public void onClickFour() {
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putString("search_goods", "FOUR");
+		intent.putExtras(bundle);
+		intent.setClass(context,MfrmSearchGoodListController.class);
+		startActivity(intent);
 
 	}
 
 	@Override
 	public void onClickFive() {
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putString("search_goods", "FIVE");
+		intent.putExtras(bundle);
+		intent.setClass(context,MfrmSearchGoodListController.class);
+		startActivity(intent);
 
 	}
 
 	@Override
 	public void onClickSix() {
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putString("search_goods", "SIX");
+		intent.putExtras(bundle);
+		intent.setClass(context,MfrmSearchGoodListController.class);
+		startActivity(intent);
 
 	}
 
 	@Override
 	public void onClickSeven() {
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putString("search_goods", "SEVEN");
+		intent.putExtras(bundle);
+		intent.setClass(context,MfrmSearchGoodListController.class);
+		startActivity(intent);
 
 	}
 
 	@Override
 	public void onClickEight() {
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putString("search_goods", "EIGHT");
+		intent.putExtras(bundle);
+		intent.setClass(context,MfrmSearchGoodListController.class);
+		startActivity(intent);
 
 	}
 

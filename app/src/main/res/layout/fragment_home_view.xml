@@ -7,6 +7,7 @@
 
     <!--最上方搜索-->
     <LinearLayout
+        android:id="@+id/ll_top"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:background="@color/colorAccent">
@@ -41,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp">
-
+            <!--女装-->
             <LinearLayout
                 android:id="@+id/home_middle_one"
                 android:layout_width="match_parent"
@@ -52,14 +53,15 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/home_middle_female"/>
+                    android:src="@drawable/img_home_middle_female"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/asset_child"
-                    android:text="男装"/>
+                    android:text="@string/home_middle_female"/>
             </LinearLayout>
 
+            <!--男装-->
             <LinearLayout
                 android:id="@+id/home_middle_two"
                 android:layout_width="match_parent"
@@ -70,13 +72,14 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/home_middle_female"/>
+                    android:src="@drawable/img_home_middle_male"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="男装"/>
+                    android:text="@string/home_middle_male"/>
             </LinearLayout>
 
+            <!--内衣-->
             <LinearLayout
                 android:id="@+id/home_middle_three"
                 android:layout_width="match_parent"
@@ -87,13 +90,14 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/home_middle_female"/>
+                    android:src="@drawable/img_home_middle_underclothes"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="男装"/>
+                    android:text="@string/home_middle_underclothes"/>
             </LinearLayout>
 
+            <!--美妆-->
             <LinearLayout
                 android:id="@+id/home_middle_four"
                 android:layout_width="match_parent"
@@ -104,11 +108,11 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/home_middle_female"/>
+                    android:src="@drawable/img_home_middle_cosmetics"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="男装"/>
+                    android:text="@string/home_middle_cosmetics"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -116,6 +120,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp">
 
+            <!--美食-->
             <LinearLayout
                 android:id="@+id/home_middle_five"
                 android:layout_width="match_parent"
@@ -126,14 +131,15 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/home_middle_female"/>
+                    android:src="@drawable/img_home_middle_cate"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/asset_child"
-                    android:text="男装"/>
+                    android:text="@string/home_middle_cate"/>
             </LinearLayout>
 
+            <!--母婴-->
             <LinearLayout
                 android:id="@+id/home_middle_six"
                 android:layout_width="match_parent"
@@ -144,13 +150,14 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/home_middle_female"/>
+                    android:src="@drawable/img_home_middle_baby"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="男装"/>
+                    android:text="@string/home_middle_baby"/>
             </LinearLayout>
 
+            <!--家具-->
             <LinearLayout
                 android:id="@+id/home_middle_seven"
                 android:layout_width="match_parent"
@@ -161,13 +168,14 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/home_middle_female"/>
+                    android:src="@drawable/img_home_middle_furniture"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="男装"/>
+                    android:text="@string/home_middle_furniture"/>
             </LinearLayout>
 
+            <!--其他-->
             <LinearLayout
                 android:id="@+id/home_middle_eight"
                 android:layout_width="match_parent"
@@ -178,11 +186,11 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/home_middle_female"/>
+                    android:src="@drawable/img_home_middle_other"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="男装"/>
+                    android:text="@string/home_middle_other"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

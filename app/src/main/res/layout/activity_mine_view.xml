@@ -139,8 +139,8 @@
         android:background="@color/white">
         <ImageView
             android:id="@+id/img_ming_order"
-            android:layout_width="@dimen/remote_setting_menu_btn_width"
-            android:layout_height="@dimen/remote_setting_menu_btn_height"
+            android:layout_width="@dimen/picture_size"
+            android:layout_height="@dimen/picture_size"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:background="@drawable/img_user_myorder" />
@@ -160,9 +160,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
             android:layout_width="@dimen/remote_setting_menu_btn_width"
-            android:layout_height="23dp"
+            android:layout_height="@dimen/remote_setting_menu_btn_width"
             android:layout_centerVertical="true"
-            android:background="@drawable/moredetails_arrow" />
+            android:src="@drawable/moredetails_arrow" />
 
         <View
             android:layout_alignParentBottom="true"
@@ -194,8 +194,8 @@
                 android:background="@color/white">
                 <ImageView
                     android:id="@+id/img_record_of_income"
-                    android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="@dimen/remote_setting_menu_btn_height"
+                    android:layout_width="@dimen/picture_size"
+                    android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/img_user_incomerecord" />
@@ -215,9 +215,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="23dp"
+                    android:layout_height="@dimen/remote_setting_menu_btn_width"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/moredetails_arrow" />
+                    android:src="@drawable/moredetails_arrow" />
 
                 <View
                     android:layout_alignParentBottom="true"
@@ -234,8 +234,8 @@
                 android:background="@color/white">
                 <ImageView
                     android:id="@+id/img_present_record"
-                    android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="@dimen/remote_setting_menu_btn_height"
+                    android:layout_width="@dimen/picture_size"
+                    android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/img_user_presentrecord" />
@@ -255,9 +255,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="23dp"
+                    android:layout_height="@dimen/remote_setting_menu_btn_width"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/moredetails_arrow" />
+                    android:src="@drawable/moredetails_arrow" />
                 <View
                     android:layout_alignParentBottom="true"
                     android:background="@color/line_color"
@@ -273,8 +273,8 @@
                 android:background="@color/white">
                 <ImageView
                     android:id="@+id/img_immediate_cash"
-                    android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="@dimen/remote_setting_menu_btn_height"
+                    android:layout_width="@dimen/picture_size"
+                    android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/img_user_present" />
@@ -294,9 +294,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="23dp"
+                    android:layout_height="@dimen/remote_setting_menu_btn_width"
                     android:layout_marginTop="11dp"
-                    android:background="@drawable/moredetails_arrow" />
+                    android:src="@drawable/moredetails_arrow" />
                 <View
                     android:layout_alignParentBottom="true"
                     android:background="@color/line_color"
@@ -312,8 +312,8 @@
                 android:background="@color/white">
                 <ImageView
                     android:id="@+id/img_share"
-                    android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="@dimen/remote_setting_menu_btn_height"
+                    android:layout_width="@dimen/picture_size"
+                    android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/img_user_share" />
@@ -333,9 +333,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="23dp"
+                    android:layout_height="@dimen/remote_setting_menu_btn_width"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/moredetails_arrow" />
+                    android:src="@drawable/moredetails_arrow" />
                 <View
                     android:layout_alignParentBottom="true"
                     android:background="@color/line_color"
@@ -351,8 +351,8 @@
                 android:background="@color/white">
                 <ImageView
                     android:id="@+id/img_bound_alipay"
-                    android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="@dimen/remote_setting_menu_btn_height"
+                    android:layout_width="@dimen/picture_size"
+                    android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/img_user_alipay" />
@@ -372,9 +372,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:layout_width="@dimen/remote_setting_menu_btn_width"
-                    android:layout_height="23dp"
+                    android:layout_height="@dimen/remote_setting_menu_btn_height"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/moredetails_arrow" />
+                    android:src="@drawable/moredetails_arrow" />
 
                 <View
                     android:layout_alignParentBottom="true"

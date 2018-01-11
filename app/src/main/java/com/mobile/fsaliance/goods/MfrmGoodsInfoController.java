@@ -1,7 +1,12 @@
 package com.mobile.fsaliance.goods;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -10,11 +15,12 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.T;
 
 public class MfrmGoodsInfoController extends BaseController implements View.OnClickListener {
 
-    private TextView oneKeyCopyText, goodsInfoCodeText;
+    private TextView oneKeyCopyText, goodsInfoCodeText, toTaoBaoText;
     private ImageView goodsInfoImg;
     private TextView titleTxt;
     private LinearLayout backLL;
@@ -57,6 +63,7 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
         oneKeyCopyText = (TextView) findViewById(R.id.goods_info_copy_one_key);
         goodsInfoImg = (ImageView) findViewById(R.id.goods_info_img);
         goodsInfoCodeText = (TextView) findViewById(R.id.goods_info_code);
+        toTaoBaoText = (TextView) findViewById(R.id.goods_info_to_taobao);
     }
 
     /**
@@ -67,7 +74,7 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
      */
     private void initValues() {
         goodsInfoImg.setImageResource(R.drawable.goods_price_discount);
-        goodsInfoCodeText.setText("&USIHDASHDIASD");
+        goodsInfoCodeText.setText("￥1Jri0PY0hT6￥");
     }
 
      /**
@@ -92,12 +99,25 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
     private void addListener() {
         backLL.setOnClickListener(this);
         oneKeyCopyText.setOnClickListener(this);
+        toTaoBaoText.setOnClickListener(this);
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+
+    public static boolean checkPackage(Context context ,String packageName){
+        if (packageName == null || "".equals(packageName))
+            return false;
+        try{
+            context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
+            return true;
+        }catch (PackageManager.NameNotFoundException e){
+            return false;
+        }
     }
 
     @Override
@@ -112,8 +132,28 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
                 String goodCode = getGoodCode();
                 if ("".equals(goodCode)) {
                     T.showShort(this, "出现错误啦");
+                    return;
                 }
-                //TODO 复制到剪切板
+                // 复制到剪切板
+                // 从API11开始android推荐使用android.content.ClipboardManager
+                // 为了兼容低版本我们这里使用旧版的android.text.ClipboardManager，虽然提示deprecated，但不影响使用。
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 将文本内容放到系统剪贴板里。
+                cm.setText(goodCode);
+                T.showShort(this, "复制成功");
+                break;
+            //直接领券
+            case R.id.goods_info_to_taobao:
+                //TODO 跳转淘宝 根据地址
+                String goodCode1 = getGoodCode();
+                if (checkPackage(this, "com.taobao.taobao")) {
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    String url = "taobao://shop.m.taobao.com/shop/shop_index.htm?shop_id=131259851&spm=a230r.7195193.1997079397.8.Pp3ZMM&point";
+                    Uri uri = Uri.parse(url);
+                    intent.setData(uri);
+                    startActivity(intent);
+                }
                 break;
             default:
                 break;

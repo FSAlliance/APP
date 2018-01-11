@@ -4,6 +4,16 @@
     <string name="tabbar_bottom_super_voucher">超级券</string>
     <string name="tabbar_bottom_mine">我的</string>
     <string name="mainframe_whethertoquit">再按一次退出</string>
+    <!--首页-->
+    <string name="home_middle_female">女装</string>
+    <string name="home_middle_male">男装</string>
+    <string name="home_middle_underclothes">内衣</string>
+    <string name="home_middle_cosmetics">美妆</string>
+    <string name="home_middle_cate">美食</string>
+    <string name="home_middle_baby">母婴</string>
+    <string name="home_middle_furniture">家具</string>
+    <string name="home_middle_other">其他</string>
+    <string name="home_goods_sale_num">件</string>
     <!-- loading 加载 -->
     <string name="text_gif_loading">加载中</string>
     <string name="hint_input_job_num">请输入工号</string>
@@ -66,6 +76,7 @@
     <string name="goods_info_use_explain">使用说明</string>
     <string name="goods_info_use_explain_info">复制文字或者点击一键复制按钮，打开[手淘APP]领卷下单</string>
     <string name="goods_info_one_key_copy">一键复制</string>
+    <string name="goods_info_to_taobao">直接领券</string>
 
 
     <!--商品搜索-->

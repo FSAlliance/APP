@@ -25,7 +25,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 /**
   * @date 创建时间 2017/9/5
   * @author tanyadong
-  * @Description 搜索
+  * @Description 首页
 */
 public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate,AssetListViewAdapter.AssetListViewAdapterDelegate, AbsListView.OnScrollListener {
 	private ListView searchListView;
