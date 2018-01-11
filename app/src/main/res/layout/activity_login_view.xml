@@ -59,7 +59,7 @@
             android:layout_width="15dp"
             android:layout_height="20dp"
             android:layout_marginLeft="24dp"
-            android:src="@drawable/login_jobid_img"/>
+            android:src="@drawable/img_register_phone"/>
 
         <EditText
             android:id="@+id/edit_user_name"
@@ -94,7 +94,7 @@
             android:layout_width="15dp"
             android:layout_height="22dp"
             android:layout_marginLeft="24dp"
-            android:src="@drawable/password_img"/>
+            android:src="@drawable/img_register_pwd"/>
         <EditText
             android:id="@+id/edit_password"
             android:layout_width="match_parent"

@@ -84,10 +84,10 @@ public class PresentRecordListViewAdapter extends BaseAdapter implements View.On
 		PresentRecord presentRecord = presentRecords.get(position);
 		if (presentRecord.getState() == 0) { //提现中
 			holder.presentRecordTypeTxt.setText(R.string.mine_money_in_the_present);
-			holder.presentRecordImg.setImageResource(R.drawable.register_job_id);
+			holder.presentRecordImg.setImageResource(R.drawable.img_presenting);
 		} else {
 			holder.presentRecordTypeTxt.setText(R.string.mine_money_has_present);
-			holder.presentRecordImg.setImageResource(R.drawable.register_at_once);
+			holder.presentRecordImg.setImageResource(R.drawable.img_has_presented);
 		}
 		holder.presentRecordMoneyTxt.setText(presentRecord.getPresentMoneny());
 		holder.presentRecordTimeTxt.setText(presentRecord.getPresentTime());

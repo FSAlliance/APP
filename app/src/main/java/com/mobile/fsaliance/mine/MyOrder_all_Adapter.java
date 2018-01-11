@@ -93,8 +93,6 @@ public class MyOrder_all_Adapter extends BaseAdapter{
 
         vh.myOrderMoney.setText(String.valueOf(list.get(position).getMoney()));
 
-
-
 //        //未付款未取消订单
 //        if(list.get(position).tag==1 && list.get(position).cancleOrNot==0){
 //            //未取消订单

@@ -12,7 +12,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="15dp"
-            android:src="@mipmap/refresh_head_arrow"/>
+            android:src="@drawable/img_user_order_shop"/>
         <TextView
             android:id="@+id/txt_myorder_shop_name"
             android:layout_toRightOf="@+id/item_order_shop_img"

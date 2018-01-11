@@ -128,7 +128,6 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
      * @date ${tags}
      */
     public void getOrderData() {
-        L.e("tyd--"+typeId);
         String uri = AppMacro.REQUEST_URL + "/asset/query";
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);

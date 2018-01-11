@@ -89,11 +89,11 @@ public class IncomeListViewAdapter extends BaseAdapter implements View.OnClickLi
 
 		IncomeRecord incomeRecord = incomeRecords.get(position);
 		if (incomeRecord.getType() == 0) { //主动收入
-			holder.incomeRecordTypeTxt.setText(R.string.mine_money_in_the_present);
-			holder.incomeRecordImg.setImageResource(R.drawable.register_job_id);
+			holder.incomeRecordTypeTxt.setText(R.string.active_income);
+			holder.incomeRecordImg.setImageResource(R.drawable.img_active_income);
 		} else {  // 被动收入
-			holder.incomeRecordTypeTxt.setText(R.string.mine_money_has_present);
-			holder.incomeRecordImg.setImageResource(R.drawable.register_at_once);
+			holder.incomeRecordTypeTxt.setText(R.string.passive_income);
+			holder.incomeRecordImg.setImageResource(R.drawable.img_passive_income);
 		}
 		holder.incomeRecordMoneyTxt.setText(incomeRecord.getIncomeMoneny());
 		holder.incomeRecordTimeTxt.setText(incomeRecord.getIncomeTime());

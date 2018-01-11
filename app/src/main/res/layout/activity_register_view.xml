@@ -59,7 +59,7 @@
                 android:layout_centerVertical="true"
                 android:layout_width="18dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/register_job_id"
+                android:src="@drawable/img_register_phone"
                 android:gravity="center_vertical"
                 android:layout_height="23dp" />
            <EditText
@@ -89,7 +89,7 @@
                 android:layout_centerVertical="true"
                 android:layout_height="23dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/register_username"
+                android:src="@drawable/img_register_pwd"
                 android:gravity="center_vertical"
                 android:layout_width="18dp" />
 
@@ -115,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp">
             <ImageView
-                android:src="@drawable/register_password"
+                android:src="@drawable/img_register_referee"
                 android:id="@+id/txt_user_password"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"

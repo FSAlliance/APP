@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity
 
     private ViewPager viewPager;
     private List<BaseFragmentController> list_fragment;
-    private LinearLayout mineAssetLl, searchAssetLl, moreLl;
-    private ImageView mineImg, searchImg, moreImg;
-    private TextView mineTxt, searchTxt, moreTxt;
+    private LinearLayout mineLl, superLl, homeLl;
+    private ImageView homeImg, superImg, mineImg;
+    private TextView homeTxt, superTxt, mineTxt;
 
     private int id;
     private MfrmSuperVouchersController mfrmSuperVouchersController = null;
@@ -75,9 +75,9 @@ public class MainActivity extends AppCompatActivity
      * 点击事件
      */
     private void click() {
-        this.mineAssetLl.setOnClickListener(this);
-        this.searchAssetLl.setOnClickListener(this);
-        this.moreLl.setOnClickListener(this);
+        this.mineLl.setOnClickListener(this);
+        this.superLl.setOnClickListener(this);
+        this.homeLl.setOnClickListener(this);
         //设置ViewPager滑动监听
         viewPager.setOnPageChangeListener(this);
     }
@@ -86,17 +86,17 @@ public class MainActivity extends AppCompatActivity
      * 初始化界面
      */
     private void initView() {
-        this.mineAssetLl = (LinearLayout) findViewById(R.id.ll_mine_page);
-        this.searchAssetLl = (LinearLayout) findViewById(R.id.ll_search_page);
-        this.moreLl = (LinearLayout) findViewById(R.id.ll_more_page);
+        this.mineLl = (LinearLayout) findViewById(R.id.ll_mine_page);
+        this.superLl = (LinearLayout) findViewById(R.id.ll_super_page);
+        this.homeLl = (LinearLayout) findViewById(R.id.ll_home_page);
 
+        this.homeTxt = (TextView) findViewById(R.id.txt_home);
+        this.superTxt = (TextView) findViewById(R.id.txt_super);
         this.mineTxt = (TextView) findViewById(R.id.txt_mine);
-        this.searchTxt = (TextView) findViewById(R.id.txt_search);
-        this.moreTxt = (TextView) findViewById(R.id.txt_more);
 
+        this.homeImg = (ImageView) findViewById(R.id.img_home);
+        this.superImg = (ImageView) findViewById(R.id.img_super);
         this.mineImg = (ImageView) findViewById(R.id.img_mine);
-        this.searchImg = (ImageView) findViewById(R.id.img_search);
-        this.moreImg = (ImageView) findViewById(R.id.img_more);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         mfrmSuperVouchersController = new MfrmSuperVouchersController();
         mfrmMineController = new MfrmMineController();
@@ -125,12 +125,12 @@ public class MainActivity extends AppCompatActivity
      */
 
     private void showHome(){
-        mineTxt.setTextColor(getResources().getColor(R.color.green_light));
-        searchTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
-        moreTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
-        mineImg.setImageResource(R.drawable.bottom_asset_select);
-        searchImg.setImageResource(R.drawable.bottom_search_normol);
-        moreImg.setImageResource(R.drawable.bottom_more_normol);
+        homeTxt.setTextColor(getResources().getColor(R.color.login_btn_color));
+        superTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
+        mineTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
+        homeImg.setImageResource(R.drawable.img_tab_home_select);
+        superImg.setImageResource(R.drawable.img_tab_supers);
+        mineImg.setImageResource(R.drawable.img_tab_mine);
         //隐藏menu
         id = 1;
     }
@@ -142,12 +142,12 @@ public class MainActivity extends AppCompatActivity
       * @date 2017/9/5 21:38
     */
     private void showMine() {
-        mineTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
-        searchTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
-        moreTxt.setTextColor(getResources().getColor(R.color.green_light));
-        mineImg.setImageResource(R.drawable.bottom_asset_normol);
-        searchImg.setImageResource(R.drawable.bottom_search_normol);
-        moreImg.setImageResource(R.drawable.bottom_more_select);
+        homeTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
+        superTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
+        mineTxt.setTextColor(getResources().getColor(R.color.login_btn_color));
+        homeImg.setImageResource(R.drawable.img_tab_home);
+        superImg.setImageResource(R.drawable.img_tab_supers);
+        mineImg.setImageResource(R.drawable.img_tab_mine_select);
        id = 3;
     }
 
@@ -158,12 +158,12 @@ public class MainActivity extends AppCompatActivity
       * @date 2017/9/5 21:37
     */
     private void showSuperVoucher(){
+        homeTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
+        superTxt.setTextColor(getResources().getColor(R.color.login_btn_color));
         mineTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
-        searchTxt.setTextColor(getResources().getColor(R.color.green_light));
-        moreTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
-        mineImg.setImageResource(R.drawable.bottom_asset_normol);
-        searchImg.setImageResource(R.drawable.bottom_search_select);
-        moreImg.setImageResource(R.drawable.bottom_more_normol);
+        homeImg.setImageResource(R.drawable.img_tab_home);
+        superImg.setImageResource(R.drawable.img_tab_supers_select);
+        mineImg.setImageResource(R.drawable.img_tab_mine);
         //隐藏menu
         id =2;
     }
@@ -171,15 +171,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_mine_page:
+            case R.id.ll_home_page:
                 showHome();
                 viewPager.setCurrentItem(0);
                 break;
-            case R.id.ll_search_page:
+            case R.id.ll_super_page:
                 showSuperVoucher();
                 viewPager.setCurrentItem(1);
                 break;
-            case R.id.ll_more_page:
+            case R.id.ll_mine_page:
                 showMine();
                 viewPager.setCurrentItem(2);
                 break;

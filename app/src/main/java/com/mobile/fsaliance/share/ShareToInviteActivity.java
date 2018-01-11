@@ -92,7 +92,6 @@ public class ShareToInviteActivity extends Activity implements View.OnClickListe
             L.e("titleText == null");
             return;
         }
-
         titleText.setText(R.string.share_to_invite_title);
 
         codeText.setText("WWWWWWWWW");
@@ -110,12 +109,14 @@ public class ShareToInviteActivity extends Activity implements View.OnClickListe
         shareToQQImg.setOnClickListener(this);
         shareToWechatImg.setOnClickListener(this);
     }
+
     /**
-     * @author 姜冬阳
-     * @Description: 检查系统应用程序，并打开
-     * @date 2017/2/27
-     * ${tags}
+     * @author tanyadong
+     * @Title: openApp
+     * @Description: 打开app
+     * @date 2018/1/11 0011 19:35
      */
+
     private void openApp(ShareItem share){
         PackageManager mPackageManager = this.getPackageManager();
         //应用过滤条件
@@ -141,7 +142,13 @@ public class ShareToInviteActivity extends Activity implements View.OnClickListe
     }
 
 
-    // 分享图片
+    /**
+     * @author tanyadong
+     * @Title: shareMsg
+     * @Description: 分享文字
+    @date 2018/1/11 0011 19:35
+     */
+
     private void shareMsg(Context context, String msgTitle, String codeTxt,
                           ShareItem share) {
         if (context == null || msgTitle == null || share == null) {

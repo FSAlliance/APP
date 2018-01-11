@@ -110,9 +110,9 @@
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/img_share_to_invite_qq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/search_delete"/>
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/img_qq"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -131,9 +131,9 @@
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/img_share_to_invite_wechat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/search_delete"/>
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/img_wechart"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
