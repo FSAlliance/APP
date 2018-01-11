@@ -15,8 +15,6 @@ import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.T;
 
-
-
 public class MfrmRegisterView extends BaseView {
 
     private TextView registerTxt;
