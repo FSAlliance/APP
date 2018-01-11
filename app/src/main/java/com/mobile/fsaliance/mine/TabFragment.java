@@ -14,6 +14,7 @@ import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.common.InitApplication;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.T;
+import com.mobile.fsaliance.common.vo.Order;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -23,8 +24,12 @@ import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
@@ -33,8 +38,11 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import static android.view.View.VISIBLE;
 
 /**
- * Created by zhangming on 2017/9/21.
- */
+ * @author tanyadong
+ * @Description: 订单fragment
+ * @date 2018/1/11 0011 22:40
+ * */
+
 public class TabFragment extends BaseFragmentController implements BGARefreshLayout.BGARefreshLayoutDelegate, OnResponseListener<String> {
     private ListView listView;
     private BGARefreshLayout mRefreshLayout;
@@ -48,7 +56,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
     private int limit = 20;
     private static final int PUBLIC_DATA = 1;
     private static final int PUBLIC_DATA_PULLUPREFRESH = 2;
-//    private ArrayList<Public> publics = new ArrayList<>();
+    private ArrayList<Order> publics = new ArrayList<>();
     private boolean flag = false;
     private String typeId;
     private boolean mHasLoadedOnce;
@@ -106,27 +114,29 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
     private void addListener() {
     }
 
-//    public void setGridviewAdapter(ArrayList<Public> publics) {
-//        if (publics == null || publics.size() < 0) {
-//            L.e("publics == null || publics.size() < 0");
-//            return;
-//        }
-//        setNoDataTxt(publics.size());
-//        if (adapter == null) {
-////            adapter = new MyOrder_all_Adapter(InitApplication.getInstance().getApplicationContext(), publics);
-//            listView.setAdapter(adapter);
-//            adapter.notifyDataSetChanged();
-//        } else {
-////            adapter.updateList(publics);
-//            adapter.notifyDataSetChanged();
-//        }
-//    }
+    public void setGridviewAdapter(ArrayList<Order> orderArrayList) {
+        if (orderArrayList == null || orderArrayList.size() < 0) {
+            L.e("publics == null || publics.size() < 0");
+            return;
+        }
+        setNoDataTxt(orderArrayList.size());
+        if (adapter == null) {
+            adapter = new MyOrder_all_Adapter(context, orderArrayList);
+            listView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        } else {
+            adapter.updateList(publics);
+            adapter.notifyDataSetChanged();
+        }
+    }
 
-    /**
-     * @author JDY
-     * @Description: $获取公共视界初始化数据
-     * @date ${tags}
-     */
+   /**
+    * @author tanyadong
+    * @Title: getOrderData
+    * @Description: 获取订单数据
+    * @date 2018/1/11 0011 22:41
+    */
+
     public void getOrderData() {
         String uri = AppMacro.REQUEST_URL + "/asset/query";
         Request<String> request = NoHttp.createStringRequest(uri);
@@ -138,11 +148,13 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
     }
 
     /**
-     * @author JDY
-     * @Description: $获取公共视界上拉加载数据
-     * @date ${tags}
+     * @author tanyadong
+     * @Title: 上拉加载更多数据
+     * @Description:
+     * @date 2018/1/11 0011 22:41
      */
-    private void getPublicDataPullUpRefresh() {
+
+    private void getOrderPullUpRefresh() {
 //        String getPublicUrl = AppMacro.WEB_SERVICE_URL + AppMacro.GET_PUBLIC_DATA_URL;
 //        //获取访问类
 //        NetWorkServer netWork = NetWorkServer.getInstance();
@@ -176,11 +188,13 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         mRefreshLayout.setRefreshViewHolder(bgaNormalRefreshViewHolder);
     }
 
-    /**
-     * @author JDY
-     * @Description: 停止刷新
-     * @date ${tags}
-     */
+ /**
+  * @author tanyadong
+  * @Title: endRefreshLayout
+  * @Description: 停止刷新
+  * @date 2018/1/11 0011 22:42
+  */
+
     public void endRefreshLayout() {
         mRefreshLayout.endLoadingMore();
         mRefreshLayout.endRefreshing();
@@ -197,7 +211,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        getPublicDataPullUpRefresh();
+        getOrderPullUpRefresh();
         return true;
     }
 
@@ -216,34 +230,36 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         }
     }
 
-    /**
-     * @author JDY
-     * @Description: 解析公共视界数据
-     * @date ${tags}
-     */
-//    private ArrayList<Public> analyzePublicListData(String result) {
-//        if (null == result || "".equals(result)) {
-//            L.e("result == null");
-//            T.showShort(getActivity(), R.string.get_public_data_failed);
-//            return null;
-//        }
-//        ArrayList<Public> list = new ArrayList<>();
-//        try {
-//            JSONObject jsonObject = new JSONObject(result);
-//            if (jsonObject.has("ret")) {
-//                int ret = jsonObject.optInt("ret");
-//                if (ret == 0) {
-//                    JSONObject jsonContent = jsonObject.optJSONObject("content");
-//
-//                    if (jsonContent == null || "".equals(jsonContent)) {
-//                        T.showShort(getActivity(), R.string.get_public_data_failed);
-//                        return null;
-//                    } else {
-//
-//                        JSONArray jsonPublics = jsonContent.optJSONArray("channels");
-//
-//                        for (int i = 0; i < jsonPublics.length(); i++) {
-//                            Public publics = new Public();
+ /**
+  * @author tanyadong
+  * @Title: analyzeOrderListData
+  * @Description: 解析订单
+  * @date 2018/1/11 0011 22:33
+  */
+
+    private ArrayList<Order> analyzeOrderListData(String result) {
+        if (null == result || "".equals(result)) {
+            L.e("result == null");
+            T.showShort(getActivity(), R.string.my_order_get_failed);
+            return null;
+        }
+        ArrayList<Order> list = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if (jsonObject.has("ret")) {
+                int ret = jsonObject.optInt("ret");
+                if (ret == 0) {
+                    JSONObject jsonContent = jsonObject.optJSONObject("content");
+
+                    if (jsonContent == null || "".equals(jsonContent)) {
+                        T.showShort(getActivity(), R.string.my_order_get_failed);
+                        return null;
+                    } else {
+
+                        JSONArray jsonPublics = jsonContent.optJSONArray("channels");
+
+                        for (int i = 0; i < jsonPublics.length(); i++) {
+                            Order order = new Order();
 //                            JSONObject jsPublic = (JSONObject) jsonPublics.get(i);
 //                            publics.setHostId(jsPublic.optString("hostId"));
 //                            publics.setChannelNum(jsPublic.optInt("channelNum"));
@@ -251,22 +267,22 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
 //                            publics.setPassword(AESUtil.decrypt(jsPublic.optString("password")));
 //                            publics.setShareName(jsPublic.optString("shareName"));
 //                            publics.setImageUrl(jsPublic.optString("imgUrl"));
-//                            list.add(publics);
-//                        }
-//                    }
-//                } else {
-//                    T.showShort(getActivity(), R.string.my_order_get_failed);
-//                }
-//            } else {
-//                T.showShort(getActivity(), R.string.my_order_get_failed);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            T.showShort(getActivity(), R.string.my_order_get_failed);
-//        }
-//
-//        return list;
-//    }
+                            list.add(order);
+                        }
+                    }
+                } else {
+                    T.showShort(getActivity(), R.string.my_order_get_failed);
+                }
+            } else {
+                T.showShort(getActivity(), R.string.my_order_get_failed);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            T.showShort(getActivity(), R.string.my_order_get_failed);
+        }
+
+        return list;
+    }
 
     @Override
     public void onSucceed(int i, Response response) {
@@ -276,23 +292,23 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
                     //200为接口能调通
                     if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
                         String result = (String) response.get();
-//                        publics = analyzePublicListData(result);
-//                        if (publics != null) {
-////                            setGridviewAdapter(publics);
-//                            index = publics.size();
-//                        }
+                        publics = analyzeOrderListData(result);
+                        if (publics != null) {
+//                            setGridviewAdapter(publics);
+                            index = publics.size();
+                        }
                     }
                     break;
                 case PUBLIC_DATA_PULLUPREFRESH:
                     //200为接口能调通
                     if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
                         String result = (String) response.get();
-//                        ArrayList<Public> list = analyzePublicListData(result);
-//                        if (publics != null) {
-////                            publics.addAll(list);
-//                            index = publics.size();
-////                            setGridviewAdapter(publics);
-//                        }
+                        ArrayList<Order> list = analyzeOrderListData(result);
+                        if (publics != null) {
+//                            publics.addAll(list);
+                            index = publics.size();
+//                            setGridviewAdapter(publics);
+                        }
                     }
                     break;
             }
@@ -331,7 +347,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
             default:
                 break;
         }
-//        setGridviewAdapter(publics);
+        setGridviewAdapter(publics);
     }
 
     @Override
