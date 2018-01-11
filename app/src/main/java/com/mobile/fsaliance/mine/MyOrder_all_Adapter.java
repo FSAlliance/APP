@@ -32,13 +32,10 @@ public class MyOrder_all_Adapter extends BaseAdapter{
     public MyOrder_all_Adapter(Context context){
         this.context=context;
     }
-    public MyOrder_all_Adapter(Context context, int resource, ArrayList<Order> list, ListView listView,LinearLayout nointent){
+    public MyOrder_all_Adapter(Context context, ArrayList<Order> list){
         inflater = LayoutInflater.from(context);
         this.context =context;
         this.list = list;
-        this.resource = resource;
-        this.linearLayout=nointent;
-        this.listView=listView;
     }
 
     Handler mMandler = new Handler() {
@@ -47,8 +44,9 @@ public class MyOrder_all_Adapter extends BaseAdapter{
             super.handleMessage(msg);
         }
     };
-    public void addItems(ArrayList<Order> list){
-        this.list.addAll(list);
+
+    public void updateList(ArrayList<Order> list){
+        this.list = list;
         notifyDataSetChanged();
     }
 
@@ -91,19 +89,20 @@ public class MyOrder_all_Adapter extends BaseAdapter{
 
         final Order order=list.get(position);
 
+        if (order.getType() == 0) { //订单成功
+            vh.myOrderMoney.setText(R.string.my_order_success);
+        } else if (order.getType() == 1) { //已结算
+            vh.myOrderMoney.setText(R.string.my_order_already_settled);
+        } else if (order.getType() == 2) { //已付款
+            vh.myOrderMoney.setText(R.string.my_order_already_paid);
+        } else if (order.getType() == 3) { //失效
+            vh.myOrderMoney.setText(R.string.my_order_fail);
+        }
         vh.myOrderMoney.setText(String.valueOf(list.get(position).getMoney()));
-
-//        //未付款未取消订单
-//        if(list.get(position).tag==1 && list.get(position).cancleOrNot==0){
-//            //未取消订单
-//            vh.myOrderStateTxt.setText("等待付款");
-//        }
-//        if(list.get(position).completeOrNot==1){ //已经完成
-//            vh.myOrderStateTxt.setText("实付款");
-//        }
-
-
-
+        vh.myOrderIntroduceTxt.setText(order.getOrderItemTitle());
+        vh.myOrderTime.setText(order.getOrderTime());
+        vh.myOrderShopNameTxt.setText(order.getOrderShopTitle());
+        vh.myOrderID.setText(order.getOrderNumber());
         return convertView;
     }
 

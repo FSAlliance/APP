@@ -64,6 +64,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:orientation="vertical"
         android:background="@color/white">
         <LinearLayout
             android:orientation="horizontal"
@@ -72,10 +73,12 @@
             android:layout_weight="1">
             <TextView
                 android:text="@string/my_order_id"
+                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
             <TextView
                 android:id="@+id/txt_myorder_id"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
@@ -86,10 +89,12 @@
             android:layout_weight="1">
             <TextView
                 android:text="@string/my_order_time"
+                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
             <TextView
                 android:id="@+id/txt_myorder_time"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

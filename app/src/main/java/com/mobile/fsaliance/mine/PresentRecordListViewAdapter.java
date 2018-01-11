@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.fsaliance.common.vo.PresentRecord;
 
 import java.util.List;

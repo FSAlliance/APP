@@ -137,6 +137,10 @@
     <string name="my_order_get_failed">获取订单失败</string>
     <string name="my_order_id">订单编号:</string>
     <string name="my_order_time">下单时间:</string>
+    <string name="my_order_success">订单成功</string>
+    <string name="my_order_fail">订单失效</string>
+    <string name="my_order_already_settled">已结算</string>
+    <string name="my_order_already_paid">已付款</string>
     <!--分享界面-->
     <string name="share_title">分享</string>
     <string name="share_app">分享APP</string>
