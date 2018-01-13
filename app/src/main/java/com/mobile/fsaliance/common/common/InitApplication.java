@@ -81,6 +81,12 @@ public class InitApplication extends Application {
 			} else {
 				dir.mkdir();
 			}
+			// 图片文件夹
+			dir = new File(AppMacro.PHOTO_PATH);
+			if (dir.exists()) {
+			} else {
+				dir.mkdir();
+			}
 		} catch (Exception e) {
 			Log.e(TAG, "error " + e.getMessage());
 			e.printStackTrace();

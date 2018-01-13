@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.WindowManager;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
@@ -26,7 +27,7 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
     private User user;
     private static final int GALLERY_REQUEST_CODE = 0;
     private static final int CAMERA_REQUEST_CODE = 1;
-    private String phoroPath = AppMacro.PHOTO_PATH +  File.separator + "photo.jpeg";
+    private String phoroPath = AppMacro.PHOTO_PATH + "photo.jpeg";
     @Override
     protected void getBundleData() {
 
@@ -127,6 +128,18 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
         // 如果限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型"
         pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(pickIntent, GALLERY_REQUEST_CODE);
+    }
+
+    @Override
+    public void onClickSetAttributes(float bgAlpha) {
+        WindowManager.LayoutParams lp= this.getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        if (bgAlpha == 1) {
+            this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//不移除该Flag的话,在有视频的页面上的视频会出现黑屏的bug
+        } else {
+            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//此行代码主要是解决在华为手机上半透明效果无效的bug
+        }
+        this.getWindow().setAttributes(lp);
     }
 
     @Override

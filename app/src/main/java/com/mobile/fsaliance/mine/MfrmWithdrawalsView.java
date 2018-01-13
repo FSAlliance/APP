@@ -65,6 +65,11 @@ public class MfrmWithdrawalsView extends BaseView {
     @Override
     protected void onClickListener(View v) {
         switch (v.getId()) {
+            case R.id.ll_title_left:
+                if (super.delegate instanceof MfrmWithdrawalsViewDelegate) {
+                    ((MfrmWithdrawalsViewDelegate) super.delegate).onClickBack();
+                }
+                break;
             case R.id.txt_present_all:
                 presentCountEdit.setText(presentmMonenyTxt.getText().toString());
                 break;
@@ -92,6 +97,6 @@ public class MfrmWithdrawalsView extends BaseView {
     */
     public interface MfrmWithdrawalsViewDelegate {
         void onClickPresent(String presentMoneny); //提现
-
+        void onClickBack();
     }
 }

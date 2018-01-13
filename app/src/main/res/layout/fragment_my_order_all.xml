@@ -25,6 +25,7 @@
             android:id="@+id/listView_my_order"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:listSelector="@android:color/transparent"
             android:layout_weight="1"
             android:dividerHeight="10dp">
         </ListView>

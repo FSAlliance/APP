@@ -38,12 +38,6 @@ public class MyOrder_all_Adapter extends BaseAdapter{
         this.list = list;
     }
 
-    Handler mMandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
 
     public void updateList(ArrayList<Order> list){
         this.list = list;

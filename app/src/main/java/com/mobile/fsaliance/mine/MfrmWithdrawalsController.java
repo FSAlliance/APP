@@ -49,7 +49,7 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
         user = LoginUtils.getUserInfo(this);
         if (user == null) {
             return;
-    }
+        }
         mfrmWithdrawalsView.initData(user);
     }
 
@@ -76,6 +76,11 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
         request.setCancelSign(cancelObject);
         request.add("presentMoneny", presentMoneny);
         queue.add(0, request, this);
+    }
+
+    @Override
+    public void onClickBack() {
+        finish();
     }
 
     @Override

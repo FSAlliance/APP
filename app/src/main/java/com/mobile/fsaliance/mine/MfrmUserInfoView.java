@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
+import com.mobile.fsaliance.common.util.CropCircleTransformation;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.User;
 
@@ -55,17 +56,14 @@ public class MfrmUserInfoView extends BaseView {
             alipayAccountTxt.setText(user.getAliPayAccount());
         }
         userNickNameTxt.setText(user.getUserName());
-        Glide.with(context)
-                .load(user.getUserHead())
-                .placeholder(R.drawable.register_job_id)
-                .into(userHeadPortraitImg);
+        setSelectPhoto(Uri.parse(user.getUserHead()));
     }
 
     public void setSelectPhoto(Uri uri) {
         Glide.with(context)
                 .load(uri)
-                .placeholder(R.drawable.register_job_id)
-                .into(userHeadPortraitImg);
+                .placeholder(R.drawable.img_user_head)
+                .bitmapTransform(new CropCircleTransformation(context)).crossFade(1000).into(userHeadPortraitImg);
     }
     @Override
     protected void initViews() {
@@ -104,14 +102,16 @@ public class MfrmUserInfoView extends BaseView {
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // 设置弹出窗体可点击
         popupWindow.setAnimationStyle(R.style.take_photo_anim);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(false);
+        popupWindow.setFocusable(false);
+        popupWindow.setOutsideTouchable(true);
         popupWindow.setWidth(LayoutParams.MATCH_PARENT);
         //设置PopupWindow弹出窗体的高
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-
+                if (delegate instanceof MfrmUserInfoViewDelegate) {
+                    ((MfrmUserInfoViewDelegate)delegate).onClickSetAttributes((float) 1);
+                }
             }
         });
     }
@@ -133,9 +133,6 @@ public class MfrmUserInfoView extends BaseView {
     protected void onClickListener(View v) {
         switch (v.getId()) {
             case R.id.rl_user_info_head_portrait:
-//                if (super.delegate instanceof MfrmUserInfoViewDelegate) {
-//                    ((MfrmUserInfoViewDelegate) super.delegate).onClickModifyHeadImg();
-//                }
                 showPopupWindow();
                 break;
             case R.id.rl_user_alipay:
@@ -162,19 +159,16 @@ public class MfrmUserInfoView extends BaseView {
                 dismissPopupWindow();
                 break;
             case R.id.picture_selector_pick_picture_btn:
-                // TODO: 2018/1/3 0003 从相册选择
                 dismissPopupWindow();
                 if (super.delegate instanceof MfrmUserInfoViewDelegate) {
                     ((MfrmUserInfoViewDelegate) super.delegate).onClickPickPicture();
                 }
                 break;
             case R.id.picture_selector_take_photo_btn:
-                // TODO: 2018/1/3 0003 拍照
                 dismissPopupWindow();
                 if (super.delegate instanceof MfrmUserInfoViewDelegate) {
                     ((MfrmUserInfoViewDelegate) super.delegate).onClickTackPhoto();
                 }
-
                 break;
             case R.id.ll_title_left:
                 if (super.delegate instanceof MfrmUserInfoViewDelegate) {
@@ -204,9 +198,9 @@ public class MfrmUserInfoView extends BaseView {
         // 设置弹出窗体显示时的动画，从底部向上弹出
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupWindow.showAtLocation(this, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-//        if (super.delegate instanceof MfrmAssetCheckDetailDelegate) {
-//            ((MfrmAssetCheckDetailDelegate) super.delegate).onClickSetAttributes((float) 0.5);
-//        }
+        if (super.delegate instanceof MfrmUserInfoViewDelegate) {
+            ((MfrmUserInfoViewDelegate) super.delegate).onClickSetAttributes((float) 0.5);
+        }
     }
     /**
       * @date 创建时间 2017/9/6
@@ -227,5 +221,7 @@ public class MfrmUserInfoView extends BaseView {
         void onClickTackPhoto(); //拍照
 
         void onClickPickPicture(); //选择
+
+        void onClickSetAttributes(float bgAlpha);//设置activity背景透明度
     }
 }

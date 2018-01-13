@@ -16,16 +16,7 @@ import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.fsaliance.goods.MfrmGoodsInfoController;
 import com.mobile.fsaliance.goods.MfrmSearchGoodListController;
 import com.mobile.fsaliance.goods.MfrmSearchGoodsController;
-import com.taobao.api.ApiException;
-import com.taobao.api.Constants;
-import com.taobao.api.DefaultTaobaoClient;
-import com.taobao.api.TaobaoClient;
-import com.taobao.api.domain.TbkFavorites;
-import com.taobao.api.internal.util.StringUtils;
-import com.taobao.api.request.TbkUatmFavoritesGetRequest;
-import com.taobao.api.request.TbkUatmFavoritesItemGetRequest;
-import com.taobao.api.response.TbkUatmFavoritesGetResponse;
-import com.taobao.api.response.TbkUatmFavoritesItemGetResponse;
+
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;

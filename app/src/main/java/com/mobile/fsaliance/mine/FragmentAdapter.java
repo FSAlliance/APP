@@ -4,9 +4,10 @@ import android.content.Context;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
+
+import com.mobile.fsaliance.common.util.OrderType;
 
 import java.util.List;
 
@@ -15,10 +16,10 @@ import java.util.List;
  */
 public class FragmentAdapter extends FragmentStatePagerAdapter {
     public List<Fragment> fragments;
-    private List<String> shareTypes;
+    private List<OrderType> shareTypes;
     private Context context;
 
-    public FragmentAdapter(Context context, FragmentManager fm, List<Fragment> list, List<String> titles) {
+    public FragmentAdapter(Context context, FragmentManager fm, List<Fragment> list, List<OrderType> titles) {
         super(fm);
         this.context = context;
         this.fragments = list;
@@ -43,8 +44,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return shareTypes.get(position);
-
+        return shareTypes.get(position).getName();
     }
 
 
