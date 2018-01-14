@@ -106,6 +106,10 @@
             android:name=".mine.MfrmModifyPasswordController"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".mine.MfrmFindMyOrderController"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

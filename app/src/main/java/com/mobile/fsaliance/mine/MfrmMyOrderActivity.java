@@ -60,7 +60,7 @@ public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnP
         titleLiftImg = (ImageView) findViewById(R.id.img_back);
         titleLiftImg.setImageResource(R.drawable.goback);
         titleTxt = (TextView) findViewById(R.id.txt_title);
-        titleTxt.setText(getResources().getString(R.string.ming_my_order));
+        titleTxt.setText(getResources().getString(R.string.mine_my_order));
         tab_FindFragment_title = (TabLayout)findViewById(R.id.tab_FindFragment_title);
 
         vp_FindFragment_pager = (ViewPager)findViewById(R.id.vp_FindFragment_pager);

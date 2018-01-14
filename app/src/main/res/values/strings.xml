@@ -81,11 +81,16 @@
 
     <!--商品搜索-->
     <string name="goods_search">商品搜索</string>
+    <string name="goods_search_text">搜索</string>
+
     <!--我的界面-->
     <string name="mine_money_balance">余额</string>
     <string name="mine_money_in_the_present">提现中</string>
     <string name="mine_money_has_present">已提现</string>
-    <string name="ming_my_order">我的订单</string>
+    <string name="mine_my_order">我的订单</string>
+    <string name="mine_my_order_find">找回订单</string>
+    <string name="mine_my_order_find_hint">请输入订单号</string>
+    <string name="mine_my_order_find_text">找回</string>
     <string name="ming_record_of_income">收入记录</string>
     <string name="ming_present_record">提现记录</string>
     <string name="mine_immediate_cash">立即提现</string>

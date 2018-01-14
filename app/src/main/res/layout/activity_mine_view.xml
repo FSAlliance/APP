@@ -152,7 +152,7 @@
             android:layout_marginLeft="12dp"
             android:layout_toRightOf="@+id/img_ming_order"
             android:gravity="center_vertical"
-            android:text="@string/ming_my_order"
+            android:text="@string/mine_my_order"
             android:textColor="@color/optiontext_color_black"
             android:textSize="@dimen/fontSize" />
         <ImageView
@@ -170,6 +170,40 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"></View>
     </RelativeLayout>
+    <!--找回订单-->
+    <RelativeLayout
+        android:id="@+id/rl_mine_order_find"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/menu_item_height"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/img_ming_order_find"
+            android:layout_width="@dimen/picture_size"
+            android:layout_height="@dimen/picture_size"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/img_my_order_find" />
+
+        <TextView
+            android:id="@+id/txt_mine_order_find"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@+id/img_ming_order_find"
+            android:gravity="center_vertical"
+            android:text="@string/mine_my_order_find"
+            android:textColor="@color/optiontext_color_black"
+            android:textSize="@dimen/fontSize" />
+        <ImageView
+            android:id="@+id/img_mine_order_right_find"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_width="@dimen/remote_setting_menu_btn_width"
+            android:layout_height="@dimen/remote_setting_menu_btn_width"
+            android:layout_centerVertical="true"
+            android:src="@drawable/moredetails_arrow" />
+
+    </RelativeLayout>
 
     <!--收入记录-->
     <ScrollView
@@ -182,11 +216,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <View
-                android:layout_alignParentBottom="true"
-                android:background="@color/line_color"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"></View>
             <RelativeLayout
                 android:id="@+id/rl_record_of_income"
                 android:layout_width="match_parent"

@@ -89,6 +89,13 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
     }
 
     @Override
+    public void onClickFindMyOrder() {
+        Intent intent = new Intent();
+        intent.setClass(context, MfrmFindMyOrderController.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onClickBoundAlipay() {
         Intent intent = new Intent();
         intent.setClass(context, MfrmBoundAlipayController.class);

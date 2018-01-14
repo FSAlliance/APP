@@ -23,7 +23,7 @@ public class MfrmMineView extends BaseView {
     private LinearLayout userNameLl, userBalanceLl, inPresentLl, hasBalanceLl;
     private TextView userAccountIdTxt, userBalanceTxt, inPresentTxt, hasBalanceTxt;
     private ImageView userHeadImg; //头像
-    private RelativeLayout mineOrderRl, mineRecordIncomeRl, presentRecordRl, immediateCashRl, mineShareRl,
+    private RelativeLayout mineOrderRl, findMyOrderRl, mineRecordIncomeRl, presentRecordRl, immediateCashRl, mineShareRl,
     boundAlipayRl;
     public MfrmMineView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -60,6 +60,7 @@ public class MfrmMineView extends BaseView {
         hasBalanceTxt = (TextView) findViewById(R.id.txt_has_balance);
 
         mineOrderRl = (RelativeLayout) findViewById(R.id.rl_mine_order);
+        findMyOrderRl = (RelativeLayout) findViewById(R.id.rl_mine_order_find);
         mineRecordIncomeRl = (RelativeLayout) findViewById(R.id.rl_record_of_income);
         mineShareRl = (RelativeLayout) findViewById(R.id.rl_share);
         presentRecordRl = (RelativeLayout) findViewById(R.id.rl_present_record);
@@ -75,6 +76,7 @@ public class MfrmMineView extends BaseView {
         hasBalanceLl.setOnClickListener(this);
 
         mineOrderRl.setOnClickListener(this);
+        findMyOrderRl.setOnClickListener(this);
         mineRecordIncomeRl.setOnClickListener(this);
         mineShareRl.setOnClickListener(this);
         presentRecordRl.setOnClickListener(this);
@@ -124,6 +126,12 @@ public class MfrmMineView extends BaseView {
                     ((MfrmMineViewDelegate) super.delegate).onClickMyOrder();
                 }
                 break;
+            case R.id.rl_mine_order_find:
+                //找回订单
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickFindMyOrder();
+                }
+                break;
             case R.id.ll_balance:
                 //我的余额
                 if (super.delegate instanceof MfrmMineViewDelegate) {
@@ -158,6 +166,8 @@ public class MfrmMineView extends BaseView {
         void onClickHasBalance();//已提现
 
         void onClickMyOrder(); //我的订单
+
+        void onClickFindMyOrder(); //找回订单
 
         void onClickBoundAlipay();  //绑定支付宝
 
