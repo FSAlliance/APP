@@ -11,15 +11,27 @@ import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
+import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
 import com.mobile.fsaliance.main.MfrmLoginController;
 import com.yanzhenjie.nohttp.NoHttp;
+import com.yanzhenjie.nohttp.RequestMethod;
+import com.yanzhenjie.nohttp.error.NetworkError;
+import com.yanzhenjie.nohttp.error.UnKnownHostError;
+import com.yanzhenjie.nohttp.rest.OnResponseListener;
+import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
+import com.yanzhenjie.nohttp.rest.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 
 
-public class MfrmUserInfoController extends BaseController implements MfrmUserInfoView.MfrmUserInfoViewDelegate {
+public class MfrmUserInfoController extends BaseController implements MfrmUserInfoView.MfrmUserInfoViewDelegate, OnResponseListener<String> {
 
     private MfrmUserInfoView mfrmUserInfoView;
     private Object cancelObject = new Object();
@@ -50,8 +62,26 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
         mfrmUserInfoView.initData(user);
     }
 
+    /**
+     * @author tanyadong
+     * @Title: updatePicture
+     * @Description: 上传头像照片
+     * @date 2018/1/15 0015 22:45
+     * @param phoroPath
+     */
 
+    private void updatePicture(Uri phoroPath) {
+        Request<String> request = NoHttp.createStringRequest(String.valueOf(phoroPath), RequestMethod.POST);
+        request.setCancelSign(cancelObject);
 
+//        request.add("json", paramJson.toString());
+//        if (type == 0) {
+//            request.add("pic", new File(picPath));
+//        } else if (type == 1) {
+//            request.add("video", new File(videoPath));
+//        }
+        queue.add(0, request, this);
+    }
 
 
 
@@ -149,12 +179,80 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
                 case CAMERA_REQUEST_CODE:
                     File temp = new File(phoroPath);
                     mfrmUserInfoView.setSelectPhoto(Uri.fromFile(temp));
+                    updatePicture(Uri.fromFile(temp));
                     break;
                 case GALLERY_REQUEST_CODE:
                     mfrmUserInfoView.setSelectPhoto(data.getData());
+                    updatePicture(data.getData());
                     break;
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onStart(int i) {
+
+    }
+
+    @Override
+    public void onSucceed(int i, Response<String> response) {
+        try {
+            JSONObject object;
+            if (!response.isSucceed()) {
+                T.showShort(this, R.string.video_update_fail);
+                return;
+            }
+            object = new JSONObject(response.get().toString());
+            if (object.has("ret") && object.getInt("ret") == 0) {
+                JSONObject content = object.optJSONObject("content");
+                if (content == null) {
+                    T.showShort(this, R.string.video_update_fail);
+                    return;
+                }
+                JSONObject platJSON = content.optJSONObject("platformRet");
+                if (platJSON == null) {
+                    T.showShort(this, R.string.video_update_fail);
+                    return;
+                }
+                if (platJSON.has("ret") && platJSON.getInt("ret") == 0) {
+//                    mfrmVideoCollectionView.showUploadPicView(null, false);
+                } else {
+                    T.showShort(this, R.string.video_update_fail);
+                }
+            }else{
+                T.showShort(this, R.string.video_update_fail);
+            }
+        } catch (JSONException e) {
+            T.showShort(this, R.string.video_update_fail);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onFailed(int i, Response<String> response) {
+        Exception exception = response.getException();
+        if (exception instanceof NetworkError) {
+            T.showShort(this, R.string.network_error);
+            return;
+        }
+        if (exception instanceof SocketTimeoutException) {
+            T.showShort(this, R.string.network_socket_timeout_error);
+            return;
+        }
+        if (exception instanceof UnKnownHostError) {
+            T.showShort(this, R.string.network_unknown_host_error);
+            return;
+        }
+        if (exception instanceof ConnectException) {
+            T.showShort(this, R.string.network_error);
+            return;
+        }
+        T.showShort(this, R.string.video_update_fail);
+    }
+
+    @Override
+    public void onFinish(int i) {
+
     }
 }
