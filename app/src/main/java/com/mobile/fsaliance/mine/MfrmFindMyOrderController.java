@@ -1,6 +1,5 @@
 package com.mobile.fsaliance.mine;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.fsaliance.goods.MfrmSearchGoodListController;
 
 /**
  * @author yuanxueyuan

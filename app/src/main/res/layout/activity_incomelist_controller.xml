@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
@@ -8,10 +8,27 @@
     <include android:id="@+id/title_include"
         layout="@layout/include_toolbar_title"/>
 
-    <ListView
-        android:id="@+id/income_list_view"
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/incomelist_freshlayout"
+        android:layout_below="@+id/title_include"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    </ListView>
-</LinearLayout>
+        <ListView
+            android:id="@+id/income_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:listSelector="@android:color/transparent"
+            android:layout_weight="1"
+            android:dividerHeight="10dp">
+        </ListView>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.mobile.fsaliance.common.common.CircleProgressBarView
+            android:id="@+id/circleProgressBarView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </LinearLayout>
+</RelativeLayout>

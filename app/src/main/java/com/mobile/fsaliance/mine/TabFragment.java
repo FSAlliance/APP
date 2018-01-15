@@ -94,7 +94,6 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         if (!isPrepared || !isVisible || mHasLoadedOnce) {
             return;
         }
-        L.e("tyd----aaaaa");
         getOrderData();
     }
 
@@ -103,7 +102,6 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         super.onResume();
         flag = true;
         index = 0;
-        L.e("tyd----bbbbbb");
         getOrderData();
     }
 
@@ -111,7 +109,6 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         circleProgressBarView = (CircleProgressBarView) view.findViewById(R.id.circleProgressBarView);
         listView = (ListView) view.findViewById(R.id.listView_my_order);
         noDataLl = (LinearLayout) view.findViewById(R.id.my_order_no_date);
-        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.my_all_order_freshlayout);
         initFresh();
     }
 
@@ -142,7 +139,6 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
     */
 
     public void getOrderData() {
-        L.e("tyd---typeid"+typeId);
         String uri = AppMacro.REQUEST_URL + "/asset/query";
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
@@ -201,6 +197,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
      * 初始化上下拉刷新控件
      */
     private void initFresh() {
+        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.my_all_order_freshlayout);
         mRefreshLayout.setDelegate(this);
         //true代表开启上拉加载更多
         BGANormalRefreshViewHolder bgaNormalRefreshViewHolder = new BGANormalRefreshViewHolder(this.getActivity(), true);

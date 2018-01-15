@@ -120,6 +120,7 @@
     <string name="pick_picture">从相册选择</string>
     <string name="active_income">主动收入</string>
     <string name="passive_income">被动收入</string>
+    <string name="get_record_failed">获取记录失败</string>
     
     <!--修改密码-->
     <string name="user_password">密码</string>

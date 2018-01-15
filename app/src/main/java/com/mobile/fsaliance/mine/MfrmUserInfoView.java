@@ -55,6 +55,9 @@ public class MfrmUserInfoView extends BaseView {
         if (user.getAliPayAccount() != null && !user.getAliPayAccount().equals("")) {
             alipayAccountTxt.setText(user.getAliPayAccount());
         }
+        if (user.getUserHead() == null) {
+            return;
+        }
         userNickNameTxt.setText(user.getUserName());
         setSelectPhoto(Uri.parse(user.getUserHead()));
     }
