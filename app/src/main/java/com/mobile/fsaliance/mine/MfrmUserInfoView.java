@@ -207,6 +207,18 @@ public class MfrmUserInfoView extends BaseView {
             ((MfrmUserInfoViewDelegate) super.delegate).onClickSetAttributes((float) 0.5);
         }
     }
+
+    /**
+     * @author tanyadong
+     * @Title: setAlipayBound
+     * @Description: 设置支付宝账号
+     * @date 2018/1/18 0018 21:38
+     */
+
+    public void setAlipayBound(String alipayBound) {
+        alipayAccountTxt.setText(alipayBound);
+    }
+
     /**
       * @date 创建时间 2017/9/6
       * @author tanyadong

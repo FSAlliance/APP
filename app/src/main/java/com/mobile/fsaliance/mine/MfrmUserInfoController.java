@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
@@ -73,7 +74,6 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
     private void updatePicture(Uri phoroPath) {
         Request<String> request = NoHttp.createStringRequest(String.valueOf(phoroPath), RequestMethod.POST);
         request.setCancelSign(cancelObject);
-
 //        request.add("json", paramJson.toString());
 //        if (type == 0) {
 //            request.add("pic", new File(picPath));
@@ -117,8 +117,10 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
     public void onClickBoundAlipay() {
         Intent intent = new Intent();
         intent.setClass(this, MfrmBoundAlipayController.class);
-        //todo 参数
-        startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 2);
     }
 
     @Override
@@ -174,7 +176,7 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == this.RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE:
                     File temp = new File(phoroPath);
@@ -184,6 +186,9 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
                 case GALLERY_REQUEST_CODE:
                     mfrmUserInfoView.setSelectPhoto(data.getData());
                     updatePicture(data.getData());
+                    break;
+                case 2:
+                    mfrmUserInfoView.setAlipayBound(data.getStringExtra("boundAlipay"));
                     break;
             }
         }

@@ -18,7 +18,7 @@ import com.mobile.fsaliance.common.vo.User;
 
 public class MfrmBoundAlipayView extends BaseView {
     private ImageView userInfoBackImg;
-    private TextView titleTxt, boundOkTxt;
+    private TextView titleTxt, boundOkTxt, boundAccountTxt;
     private LinearLayout titleLiftLl, titleRightLl;
     private EditText alipayAcountEdit;
     public CircleProgressBarView circleProgressBarView;
@@ -38,8 +38,12 @@ public class MfrmBoundAlipayView extends BaseView {
         if (user == null) {
             return;
         }
+        if (user.getAliPayAccount() != null && !user.getAliPayAccount().equals("")) {
+            boundAccountTxt.setText(context.getText(R.string.mine_bound_alipay_current)+" " + user.getAliPayAccount());
+        } else {
+            boundAccountTxt.setText(context.getText(R.string.mine_bound_alipay_no));
+        }
     }
-
 
     @Override
     protected void initViews() {
@@ -53,6 +57,7 @@ public class MfrmBoundAlipayView extends BaseView {
         boundOkTxt = (TextView) findViewById(R.id.txt_bound_ok);
         alipayAcountEdit = (EditText) findViewById(R.id.edit_alipay_acount);
         circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
+        boundAccountTxt = (TextView) findViewById(R.id.txt_bound_account);
     }
 
     @Override

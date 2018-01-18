@@ -34,6 +34,11 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
     private String alipayAccount;
     @Override
     protected void getBundleData() {
+        Bundle bundle= getIntent().getExtras();
+        if (bundle == null) {
+            return;
+        }
+        user = (User) bundle.getSerializable("user");
 
     }
 
@@ -47,11 +52,12 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
         mfrmBoundAlipayView = (MfrmBoundAlipayView) findViewById(R.id.activity_boundalipay_view);
         mfrmBoundAlipayView.setDelegate(this);
         queue = NoHttp.newRequestQueue();
-        user = LoginUtils.getUserInfo(this);
-        if (user == null) {
-            return;
-        }
         mfrmBoundAlipayView.initData(user);
+//        user = LoginUtils.getUserInfo(this);
+//        if (user == null) {
+//            return;
+//        }
+
     }
 
 
@@ -81,7 +87,7 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
         String uri = AppMacro.REQUEST_URL + "/user/login";
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
-        request.add("user", user.getId());
+        request.add("user", "aaa");
         request.add("alipayAcount", alipayAcount);
         queue.add(0, request, this);
     }
@@ -114,7 +120,6 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
                     user.setAliPayAccount(alipayAccount);
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
                     finish();
                 } else {
                     T.showShort(this, R.string.bound_fail);
@@ -145,10 +150,16 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
             return;
         }
         T.showShort(this, R.string.bound_fail);
+
     }
 
     @Override
     public void onFinish(int i) {
         mfrmBoundAlipayView.circleProgressBarView.hideProgressBar();
+        // TODO: 2018/1/18 0018 临时数据测试 
+        Intent intent = new Intent();
+        intent.putExtra("boundAlipay", "aaaaa");
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
