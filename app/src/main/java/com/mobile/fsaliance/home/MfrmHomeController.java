@@ -40,9 +40,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	private MfrmHomeView mfrmHomeView;
 	private RequestQueue queue;
 	private static final int SEARCH_ASSET_LIST = 1;
+	private static final int SEARCH_ASSET_LIST_UP = 2;
+	private static final int INIT = 0;
 	private List<Asset> assetList;
 	private int pageNo = 0;
-	private static final int PAGE_SIZE = 10;//每页数据条数
+	private static final int PAGE_SIZE = 5;//每页数据条数
 	private static final int FIRST_PAGE = 0;//第几页
 	private boolean refreshList = false;
 	private boolean loadMoreList = false;
@@ -79,14 +81,14 @@ public class MfrmHomeController extends BaseFragmentController implements
 	  * @Description 获取搜索数据
 	  * @date 2017/9/9 10:42
 	*/
-	private void getSearchAssetData(String param, int pageNo) {
+	private void getSearchAssetData(int i ,String param, int pageNo) {
 		String uri = AppMacro.REQUEST_URL + "/asset/query";
 		Request<String> request = NoHttp.createStringRequest(uri);
 		request.cancelBySign(cancelObject);
 		request.add("param", param);
 		request.add("page", pageNo);
 		request.add("limit", PAGE_SIZE);
-		queue.add(SEARCH_ASSET_LIST, request, this);
+		queue.add(i, request, this);
 	}
 
 	@Override
@@ -99,7 +101,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 		if (!isPrepared || !isVisible || mHasLoadedOnce) {
 			return;
 		}
-		getSearchAssetData("", FIRST_PAGE);
+		getSearchAssetData(INIT, "", FIRST_PAGE);
 		mHasLoadedOnce = true;
 	}
 
@@ -217,7 +219,8 @@ public class MfrmHomeController extends BaseFragmentController implements
 	@Override
 	public void onClickPullDown(String strSearch) {
 		refreshList = true;
-		getSearchAssetData(strSearch, FIRST_PAGE);
+		pageNo = 0;
+		getSearchAssetData(SEARCH_ASSET_LIST, strSearch, FIRST_PAGE);
 	}
 
 	/**
@@ -229,7 +232,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	@Override
 	public void onClickLoadMore(String strSearch) {
 		loadMoreList = true;
-		getSearchAssetData(strSearch, pageNo);
+		getSearchAssetData(SEARCH_ASSET_LIST_UP, strSearch, pageNo);
 	}
 
 	@Override
@@ -240,6 +243,26 @@ public class MfrmHomeController extends BaseFragmentController implements
 		//TODO 填写具体的参数
 		intent.putExtras(bundle);
 		startActivity(intent);
+	}
+
+	@Override
+	public void onClickToDetailEx(int position) {
+		if (assetList == null || assetList.size() <= 0) {
+			L.e("assetList == null ");
+			return;
+		}
+
+		if ((assetList.size() - 1) < position) {
+			L.e("assetList == null ");
+			return;
+		}
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		intent.setClass(context, MfrmGoodsInfoController.class);
+		//TODO 填写具体的参数
+		intent.putExtras(bundle);
+		startActivity(intent);
+
 	}
 
 
@@ -253,11 +276,10 @@ public class MfrmHomeController extends BaseFragmentController implements
 
 	@Override
 	public void onSucceed(int i, Response response) {
-
 		if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
 			String result = (String) response.get();
 			assetList = analyzeAssetsData(result);
-			mfrmHomeView.showSearchAssetList(assetList);
+			mfrmHomeView.showSearchAssetList(assetList, i);
 		}
 	}
 
@@ -293,16 +315,17 @@ public class MfrmHomeController extends BaseFragmentController implements
 					}
 					return null;
 				} else {
+					pageNo++;
 					mfrmHomeView.setNoDataView(false);
 				}
 				if (assetList == null){
 					assetList = new ArrayList<>();
 				}
-				int arrCount = 0;
+				/*int arrCount = 0;
 				if (assetList != null) {
 					arrCount = assetList.size();
-				}
-				if (jsonArray.length() >= PAGE_SIZE) {
+				}*/
+				/*if (jsonArray.length() >= PAGE_SIZE) {
 					pageNo++;
 				} else {
 					if (lastCount < PAGE_SIZE && arrCount > 0) {
@@ -315,7 +338,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 							}
 						}
 					}
-				}
+				}*/
 				for (int i = 0; i < jsonArray.length(); i++) {
 					Asset asset = new Asset();
 					JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
@@ -375,7 +398,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	private void reloadNoDataList() {
 		if (assetList == null || assetList.size() <= 0) {
 			mfrmHomeView.setNoDataView(true);
-			mfrmHomeView.showSearchAssetList(assetList);
+			mfrmHomeView.showSearchAssetList(assetList, 0);
 		}
 	}
 

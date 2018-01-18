@@ -6,6 +6,7 @@ import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Asset;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,7 @@ public class AssetListViewAdapter extends BaseAdapter {
 			holder = (Holder) view.getTag();
 		}
 		if (assets != null) {
-			holder.goodsDescribeText.setText("12121"); //描述
+			holder.goodsDescribeText.setText(assets.get(position).getModel()); //描述
 			holder.goodsPriceDiscountText.setText("10"); //商品优惠卷价格
 			holder.goodsPriceText.setText("100"); //商品价格
 			holder.goodsSaleNumText.setText("12");//商品销量

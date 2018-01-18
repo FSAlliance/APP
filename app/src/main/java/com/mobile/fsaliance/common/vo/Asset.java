@@ -311,4 +311,44 @@ public class Asset implements Serializable{
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    @Override
+    public String toString() {
+        return "Asset{" +
+                "id=" + id +
+                ", codeId='" + codeId + '\'' +
+                ", jobId='" + jobId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", model='" + model + '\'' +
+                ", place='" + place + '\'' +
+                ", floor='" + floor + '\'' +
+                ", realPlace='" + realPlace + '\'' +
+                ", saver='" + saver + '\'' +
+                ", realSaver='" + realSaver + '\'' +
+                ", state=" + state +
+                ", stateText='" + stateText + '\'' +
+                ", build='" + build + '\'' +
+                ", center='" + center + '\'' +
+                ", part='" + part + '\'' +
+                ", leavePlace='" + leavePlace + '\'' +
+                ", cpu='" + cpu + '\'' +
+                ", board='" + board + '\'' +
+                ", memory='" + memory + '\'' +
+                ", disk='" + disk + '\'' +
+                ", box='" + box + '\'' +
+                ", videoCard='" + videoCard + '\'' +
+                ", softDriver='" + softDriver + '\'' +
+                ", hardDriver='" + hardDriver + '\'' +
+                ", other='" + other + '\'' +
+                ", price='" + price + '\'' +
+                ", count='" + count + '\'' +
+                ", money='" + money + '\'' +
+                ", cost='" + cost + '\'' +
+                ", time='" + time + '\'' +
+                ", costIt='" + costIt + '\'' +
+                ", isExpand=" + isExpand +
+                '}';
+    }
 }

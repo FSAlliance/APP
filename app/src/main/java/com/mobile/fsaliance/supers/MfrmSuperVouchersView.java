@@ -109,6 +109,7 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 		if (superListViewAdapter == null) {
 			superListViewAdapter = new AssetListViewAdapter(context, myAssetList);
 			superGoodListView.setAdapter(superListViewAdapter);
+			superListViewAdapter.setDelegate(this);
 		} else {
 			superListViewAdapter.update(myAssetList);
 			superListViewAdapter.notifyDataSetChanged();

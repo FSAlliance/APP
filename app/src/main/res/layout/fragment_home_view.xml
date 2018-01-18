@@ -32,204 +32,233 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
+                <!--<LinearLayout-->
+                    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+                    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                    <!--android:id="@home_toptest"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical">-->
+                <!--&lt;!&ndash;中间分类&ndash;&gt;-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical">-->
 
-    <!--中间分类-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp">
-            <!--女装-->
-            <LinearLayout
-                android:id="@+id/home_middle_one"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_home_middle_female"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/asset_child"
-                    android:text="@string/home_middle_female"/>
-            </LinearLayout>
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_marginTop="10dp">-->
+                        <!--&lt;!&ndash;女装&ndash;&gt;-->
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/home_middle_one"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="vertical">-->
 
-            <!--男装-->
-            <LinearLayout
-                android:id="@+id/home_middle_two"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_home_middle_male"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_middle_male"/>
-            </LinearLayout>
+                            <!--<ImageView-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="50dp"-->
+                                <!--android:src="@drawable/img_home_middle_female" />-->
 
-            <!--内衣-->
-            <LinearLayout
-                android:id="@+id/home_middle_three"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_home_middle_underclothes"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_middle_underclothes"/>
-            </LinearLayout>
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="@string/home_middle_female"-->
+                                <!--android:textColor="@color/asset_child" />-->
+                        <!--</LinearLayout>-->
 
-            <!--美妆-->
-            <LinearLayout
-                android:id="@+id/home_middle_four"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_home_middle_cosmetics"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_middle_cosmetics"/>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp">
+                        <!--&lt;!&ndash;男装&ndash;&gt;-->
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/home_middle_two"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="vertical">-->
 
-            <!--美食-->
-            <LinearLayout
-                android:id="@+id/home_middle_five"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_home_middle_cate"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/asset_child"
-                    android:text="@string/home_middle_cate"/>
-            </LinearLayout>
+                            <!--<ImageView-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="50dp"-->
+                                <!--android:src="@drawable/img_home_middle_male" />-->
 
-            <!--母婴-->
-            <LinearLayout
-                android:id="@+id/home_middle_six"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_home_middle_baby"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_middle_baby"/>
-            </LinearLayout>
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="@string/home_middle_male" />-->
+                        <!--</LinearLayout>-->
 
-            <!--家具-->
-            <LinearLayout
-                android:id="@+id/home_middle_seven"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_home_middle_furniture"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_middle_furniture"/>
-            </LinearLayout>
+                        <!--&lt;!&ndash;内衣&ndash;&gt;-->
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/home_middle_three"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="vertical">-->
 
-            <!--其他-->
-            <LinearLayout
-                android:id="@+id/home_middle_eight"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_home_middle_other"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_middle_other"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+                            <!--<ImageView-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="50dp"-->
+                                <!--android:src="@drawable/img_home_middle_underclothes" />-->
 
-    <View
-        android:background="@color/common_txt_bg"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="0.5dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/app_name"
-            android:gravity="center"/>
-    </LinearLayout>
-    <View
-        android:background="@color/common_txt_bg"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:id="@+id/mRefreshLayout"
-        android:background="@color/xml_bg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/home_top_text"
-        >
-        <ListView
-            android:id="@+id/search_asset_listview"
-            android:scrollbars="none"
-            android:layout_weight="1"
-            android:headerDividersEnabled="true"
-            android:divider="@color/xml_bg"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
-        </ListView>
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="@string/home_middle_underclothes" />-->
+                        <!--</LinearLayout>-->
+
+                        <!--&lt;!&ndash;美妆&ndash;&gt;-->
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/home_middle_four"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="vertical">-->
+
+                            <!--<ImageView-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="50dp"-->
+                                <!--android:src="@drawable/img_home_middle_cosmetics" />-->
+
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="@string/home_middle_cosmetics" />-->
+                        <!--</LinearLayout>-->
+                    <!--</LinearLayout>-->
+
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_marginTop="10dp">-->
+
+                        <!--&lt;!&ndash;美食&ndash;&gt;-->
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/home_middle_five"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="vertical">-->
+
+                            <!--<ImageView-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="50dp"-->
+                                <!--android:src="@drawable/img_home_middle_cate" />-->
+
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="@string/home_middle_cate"-->
+                                <!--android:textColor="@color/asset_child" />-->
+                        <!--</LinearLayout>-->
+
+                        <!--&lt;!&ndash;母婴&ndash;&gt;-->
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/home_middle_six"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="vertical">-->
+
+                            <!--<ImageView-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="50dp"-->
+                                <!--android:src="@drawable/img_home_middle_baby" />-->
+
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="@string/home_middle_baby" />-->
+                        <!--</LinearLayout>-->
+
+                        <!--&lt;!&ndash;家具&ndash;&gt;-->
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/home_middle_seven"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="vertical">-->
+
+                            <!--<ImageView-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="50dp"-->
+                                <!--android:src="@drawable/img_home_middle_furniture" />-->
+
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="@string/home_middle_furniture" />-->
+                        <!--</LinearLayout>-->
+
+                        <!--&lt;!&ndash;其他&ndash;&gt;-->
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/home_middle_eight"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="vertical">-->
+
+                            <!--<ImageView-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="50dp"-->
+                                <!--android:src="@drawable/img_home_middle_other" />-->
+
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="@string/home_middle_other" />-->
+                        <!--</LinearLayout>-->
+                    <!--</LinearLayout>-->
+                <!--</LinearLayout>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0.5dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:background="@color/common_txt_bg" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="25dp">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="@string/app_name" />-->
+                <!--</LinearLayout>-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0.5dp"-->
+                    <!--android:background="@color/common_txt_bg" />-->
+
+
+                <!--</LinearLayout>-->
+                <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+                    android:id="@+id/mRefreshLayout"
+                    android:background="@color/xml_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/home_top_text">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/search_asset_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:divider="@color/xml_bg"
+                    android:headerDividersEnabled="true"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"/>
+        </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

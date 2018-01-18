@@ -1,12 +1,14 @@
 package com.mobile.fsaliance.home;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
@@ -18,6 +20,7 @@ import com.mobile.fsaliance.common.vo.Asset;
 
 import java.util.List;
 
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
@@ -27,13 +30,14 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
   * @author tanyadong
   * @Description 首页
 */
-public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate,AssetListViewAdapter.AssetListViewAdapterDelegate, AbsListView.OnScrollListener {
-	private ListView searchListView;
+public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate,AssetListViewAdapter.AssetListViewAdapterDelegate, AbsListView.OnScrollListener ,BGAOnItemChildClickListener {
+	private RecyclerView searchListView;
 	private TextView assetListNoDataTxt;
-	private AssetListViewAdapter assetListViewAdapter;
+//	private AssetListViewAdapter assetListViewAdapter;
+	private NormalRecyclerViewAdapter assetListViewAdapter;
 	public CircleProgressBarView circleProgressBarView;
 	private BGARefreshLayout mRefreshLayout;
-
+	View headerView;
 	private LinearLayout searchTopLL, oneMiddleLL, twoMiddleLL, threeMiddleLL, fourMiddleLL,
 			fiveMiddleLL, sixMiddleLL, sevenMiddleLL, eightMiddleLL;
 
@@ -53,18 +57,18 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 		//搜索部分
 		searchTopLL = (LinearLayout) findViewById(R.id.home_top_search);
 
+		headerView = View.inflate(context, R.layout.home_top, null);
 		//中间部分
-		oneMiddleLL = (LinearLayout) findViewById(R.id.home_middle_one);
-		twoMiddleLL = (LinearLayout) findViewById(R.id.home_middle_two);
-		threeMiddleLL = (LinearLayout) findViewById(R.id.home_middle_three);
-		fourMiddleLL = (LinearLayout) findViewById(R.id.home_middle_four);
-		fiveMiddleLL = (LinearLayout) findViewById(R.id.home_middle_five);
-		sixMiddleLL = (LinearLayout) findViewById(R.id.home_middle_six);
-		sevenMiddleLL = (LinearLayout) findViewById(R.id.home_middle_seven);
-		eightMiddleLL = (LinearLayout) findViewById(R.id.home_middle_eight);
-
+		oneMiddleLL = (LinearLayout) headerView.findViewById(R.id.home_middle_one);
+		twoMiddleLL = (LinearLayout) headerView.findViewById(R.id.home_middle_two);
+		threeMiddleLL = (LinearLayout) headerView.findViewById(R.id.home_middle_three);
+		fourMiddleLL = (LinearLayout) headerView.findViewById(R.id.home_middle_four);
+		fiveMiddleLL = (LinearLayout) headerView.findViewById(R.id.home_middle_five);
+		sixMiddleLL = (LinearLayout) headerView.findViewById(R.id.home_middle_six);
+		sevenMiddleLL = (LinearLayout) headerView.findViewById(R.id.home_middle_seven);
+		eightMiddleLL = (LinearLayout) headerView.findViewById(R.id.home_middle_eight);
 		//商品列表
-		searchListView = (ListView) findViewById(R.id.search_asset_listview);
+		searchListView = (RecyclerView) findViewById(R.id.search_asset_listview);
 		assetListNoDataTxt = (TextView) findViewById(R.id.txt_asset_list_no_data);
 		circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
 		mRefreshLayout = (BGARefreshLayout) findViewById(R.id.mRefreshLayout);
@@ -86,10 +90,17 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 	 * 初始化上下拉刷新控件
 	 */
 	private void initFresh() {
+		assetListViewAdapter = new NormalRecyclerViewAdapter(searchListView);
+		assetListViewAdapter.addHeaderView(headerView);
 		mRefreshLayout.setDelegate(this);
 		//true代表开启上拉加载更多
 		BGANormalRefreshViewHolder bgaNormalRefreshViewHolder = new BGANormalRefreshViewHolder(getContext(), true);
 		mRefreshLayout.setRefreshViewHolder(bgaNormalRefreshViewHolder);
+//		mRefreshLayout.setCustomHeaderView(headerView,true);
+
+		searchListView.setLayoutManager(new GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false));
+		searchListView.addItemDecoration(new Divider(context));
+		searchListView.setAdapter(assetListViewAdapter.getHeaderAndFooterAdapter());
 	}
 
 	@Override
@@ -104,8 +115,8 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 		sixMiddleLL.setOnClickListener(this);
 		sevenMiddleLL.setOnClickListener(this);
 		eightMiddleLL.setOnClickListener(this);
-
-		searchListView.setOnScrollListener(this);
+		assetListViewAdapter.setOnItemChildClickListener(this);
+//		searchListView.setOnScrollListener(this);
 	}
 	/**
 	  * @author tanyadong
@@ -150,12 +161,12 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		//有更多
-		if(totalItemCount > visibleItemCount){
-			//不满一屏
-			isLoadMore = true;
-		}else{
-			isLoadMore = false;
-		}
+//		if(totalItemCount > visibleItemCount){
+//			//不满一屏
+//			isLoadMore = true;
+//		}else{
+//			isLoadMore = false;
+//		}
 	}
 
 
@@ -218,20 +229,12 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 	 * @Description 刷新并显示数据
 	 * @date 2017/9/8 14:44
 	 */
-	public void showSearchAssetList(List<Asset> myAssetList) {
+	public void showSearchAssetList(List<Asset> myAssetList, int i) {
 		if (myAssetList == null) {
 			L.e("myAssetList == null");
 			return;
 		}
-		if (assetListViewAdapter == null) {
-			assetListViewAdapter = new AssetListViewAdapter(context,
-					myAssetList);
-			searchListView.setAdapter(assetListViewAdapter);
-			assetListViewAdapter.setDelegate(this);
-		} else {
-			assetListViewAdapter.update(myAssetList);
-			assetListViewAdapter.notifyDataSetChanged();
-		}
+		assetListViewAdapter.setData(myAssetList);
 	}
 	/**
 	 * @author  tanyadong
@@ -255,6 +258,13 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 	@Override
 	public void initData(Object... data) {
 
+	}
+
+	@Override
+	public void onItemChildClick(ViewGroup parent, View childView, int position) {
+		if (super.delegate instanceof MfrmSearchDelegate) {
+			((MfrmSearchDelegate) super.delegate).onClickToDetailEx(position);
+		}
 	}
 
 
@@ -281,6 +291,8 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 		void onClickLoadMore(String searchTxt); //上拉加载
 
 		void onClickToDetail(Asset asset); //上啦加载
+
+		void onClickToDetailEx(int position);//点击详情
  	}
 
 }
