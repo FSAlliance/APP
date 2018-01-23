@@ -13,6 +13,7 @@ import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.Favorite;
 import com.mobile.fsaliance.goods.MfrmGoodsInfoController;
 import com.mobile.fsaliance.goods.MfrmSearchGoodListController;
 import com.mobile.fsaliance.goods.MfrmSearchGoodsController;
@@ -39,9 +40,10 @@ public class MfrmHomeController extends BaseFragmentController implements
 		MfrmHomeView.MfrmSearchDelegate, OnResponseListener {
 	private MfrmHomeView mfrmHomeView;
 	private RequestQueue queue;
+	private static final int INIT = 0;
 	private static final int SEARCH_ASSET_LIST = 1;
 	private static final int SEARCH_ASSET_LIST_UP = 2;
-	private static final int INIT = 0;
+	private static final int GET_FAVORITE = 3;//获取选品库
 	private List<Asset> assetList;
 	private int pageNo = 0;
 	private static final int PAGE_SIZE = 5;//每页数据条数
@@ -53,6 +55,8 @@ public class MfrmHomeController extends BaseFragmentController implements
 	private boolean mHasLoadedOnce;
 
 	private boolean isPrepared;
+	private List<Favorite> favoriteList;
+
 	@Override
 	protected View onCreateViewFunc(LayoutInflater inflater,
 									ViewGroup container, Bundle savedInstanceState) {
@@ -68,10 +72,12 @@ public class MfrmHomeController extends BaseFragmentController implements
 		mfrmHomeView.setDelegate(this);
 		queue = NoHttp.newRequestQueue();
 		assetList = new ArrayList<>();
+		favoriteList = new ArrayList<>();
 		isPrepared = true;
 		refreshList = false;
 		loadMoreList = false;
 		lazyLoad();
+		getFavoriteGroup();
 		return view;
 	}
 
@@ -89,6 +95,22 @@ public class MfrmHomeController extends BaseFragmentController implements
 		request.add("page", pageNo);
 		request.add("limit", PAGE_SIZE);
 		queue.add(i, request, this);
+	}
+
+	/**
+	 * @author tanyadong
+	 * @Title getFavoriteGroup
+	 * @Description 获取选品库
+	 * @date 2017/9/9 10:42
+	 */
+	private void getFavoriteGroup() {
+		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_FAVORITE;
+		Request<String> request = NoHttp.createStringRequest(uri);
+		request.cancelBySign(cancelObject);
+		request.add("pageNo", 1);
+		request.add("pageSize", 10);
+		L.i("QQQQQQQQQQQQ","url: "+request.url());
+		queue.add(GET_FAVORITE, request, this);
 	}
 
 	@Override
@@ -129,6 +151,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickOne() {
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
+		if (favoriteList == null || favoriteList.size() <= 0) {
+			L.e("favoriteList == null");
+			return;
+		}
+		bundle.putSerializable("favorite", favoriteList.get(0));
 		bundle.putString("search_goods", "ONE");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
@@ -139,6 +166,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickTwo() {
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
+		if (favoriteList == null || favoriteList.size() <= 1) {
+			L.e("favoriteList == null");
+			return;
+		}
+		bundle.putSerializable("favorite", favoriteList.get(1));
 		bundle.putString("search_goods", "TWO");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
@@ -149,6 +181,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickThree() {
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
+		if (favoriteList == null || favoriteList.size() <= 2) {
+			L.e("favoriteList == null");
+			return;
+		}
+		bundle.putSerializable("favorite", favoriteList.get(2));
 		bundle.putString("search_goods", "THREE");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
@@ -159,6 +196,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickFour() {
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
+		if (favoriteList == null || favoriteList.size() <= 3) {
+			L.e("favoriteList == null");
+			return;
+		}
+		bundle.putSerializable("favorite", favoriteList.get(3));
 		bundle.putString("search_goods", "FOUR");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
@@ -170,6 +212,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickFive() {
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
+		if (favoriteList == null || favoriteList.size() <= 4) {
+			L.e("favoriteList == null");
+			return;
+		}
+		bundle.putSerializable("favorite", favoriteList.get(4));
 		bundle.putString("search_goods", "FIVE");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
@@ -181,6 +228,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickSix() {
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
+		if (favoriteList == null || favoriteList.size() <= 5) {
+			L.e("favoriteList == null");
+			return;
+		}
+		bundle.putSerializable("favorite", favoriteList.get(5));
 		bundle.putString("search_goods", "SIX");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
@@ -192,6 +244,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickSeven() {
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
+		if (favoriteList == null || favoriteList.size() <= 6) {
+			L.e("favoriteList == null");
+			return;
+		}
+		bundle.putSerializable("favorite", favoriteList.get(6));
 		bundle.putString("search_goods", "SEVEN");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
@@ -203,6 +260,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickEight() {
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
+		if (favoriteList == null || favoriteList.size() <= 7) {
+			L.e("favoriteList == null");
+			return;
+		}
+		bundle.putSerializable("favorite", favoriteList.get(7));
 		bundle.putString("search_goods", "EIGHT");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
@@ -278,9 +340,75 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onSucceed(int i, Response response) {
 		if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
 			String result = (String) response.get();
-			assetList = analyzeAssetsData(result);
-			mfrmHomeView.showSearchAssetList(assetList, i);
+			if (GET_FAVORITE == i) {
+				L.i("QQQQQQQQQQ", "result: " + result);
+				analyzeFavoriteGroup(result);
+				L.i("QQQQQQQQQQQQ","List"+favoriteList.toString());
+				if (mfrmHomeView == null) {
+					L.e("mfrmHomeView == null");
+					return;
+				}
+				mfrmHomeView.initFavoriteView(favoriteList);
+				return;
+			} else {
+				assetList = analyzeAssetsData(result);
+				mfrmHomeView.showSearchAssetList(assetList, i);
+			}
 		}
+	}
+
+	private void analyzeFavoriteGroup(String result){
+		if (result == null) {
+			T.showShort(context, "");
+			return;
+		}
+
+		try {
+			JSONObject jsonObject = new JSONObject(result);
+			if (jsonObject.has("tbk_uatm_favorites_get_response")) {
+				//成功
+				JSONObject response = jsonObject.optJSONObject("tbk_uatm_favorites_get_response");
+				if (response == null) {
+					L.e("response == null");
+					return;
+				}
+				JSONObject results = response.optJSONObject("results");
+				if (results == null) {
+					L.e("results == null");
+					return;
+				}
+				JSONArray favoriteList = results.optJSONArray("tbk_favorites");
+				if (favoriteList == null || favoriteList.length() <= 0) {
+					L.e("favoriteList == null");
+					return;
+				}
+				if (this.favoriteList == null) {
+					this.favoriteList = new ArrayList<>();
+				}
+				for (int i = 0; i < favoriteList.length(); i++) {
+					JSONObject favoriteJSON = (JSONObject) favoriteList.get(i);
+					Favorite favorite = new Favorite();
+					String favoriteID = favoriteJSON.optString("favorites_id");
+					String favoriteName = favoriteJSON.optString("favorites_title");
+					int favoriteType= favoriteJSON.optInt("type");
+					if (favoriteID != null && !"".equals(favoriteID)) {
+						favorite.setFavoriteID(favoriteID);
+					}
+					if (favoriteName != null && !"".equals(favoriteName)) {
+						favorite.setFavoriteName(favoriteName);
+					}
+					favorite.setType(favoriteType);
+					this.favoriteList.add(favorite);
+				}
+			} else {
+				//失败
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+
 	}
 
 	/**
