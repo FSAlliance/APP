@@ -101,16 +101,20 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
     public void onClickModifyNickName() {
         Intent intent = new Intent();
         intent.setClass(this, MfrmModifyNickNameController.class);
-        //todo 参数
-        startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 4);
     }
 
     @Override
     public void onClickModifyPassword() {
         Intent intent = new Intent();
         intent.setClass(this, MfrmModifyPasswordController.class);
-        //todo 参数
-        startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 3);
     }
 
     @Override
@@ -189,6 +193,18 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
                     break;
                 case 2:
                     mfrmUserInfoView.setAlipayBound(data.getStringExtra("boundAlipay"));
+                    break;
+                case 3:
+                    user = (User) data.getSerializableExtra("user");
+                    break;
+                case 4:
+                    user = (User) data.getSerializableExtra("user");
+                    if (user == null) {
+                        return;
+                    }
+                    mfrmUserInfoView.setNickName(user.getUserName());
+                    break;
+                default:
                     break;
             }
         }

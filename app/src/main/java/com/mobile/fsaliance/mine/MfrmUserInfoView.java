@@ -219,6 +219,12 @@ public class MfrmUserInfoView extends BaseView {
         alipayAccountTxt.setText(alipayBound);
     }
 
+
+
+    public void setNickName(String userName) {
+        userNickNameTxt.setText(userName);
+    }
+
     /**
       * @date 创建时间 2017/9/6
       * @author tanyadong

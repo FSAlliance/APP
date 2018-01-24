@@ -3,6 +3,7 @@ package com.mobile.fsaliance.mine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,9 +38,14 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
     private ImageView userInfoBackImg;
     private TextView titleTxt, modifyNickNameOkTxt;
     private LinearLayout titleLiftLl, titleRightLl;
+    private EditText modifyNickNameEdit;
     @Override
     protected void getBundleData() {
-
+        Bundle bundle= getIntent().getExtras();
+        if (bundle == null) {
+            return;
+        }
+        user = (User) bundle.getSerializable("user");
     }
 
     @Override
@@ -52,8 +58,13 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
         initView();
         addLinister();
         queue = NoHttp.newRequestQueue();
-        user = LoginUtils.getUserInfo(this);
+        initData();
+    }
 
+    private void initData() {
+        if (user.getUserName() != null) {
+            modifyNickNameEdit.setText(user.getUserName());
+        }
     }
 
     private void addLinister() {
@@ -70,6 +81,8 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
         titleTxt = (TextView) findViewById(R.id.txt_title);
         titleTxt.setText(getResources().getString(R.string.modify_nickname));
         modifyNickNameOkTxt = (TextView) findViewById(R.id.txt_confirm_modify);
+        modifyNickNameEdit = (EditText) findViewById(R.id.edit_user_nickname);
+
     }
 
 
@@ -103,8 +116,10 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
                     if (user == null) {
                         user = new User();
                     }
+                    user.setUserName(modifyNickNameEdit.getText().toString().trim());
                     LoginUtils.saveUserInfo(this, user);
-                    Intent intent = new Intent(this, MainActivity.class);
+                    Intent intent = new Intent();
+                    intent.putExtra("user", user);
                     startActivity(intent);
                     finish();
                 } else {

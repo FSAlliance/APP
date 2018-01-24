@@ -45,7 +45,11 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
     private CircleProgressBarView circleProgressBarView;
     @Override
     protected void getBundleData() {
-
+        Bundle bundle= getIntent().getExtras();
+        if (bundle == null) {
+            return;
+        }
+        user = (User) bundle.getSerializable("user");
     }
 
     @Override
@@ -58,10 +62,11 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
         initView();
         addLinster();
         queue = NoHttp.newRequestQueue();
-        user = LoginUtils.getUserInfo(this);
-        if (user == null) {
-            return;
-        }
+        initData(user);
+    }
+
+    private void initData(User user) {
+
     }
 
     private void addLinster() {
@@ -130,8 +135,8 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
                     user.setUserName(jsonUser.optString("jobId"));
                     user.setPassword(jsonUser.optString("password"));
                     LoginUtils.saveUserInfo(this, user);
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
                     finish();
                 } else {
                     T.showShort(this, R.string.modify_pwd_fail);
@@ -149,6 +154,11 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
     @Override
     public void onFinish(int i) {
         circleProgressBarView.hideProgressBar();
+        user.setPassword("aaaaaaaaaaaaaaaaaaaaa");
+        LoginUtils.saveUserInfo(this, user);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
@@ -187,6 +197,9 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
             return false;
         }
         user.setPassword("aa");
+        if (user.getPassword() == null) {
+            return false;
+        }
         if (!user.getPassword().equals(originalPwd)) {
             T.showShort(this,R.string.original_pwd_is_error);
             return false;

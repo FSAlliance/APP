@@ -87,8 +87,8 @@ public class MfrmHomeController extends BaseFragmentController implements
 	  * @Description 获取搜索数据
 	  * @date 2017/9/9 10:42
 	*/
-	private void getSearchAssetData(int i ,String param, int pageNo) {
-		String uri = AppMacro.REQUEST_URL + "/asset/query";
+	private void getCustomGoodsData(int i ,String param, int pageNo) {
+		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/Goods/Custom";
 		Request<String> request = NoHttp.createStringRequest(uri);
 		request.cancelBySign(cancelObject);
 		request.add("param", param);
@@ -104,7 +104,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	 * @date 2017/9/9 10:42
 	 */
 	private void getFavoriteGroup() {
-		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_FAVORITE;
+		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/Goods/favoriteGroup";
 		Request<String> request = NoHttp.createStringRequest(uri);
 		request.cancelBySign(cancelObject);
 		request.add("pageNo", 1);
@@ -123,7 +123,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 		if (!isPrepared || !isVisible || mHasLoadedOnce) {
 			return;
 		}
-		getSearchAssetData(INIT, "", FIRST_PAGE);
+		getCustomGoodsData(INIT, "", FIRST_PAGE);
 		mHasLoadedOnce = true;
 	}
 
@@ -282,7 +282,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickPullDown(String strSearch) {
 		refreshList = true;
 		pageNo = 0;
-		getSearchAssetData(SEARCH_ASSET_LIST, strSearch, FIRST_PAGE);
+		getCustomGoodsData(SEARCH_ASSET_LIST, strSearch, FIRST_PAGE);
 	}
 
 	/**
@@ -294,7 +294,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	@Override
 	public void onClickLoadMore(String strSearch) {
 		loadMoreList = true;
-		getSearchAssetData(SEARCH_ASSET_LIST_UP, strSearch, pageNo);
+		getCustomGoodsData(SEARCH_ASSET_LIST_UP, strSearch, pageNo);
 	}
 
 	@Override
