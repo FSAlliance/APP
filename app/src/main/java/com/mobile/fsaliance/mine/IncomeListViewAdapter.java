@@ -7,15 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.fsaliance.common.vo.IncomeRecord;
-import com.mobile.fsaliance.common.vo.PresentRecord;
 
 import java.util.List;
 

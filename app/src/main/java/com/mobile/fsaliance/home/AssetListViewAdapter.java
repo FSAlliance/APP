@@ -3,7 +3,7 @@ package com.mobile.fsaliance.home;
 import com.bumptech.glide.Glide;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.Good;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -21,17 +21,17 @@ import java.util.List;
 public class AssetListViewAdapter extends BaseAdapter {
 	private Context context;
 	private AssetListViewAdapterDelegate delegate;
-	private List<Asset> assets;
+	private List<Good> assets;
 	private LayoutInflater layoutInflater;
 
-	public AssetListViewAdapter(Context context, List<Asset> assetList) {
+	public AssetListViewAdapter(Context context, List<Good> assetList) {
 		super();
 		this.context = context;
 		this.layoutInflater = LayoutInflater.from(context);
 		this.assets = assetList;
 	}
 
-	public void update(List<Asset> data) {
+	public void update(List<Good> data) {
 		if (data == null) {
 			L.e("data = null!");
 			return;
@@ -80,7 +80,7 @@ public class AssetListViewAdapter extends BaseAdapter {
 			holder = (Holder) view.getTag();
 		}
 		if (assets != null) {
-			holder.goodsDescribeText.setText(assets.get(position).getModel()); //描述
+//			holder.goodsDescribeText.setText(assets.get(position).getModel()); //描述
 			holder.goodsPriceDiscountText.setText("10"); //商品优惠卷价格
 			holder.goodsPriceText.setText("100"); //商品价格
 			holder.goodsSaleNumText.setText("12");//商品销量
@@ -89,7 +89,7 @@ public class AssetListViewAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					if (delegate != null) {
-						delegate.onClickItem(assets.get(position));
+//						delegate.onClickItem(assets.get(position));
 					}
 				}
 			});
@@ -110,6 +110,6 @@ public class AssetListViewAdapter extends BaseAdapter {
 
 	public interface AssetListViewAdapterDelegate {
 
-		void onClickItem(Asset asset);// 点击每一个item
+		void onClickItem(Good asset);// 点击每一个item
 	}
 }

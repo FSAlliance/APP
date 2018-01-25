@@ -13,7 +13,7 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.Good;
 import com.mobile.fsaliance.home.AssetListViewAdapter;
 
 
@@ -101,7 +101,7 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 	 * @Description: 刷新并显示数据
 	 * @date 2017/12/26 21:59
 	 */
-	public void showMyAssetList(List<Asset> myAssetList) {
+	public void showMyAssetList(List<Good> myAssetList) {
 		if (myAssetList == null) {
 			L.e("myAssetList == null");
 			return;
@@ -167,7 +167,7 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 	}
 
 	@Override
-	public void onClickItem(Asset asset) {
+	public void onClickItem(Good asset) {
 		if (super.delegate instanceof MfrmMineAssetDelegate) {
 			((MfrmMineAssetDelegate) super.delegate).onClickToDetail(asset);
 		}
@@ -176,7 +176,7 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 
 	public interface MfrmMineAssetDelegate {
 
-		void onClickToDetail(Asset asset);//点击详情
+		void onClickToDetail(Good asset);//点击详情
 
 		void pullDownRefresh(); //下拉刷新
 

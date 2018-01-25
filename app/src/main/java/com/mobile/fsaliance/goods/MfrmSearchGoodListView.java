@@ -14,7 +14,7 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.Good;
 import com.mobile.fsaliance.home.AssetListViewAdapter;
 
 import java.util.List;
@@ -134,7 +134,7 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
 
 
     @Override
-    public void onClickItem(Asset asset) {
+    public void onClickItem(Good asset) {
         if (super.delegate instanceof MfrmSearchGoodListDelegate) {
             ((MfrmSearchGoodListDelegate) super.delegate).onClickToDetail(asset);
         }
@@ -177,7 +177,7 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
      * @Description 刷新并显示数据
      * @date 2017/9/8 14:44
      */
-    public void showSearchAssetList(List<Asset> myAssetList) {
+    public void showSearchAssetList(List<Good> myAssetList) {
         if (myAssetList == null) {
             L.e("myAssetList == null");
             return;
@@ -220,7 +220,7 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
 
         void onClickLoadMore(String searchTxt); //上拉加载
 
-        void onClickToDetail(Asset asset); //上啦加载
+        void onClickToDetail(Good asset); //上啦加载
 
         void onClickBack();//返回键
     }
