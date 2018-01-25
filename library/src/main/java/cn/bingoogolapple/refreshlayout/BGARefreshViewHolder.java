@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.bingoogolapple.refreshlayout;
 
 import android.content.Context;
@@ -25,11 +24,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 /**
- * @author tanyadong
- * @Description: 继承该抽象类实现响应的抽象方法，做出各种下拉刷新效果。参考BGANormalRefreshViewHolder、
- * @date 2017/4/26  11:14
+ * 作者:王浩 邮件:bingoogolapple@gmail.com
+ * 创建时间:15/5/21 12:56
+ * 描述:继承该抽象类实现响应的抽象方法，做出各种下拉刷新效果。参考BGANormalRefreshViewHolder、BGAStickinessRefreshViewHolder、BGAMoocStyleRefreshViewHolder、BGAMeiTuanRefreshViewHolder
  */
 public abstract class BGARefreshViewHolder {
     /**
@@ -77,7 +75,7 @@ public abstract class BGARefreshViewHolder {
     /**
      * 正在加载更多时的文本
      */
-    protected int mLodingMoreText = R.string.upload_more;
+    protected String mLodingMoreText = "加载中...";
     /**
      * 是否开启加载更多功能
      */
@@ -117,7 +115,7 @@ public abstract class BGARefreshViewHolder {
      *
      * @param loadingMoreText
      */
-    public void setLoadingMoreText(int loadingMoreText) {
+    public void setLoadingMoreText(String loadingMoreText) {
         mLodingMoreText = loadingMoreText;
     }
 

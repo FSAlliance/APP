@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.bingoogolapple.refreshlayout;
 
 import android.content.Context;
@@ -26,9 +25,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * @author tanyadong
- * @Description: 上下拉刷新
- * @date 2017/4/26  11:10
+ * 作者:王浩 邮件:bingoogolapple@gmail.com
+ * 创建时间:15/5/21 13:05
+ * 描述:类似新浪微博下拉刷新风格
  */
 public class BGANormalRefreshViewHolder extends BGARefreshViewHolder {
     private TextView mHeaderStatusTv;
@@ -38,9 +37,9 @@ public class BGANormalRefreshViewHolder extends BGARefreshViewHolder {
     private RotateAnimation mUpAnim;
     private RotateAnimation mDownAnim;
 
-    private int mPullDownRefreshText = R.string.pull_down_to_refresh;
-    private int mReleaseRefreshText = R.string.release_the_update;
-    private int mRefreshingText = R.string.device_alarm_load;
+    private String mPullDownRefreshText = "下拉刷新";
+    private String mReleaseRefreshText = "释放更新";
+    private String mRefreshingText = "加载中...";
 
     /**
      * @param context
@@ -65,7 +64,7 @@ public class BGANormalRefreshViewHolder extends BGARefreshViewHolder {
      *
      * @param pullDownRefreshText
      */
-    public void setPullDownRefreshText(int pullDownRefreshText) {
+    public void setPullDownRefreshText(String pullDownRefreshText) {
         mPullDownRefreshText = pullDownRefreshText;
     }
 
@@ -74,7 +73,7 @@ public class BGANormalRefreshViewHolder extends BGARefreshViewHolder {
      *
      * @param releaseRefreshText
      */
-    public void setReleaseRefreshText(int releaseRefreshText) {
+    public void setReleaseRefreshText(String releaseRefreshText) {
         mReleaseRefreshText = releaseRefreshText;
     }
 
@@ -83,7 +82,7 @@ public class BGANormalRefreshViewHolder extends BGARefreshViewHolder {
      *
      * @param refreshingText
      */
-    public void setRefreshingText(int refreshingText) {
+    public void setRefreshingText(String refreshingText) {
         mRefreshingText = refreshingText;
     }
 
@@ -114,12 +113,7 @@ public class BGANormalRefreshViewHolder extends BGARefreshViewHolder {
     @Override
     public void changeToIdle() {
     }
-    /**
-      * @author tanyadong
-      * @Title changeToPullDown
-      * @Description //开始下拉
-      * @date 2017/7/18 11:56
-    */
+
     @Override
     public void changeToPullDown() {
         mHeaderStatusTv.setText(mPullDownRefreshText);
@@ -129,7 +123,7 @@ public class BGANormalRefreshViewHolder extends BGARefreshViewHolder {
         mDownAnim.setDuration(150);
         mHeaderArrowIv.startAnimation(mDownAnim);
     }
-    //下拉到一定程度，可以刷新
+
     @Override
     public void changeToReleaseRefresh() {
         mHeaderStatusTv.setText(mReleaseRefreshText);
