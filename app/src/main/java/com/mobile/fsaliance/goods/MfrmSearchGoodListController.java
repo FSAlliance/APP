@@ -9,7 +9,8 @@ import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.T;
-import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.Favorite;
+import com.mobile.fsaliance.common.vo.Good;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -37,7 +38,6 @@ public class MfrmSearchGoodListController extends BaseController
     private static final int FAVORITE_GOODS = 0;//选品库中的数据
     private static final int SEARCH_ASSET_LIST = 1;//搜索设备
 
-    private List<Asset> assetList;
     private int pageNo = 0;
     private boolean refreshList = false;
     private boolean loadMoreList = false;
@@ -68,7 +68,6 @@ public class MfrmSearchGoodListController extends BaseController
         mfrmSearchGoodListView = (MfrmSearchGoodListView)findViewById(R.id.mfrm_search_good_list_view);
         mfrmSearchGoodListView.setDelegate(this);
         queue = NoHttp.newRequestQueue();
-        assetList = new ArrayList<>();
         refreshList = false;
         loadMoreList = false;
 
@@ -144,16 +143,6 @@ public class MfrmSearchGoodListController extends BaseController
     }
 
     @Override
-    public void onClickToDetail(Good asset) {
-        Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-        intent.setClass(this, MfrmGoodsInfoController.class);
-        //TODO 填写具体的参数
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    @Override
     public void onClickToGoodDetail(Good asset) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
@@ -185,7 +174,7 @@ public class MfrmSearchGoodListController extends BaseController
             switch (i) {
                 //获取选品库中的信息
                 case FAVORITE_GOODS:
-                    List<Good> goods = analyzeData(result);
+                    List<Good> goods = analyzeFavoriteData(result);
                     if (goods == null || goods.size() <= 0) {
                         //TODO 展示没有数据
                         return;
@@ -196,8 +185,8 @@ public class MfrmSearchGoodListController extends BaseController
                     break;
                 //搜索商品信息
                 case SEARCH_ASSET_LIST:
-                    assetList = analyzeAssetsData(result);
-                    mfrmSearchGoodListView.showSearchAssetList(assetList);
+//                    assetList = analyzeAssetsData(result);
+//                    mfrmSearchGoodListView.showSearchAssetList(assetList);
                     break;
                 default:
                     break;
@@ -205,9 +194,16 @@ public class MfrmSearchGoodListController extends BaseController
         }
     }
 
-    private List<Good> analyzeData(String result){
+    /**
+     * @param result 返回的数据
+     * @author yuanxueyuan
+     * @Title: analyzeFavoriteData
+     * @Description: 解析喜爱组的数据
+     * @date 2018/1/28 21:29
+     */
+    private List<Good> analyzeFavoriteData(String result) {
         if (null == result || "".equals(result)) {
-            reloadNoDataList();
+//            reloadNoDataList();
             return null;
         }
         List<Good> goods = new ArrayList<>();
@@ -294,7 +290,6 @@ public class MfrmSearchGoodListController extends BaseController
                     goods.add(good);
                 }
             }
-            L.i("QQQQQQQ","goods: "+goods.toString());
             return goods;
 
         } catch (JSONException e) {
@@ -303,135 +298,28 @@ public class MfrmSearchGoodListController extends BaseController
         return goods;
     }
 
-
-    /**
-     * @author tanyadong
-     * @Title analyzeAssetsData
-     * @Description 解析查询到的资产
-     * @date 2017/9/9 20:57
-     */
-    private List<Good> analyzeAssetsData(String result) {
-        if (!loadMoreList) {
-            if (assetList != null) {
-                assetList.clear();
-            }
-        }
-        if (null == result || "".equals(result)) {
-            T.showShort(this, R.string.get_myasset_failed);
-            reloadNoDataList();
-            L.e("result == null");
-            return null;
-        }
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            if (jsonObject.has("code") && jsonObject.optInt("code") == 0) {
-                JSONArray jsonArray = jsonObject.optJSONArray("content");
-                mfrmSearchGoodListView.isLoadMore = true;
-                if (jsonArray.length() <= 0) {
-                    if (loadMoreList) {
-                        mfrmSearchGoodListView.isLoadMore = false;
-                        T.showShort(this, R.string.check_asset_no_more);
-                    } else {
-                        reloadNoDataList();
-                    }
-                    return null;
-                } else {
-                    mfrmSearchGoodListView.setNoDataView(false);
-                }
-                if (assetList == null){
-                    assetList = new ArrayList<>();
-                }
-                int arrCount = 0;
-                if (assetList != null) {
-                    arrCount = assetList.size();
-                }
-                if (jsonArray.length() >= PAGE_SIZE) {
-                    pageNo++;
-                } else {
-                    if (lastCount < PAGE_SIZE && arrCount > 0) {
-                        int index = (pageNo - 1) * PAGE_SIZE;//开始从某一位移除
-                        for (int i = index; i < arrCount; i++) {
-                            if (i >= index && i < index + lastCount) {
-                                if (index < assetList.size()){
-                                    assetList.remove(index);
-                                }
-                            }
-                        }
-                    }
-                }
-                for (int i = 0; i < jsonArray.length(); i++) {
-//                    Asset asset = new Asset();
-//                    JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
-//                    asset.setState(jsonObjectContent.getInt("state"));
-//                    asset.setType(jsonObjectContent.getString("type"));
-//                    asset.setCodeId(jsonObjectContent.getString("codeId"));
-//                    asset.setJobId(jsonObjectContent.getString("jobId"));
-//                    asset.setUserName(jsonObjectContent.optString("user"));
-//                    asset.setName(jsonObjectContent.getString("name"));
-//                    asset.setBoard(jsonObjectContent.getString("board"));
-//                    asset.setBox(jsonObjectContent.getString("box"));
-//                    asset.setBuild(jsonObjectContent.getString("build"));
-//                    asset.setCenter(jsonObjectContent.getString("center"));
-//                    asset.setCost(jsonObjectContent.getString("cost"));
-//                    asset.setCostIt(jsonObjectContent.getString("costIt"));
-//                    asset.setCount(jsonObjectContent.getString("count"));
-//                    asset.setCpu(jsonObjectContent.getString("cpu"));
-//                    asset.setDisk(jsonObjectContent.getString("disk"));
-//                    asset.setFloor(jsonObjectContent.getString("floor"));
-//                    asset.setHardDriver(jsonObjectContent.getString("hardDriver"));
-//                    asset.setLeavePlace(jsonObjectContent.getString("leavePlace"));
-//                    asset.setMemory(jsonObjectContent.getString("memory"));
-//                    asset.setModel(jsonObjectContent.getString("model"));
-//                    asset.setMoney(jsonObjectContent.getString("money"));
-//                    asset.setOther(jsonObjectContent.getString("other"));
-//                    asset.setPart(jsonObjectContent.getString("part"));
-//                    asset.setPlace(jsonObjectContent.getString("place"));
-//                    asset.setRealPlace(jsonObjectContent.getString("realPlace"));
-//                    asset.setSaver(jsonObjectContent.getString("saver"));
-//                    asset.setRealSaver(jsonObjectContent.getString("realSaver"));
-//                    asset.setPrice(jsonObjectContent.getString("price"));
-//                    asset.setSoftDriver(jsonObjectContent.getString("softDriver"));
-//                    asset.setTime(jsonObjectContent.getString("time"));
-//                    asset.setVideoCard(jsonObjectContent.getString("videoCard"));
-//                    assetList.add(asset);
-                }
-                lastCount = jsonArray.length();
-            } else {
-                T.showShort(this, R.string.get_myasset_failed);
-                reloadNoDataList();
-                return null;
-            }
-        } catch (JSONException e) {
-            T.showShort(this, R.string.get_myasset_failed);
-            reloadNoDataList();
-            e.printStackTrace();
-        }
-        return  assetList;
-    }
-
-
     /**
      * @author tanyadong
      * @Title reloadNoDataList
      * @Description 无数据刷新列表
      * @date 2017/9/9 20:59
      */
-    private void reloadNoDataList() {
+    /*private void reloadNoDataList() {
         if (assetList == null || assetList.size() <= 0) {
             mfrmSearchGoodListView.setNoDataView(true);
             mfrmSearchGoodListView.showSearchAssetList(assetList);
         }
-    }
+    }*/
 
     @Override
     public void onFailed(int i, Response response) {
-        if (refreshList == true) {
-            if (assetList != null) {
-                assetList.clear();
-            }
-        }
+//        if (refreshList == true) {
+//            if (assetList != null) {
+//                assetList.clear();
+//            }
+//        }
         Exception exception = response.getException();
-        reloadNoDataList();
+//        reloadNoDataList();
         if (exception instanceof NetworkError) {
             T.showShort(this, R.string.network_error);
             return;

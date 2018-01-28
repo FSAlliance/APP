@@ -14,7 +14,7 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.Good;
 import com.mobile.fsaliance.home.AssetListViewAdapter;
 import com.mobile.fsaliance.home.GoodListViewAdapter;
 
@@ -133,14 +133,6 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
         return isLoadMore;
     }
 
-
-    @Override
-    public void onClickItem(Good asset) {
-        if (super.delegate instanceof MfrmSearchGoodListDelegate) {
-            ((MfrmSearchGoodListDelegate) super.delegate).onClickToDetail(asset);
-        }
-    }
-
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -249,8 +241,6 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
         void onClickPullDown(String searchTxt); //下拉刷新
 
         void onClickLoadMore(String searchTxt); //上拉加载
-
-        void onClickToDetail(Asset asset); //点击
 
         void onClickToGoodDetail(Good asset); //点击商品列表
 
