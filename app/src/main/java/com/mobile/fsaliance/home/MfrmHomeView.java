@@ -88,42 +88,6 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 
 	}
 
-	public void initFavoriteView(List<Favorite> favorites){
-		if (favorites == null || favorites.size() <= 0) {
-			L.e("favorites == null");
-			return;
-		}
-		for (int i = 0; i < favorites.size(); i++) {
-			switch (i) {
-				case 1:
-					oneMiddleLL.setVisibility(VISIBLE);
-
-					break;
-				case 2:
-					twoMiddleLL.setVisibility(VISIBLE);
-					break;
-				case 3:
-					threeMiddleLL.setVisibility(VISIBLE);
-					break;
-				case 4:
-					fourMiddleLL.setVisibility(VISIBLE);
-					break;
-				case 5:
-					fiveMiddleLL.setVisibility(VISIBLE);
-					break;
-				case 6:
-					sixMiddleLL.setVisibility(VISIBLE);
-					break;
-				case 7:
-					sevenMiddleLL.setVisibility(VISIBLE);
-					break;
-				case 8:
-					eightMiddleLL.setVisibility(VISIBLE);
-					break;
-			}
-		}
-
-	}
 	/**
 	 * 初始化上下拉刷新控件
 	 */

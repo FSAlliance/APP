@@ -15,7 +15,9 @@ import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Asset;
+import com.mobile.fsaliance.common.vo.Good;
 import com.mobile.fsaliance.home.AssetListViewAdapter;
+import com.mobile.fsaliance.home.GoodListViewAdapter;
 
 import java.util.List;
 
@@ -28,9 +30,10 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * @date 创建时间 2017/9/5
  * @Description 搜索
  */
-public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate, AssetListViewAdapter.AssetListViewAdapterDelegate, AbsListView.OnScrollListener {
+public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate, AssetListViewAdapter.AssetListViewAdapterDelegate, GoodListViewAdapter.GoodListViewAdapterDelegate, AbsListView.OnScrollListener {
     private TextView assetListNoDataTxt;
     private AssetListViewAdapter assetListViewAdapter;
+    private GoodListViewAdapter goodListViewAdapter;
     public CircleProgressBarView circleProgressBarView;
     public boolean isLoadMore;
 
@@ -38,7 +41,6 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
     private ListView searchGoodList;
     private BGARefreshLayout mRefreshLayout;
     private LinearLayout backLL;
-
 
 
     public MfrmSearchGoodListView(Context context, AttributeSet attrs) {
@@ -58,8 +60,8 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
         searchGoodList = (ListView) findViewById(R.id.search_goods_list_back_list_view);
         mRefreshLayout = (BGARefreshLayout) findViewById(R.id.search_goods_list_back_refreshLayout);
         //商品列表
-		assetListNoDataTxt = (TextView) findViewById(R.id.txt_search_good_list_no_data);
-		circleProgressBarView = (CircleProgressBarView) findViewById(R.id.search_good_list_circleProgressBarView);
+        assetListNoDataTxt = (TextView) findViewById(R.id.txt_search_good_list_no_data);
+        circleProgressBarView = (CircleProgressBarView) findViewById(R.id.search_good_list_circleProgressBarView);
         initFresh();
     }
 
@@ -194,6 +196,29 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
     }
 
     /**
+     * @param goodList 商品列表
+     * @author yuanxueyuan
+     * @Title: showGoodLisgt
+     * @Description: 展示商品列表
+     * @date 2018/1/28 20:38
+     */
+    public void showGoodList(List<Good> goodList) {
+        if (goodList == null) {
+            L.e("goodList == null");
+            return;
+        }
+        if (goodListViewAdapter == null) {
+            goodListViewAdapter = new GoodListViewAdapter(context, goodList);
+            searchGoodList.setAdapter(goodListViewAdapter);
+            goodListViewAdapter.setDelegate(this);
+        } else {
+            goodListViewAdapter.update(goodList);
+            goodListViewAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+    /**
      * @author tanyadong
      * @Title: setNoDataView
      * @Description: 设置没有数据界面显示
@@ -212,6 +237,12 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
 
     }
 
+    @Override
+    public void onClickItem(Good good) {
+        if (super.delegate instanceof MfrmSearchGoodListDelegate) {
+            ((MfrmSearchGoodListDelegate) super.delegate).onClickToGoodDetail(good);
+        }
+    }
 
 
     public interface MfrmSearchGoodListDelegate {
@@ -220,7 +251,9 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
 
         void onClickLoadMore(String searchTxt); //上拉加载
 
-        void onClickToDetail(Asset asset); //上啦加载
+        void onClickToDetail(Asset asset); //点击
+
+        void onClickToGoodDetail(Good asset); //点击商品列表
 
         void onClickBack();//返回键
     }

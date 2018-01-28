@@ -40,20 +40,21 @@ public class MfrmHomeController extends BaseFragmentController implements
 		MfrmHomeView.MfrmSearchDelegate, OnResponseListener {
 	private MfrmHomeView mfrmHomeView;
 	private RequestQueue queue;
+
 	private static final int INIT = 0;
 	private static final int SEARCH_ASSET_LIST = 1;
 	private static final int SEARCH_ASSET_LIST_UP = 2;
 	private static final int GET_FAVORITE = 3;//获取选品库
-	private List<Asset> assetList;
-	private int pageNo = 0;
 	private static final int PAGE_SIZE = 5;//每页数据条数
 	private static final int FIRST_PAGE = 0;//第几页
+
+	private List<Asset> assetList;
+	private int pageNo = 0;
 	private boolean refreshList = false;
 	private boolean loadMoreList = false;
 	private Object cancelObject = new Object();
 	private int lastCount = 0;//上次请求数据个数
 	private boolean mHasLoadedOnce;
-
 	private boolean isPrepared;
 	private List<Favorite> favoriteList;
 
@@ -77,6 +78,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 		refreshList = false;
 		loadMoreList = false;
 		lazyLoad();
+		//获取选品库
 		getFavoriteGroup();
 		return view;
 	}
@@ -88,7 +90,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	  * @date 2017/9/9 10:42
 	*/
 	private void getCustomGoodsData(int i ,String param, int pageNo) {
-		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/Goods/Custom";
+		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/Good/Custom";
 		Request<String> request = NoHttp.createStringRequest(uri);
 		request.cancelBySign(cancelObject);
 		request.add("param", param);
@@ -104,7 +106,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	 * @date 2017/9/9 10:42
 	 */
 	private void getFavoriteGroup() {
-		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/Goods/favoriteGroup";
+		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_FAVORITE_LIST;
 		Request<String> request = NoHttp.createStringRequest(uri);
 		request.cancelBySign(cancelObject);
 		request.add("pageNo", 1);
@@ -155,8 +157,8 @@ public class MfrmHomeController extends BaseFragmentController implements
 			L.e("favoriteList == null");
 			return;
 		}
+		bundle.putInt("from", AppMacro.FROM_HOME);
 		bundle.putSerializable("favorite", favoriteList.get(0));
-		bundle.putString("search_goods", "ONE");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
 		startActivity(intent);
@@ -170,8 +172,8 @@ public class MfrmHomeController extends BaseFragmentController implements
 			L.e("favoriteList == null");
 			return;
 		}
+		bundle.putInt("from", AppMacro.FROM_HOME);
 		bundle.putSerializable("favorite", favoriteList.get(1));
-		bundle.putString("search_goods", "TWO");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
 		startActivity(intent);
@@ -186,7 +188,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 			return;
 		}
 		bundle.putSerializable("favorite", favoriteList.get(2));
-		bundle.putString("search_goods", "THREE");
+		bundle.putInt("from", AppMacro.FROM_HOME);
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
 		startActivity(intent);
@@ -201,7 +203,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 			return;
 		}
 		bundle.putSerializable("favorite", favoriteList.get(3));
-		bundle.putString("search_goods", "FOUR");
+		bundle.putInt("from", AppMacro.FROM_HOME);
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
 		startActivity(intent);
@@ -216,8 +218,8 @@ public class MfrmHomeController extends BaseFragmentController implements
 			L.e("favoriteList == null");
 			return;
 		}
+		bundle.putInt("from", AppMacro.FROM_HOME);
 		bundle.putSerializable("favorite", favoriteList.get(4));
-		bundle.putString("search_goods", "FIVE");
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
 		startActivity(intent);
@@ -233,7 +235,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 			return;
 		}
 		bundle.putSerializable("favorite", favoriteList.get(5));
-		bundle.putString("search_goods", "SIX");
+		bundle.putInt("from", AppMacro.FROM_HOME);
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
 		startActivity(intent);
@@ -249,7 +251,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 			return;
 		}
 		bundle.putSerializable("favorite", favoriteList.get(6));
-		bundle.putString("search_goods", "SEVEN");
+		bundle.putInt("from", AppMacro.FROM_HOME);
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
 		startActivity(intent);
@@ -265,7 +267,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 			return;
 		}
 		bundle.putSerializable("favorite", favoriteList.get(7));
-		bundle.putString("search_goods", "EIGHT");
+		bundle.putInt("from", AppMacro.FROM_HOME);
 		intent.putExtras(bundle);
 		intent.setClass(context,MfrmSearchGoodListController.class);
 		startActivity(intent);
@@ -343,13 +345,6 @@ public class MfrmHomeController extends BaseFragmentController implements
 			if (GET_FAVORITE == i) {
 				L.i("QQQQQQQQQQ", "result: " + result);
 				analyzeFavoriteGroup(result);
-				L.i("QQQQQQQQQQQQ","List"+favoriteList.toString());
-				if (mfrmHomeView == null) {
-					L.e("mfrmHomeView == null");
-					return;
-				}
-				mfrmHomeView.initFavoriteView(favoriteList);
-				return;
 			} else {
 				assetList = analyzeAssetsData(result);
 				mfrmHomeView.showSearchAssetList(assetList, i);
