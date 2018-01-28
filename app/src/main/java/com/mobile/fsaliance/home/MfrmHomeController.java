@@ -40,21 +40,20 @@ public class MfrmHomeController extends BaseFragmentController implements
 		MfrmHomeView.MfrmSearchDelegate, OnResponseListener {
 	private MfrmHomeView mfrmHomeView;
 	private RequestQueue queue;
-
 	private static final int INIT = 0;
 	private static final int SEARCH_ASSET_LIST = 1;
 	private static final int SEARCH_ASSET_LIST_UP = 2;
 	private static final int GET_FAVORITE = 3;//获取选品库
+	private List<Good> goodsList;
+	private int pageNo = 0;
 	private static final int PAGE_SIZE = 5;//每页数据条数
 	private static final int FIRST_PAGE = 0;//第几页
-
-	private List<Asset> assetList;
-	private int pageNo = 0;
 	private boolean refreshList = false;
 	private boolean loadMoreList = false;
 	private Object cancelObject = new Object();
 	private int lastCount = 0;//上次请求数据个数
 	private boolean mHasLoadedOnce;
+
 	private boolean isPrepared;
 	private List<Favorite> favoriteList;
 
@@ -72,7 +71,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 		}
 		mfrmHomeView.setDelegate(this);
 		queue = NoHttp.newRequestQueue();
-		assetList = new ArrayList<>();
+		goodsList = new ArrayList<>();
 		favoriteList = new ArrayList<>();
 		isPrepared = true;
 		refreshList = false;
@@ -89,13 +88,13 @@ public class MfrmHomeController extends BaseFragmentController implements
 	  * @Description 获取搜索数据
 	  * @date 2017/9/9 10:42
 	*/
-	private void getCustomGoodsData(int i ,String param, int pageNo) {
-		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/Good/Custom";
+	private void getCustomGoodsData(int i ,long adzoneid, long pageNo) {
+		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/Goods/Custom";
 		Request<String> request = NoHttp.createStringRequest(uri);
 		request.cancelBySign(cancelObject);
-		request.add("param", param);
-		request.add("page", pageNo);
-		request.add("limit", PAGE_SIZE);
+		request.add("adzoneid", adzoneid);
+		request.add("pageNo", pageNo);
+		request.add("pageSize", PAGE_SIZE);
 		queue.add(i, request, this);
 	}
 
@@ -125,7 +124,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 		if (!isPrepared || !isVisible || mHasLoadedOnce) {
 			return;
 		}
-		getCustomGoodsData(INIT, "", FIRST_PAGE);
+		getCustomGoodsData(INIT, AppMacro.ADZONEID, FIRST_PAGE);
 		mHasLoadedOnce = true;
 	}
 
@@ -284,7 +283,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickPullDown(String strSearch) {
 		refreshList = true;
 		pageNo = 0;
-		getCustomGoodsData(SEARCH_ASSET_LIST, strSearch, FIRST_PAGE);
+		getCustomGoodsData(SEARCH_ASSET_LIST, AppMacro.ADZONEID, FIRST_PAGE);
 	}
 
 	/**
@@ -296,11 +295,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 	@Override
 	public void onClickLoadMore(String strSearch) {
 		loadMoreList = true;
-		getCustomGoodsData(SEARCH_ASSET_LIST_UP, strSearch, pageNo);
+		getCustomGoodsData(SEARCH_ASSET_LIST_UP, AppMacro.ADZONEID, pageNo);
 	}
 
 	@Override
-	public void onClickToDetail(Asset asset) {
+	public void onClickToDetail(Good asset) {
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
 		intent.setClass(context, MfrmGoodsInfoController.class);
@@ -311,12 +310,12 @@ public class MfrmHomeController extends BaseFragmentController implements
 
 	@Override
 	public void onClickToDetailEx(int position) {
-		if (assetList == null || assetList.size() <= 0) {
+		if (goodsList == null || goodsList.size() <= 0) {
 			L.e("assetList == null ");
 			return;
 		}
 
-		if ((assetList.size() - 1) < position) {
+		if ((goodsList.size() - 1) < position) {
 			L.e("assetList == null ");
 			return;
 		}
@@ -346,8 +345,8 @@ public class MfrmHomeController extends BaseFragmentController implements
 				L.i("QQQQQQQQQQ", "result: " + result);
 				analyzeFavoriteGroup(result);
 			} else {
-				assetList = analyzeAssetsData(result);
-				mfrmHomeView.showSearchAssetList(assetList, i);
+				goodsList = analyzeGoodsData(result);
+				mfrmHomeView.showSearchAssetList(goodsList, i);
 			}
 		}
 	}
@@ -408,14 +407,14 @@ public class MfrmHomeController extends BaseFragmentController implements
 
 	/**
 	  * @author tanyadong
-	  * @Title analyzeAssetsData
-	  * @Description 解析查询到的资产
+	  * @Title analyzeGoodsData
+	  * @Description 解析查询到的商品
 	  * @date 2017/9/9 20:57
 	*/
-	private List<Asset> analyzeAssetsData(String result) {
+	private List<Good> analyzeGoodsData(String result) {
 		if (!loadMoreList) {
-			if (assetList != null) {
-				assetList.clear();
+			if (goodsList != null) {
+				goodsList.clear();
 			}
 		}
 		if (null == result || "".equals(result)) {
@@ -426,8 +425,16 @@ public class MfrmHomeController extends BaseFragmentController implements
 		}
 		try {
 			JSONObject jsonObject = new JSONObject(result);
-			if (jsonObject.has("code") && jsonObject.optInt("code") == 0) {
-				JSONArray jsonArray = jsonObject.optJSONArray("content");
+			if (jsonObject.has("tbk_dg_item_coupon_get_response")) {
+				JSONObject optJSONObject = jsonObject.optJSONObject("tbk_dg_item_coupon_get_response");
+				if (optJSONObject == null) {
+					return null;
+				}
+				JSONObject jsonObjectResult= optJSONObject.optJSONObject("results");
+				if (jsonObjectResult == null) {
+					return null;
+				}
+				JSONArray jsonArray = jsonObjectResult.optJSONArray("tbk_coupon");
 				mfrmHomeView.isLoadMore = true;
 				if (jsonArray.length() <= 0) {
 					if (loadMoreList) {
@@ -441,62 +448,28 @@ public class MfrmHomeController extends BaseFragmentController implements
 					pageNo++;
 					mfrmHomeView.setNoDataView(false);
 				}
-				if (assetList == null){
-					assetList = new ArrayList<>();
+				if (goodsList == null){
+					goodsList = new ArrayList<>();
 				}
-				/*int arrCount = 0;
-				if (assetList != null) {
-					arrCount = assetList.size();
-				}*/
-				/*if (jsonArray.length() >= PAGE_SIZE) {
-					pageNo++;
-				} else {
-					if (lastCount < PAGE_SIZE && arrCount > 0) {
-						int index = (pageNo - 1) * PAGE_SIZE;//开始从某一位移除
-						for (int i = index; i < arrCount; i++) {
-							if (i >= index && i < index + lastCount) {
-								if (index < assetList.size()){
-									assetList.remove(index);
-								}
-							}
-						}
-					}
-				}*/
 				for (int i = 0; i < jsonArray.length(); i++) {
-					Asset asset = new Asset();
+					Good good = new Good();
 					JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
-					asset.setState(jsonObjectContent.getInt("state"));
-					asset.setType(jsonObjectContent.getString("type"));
-					asset.setCodeId(jsonObjectContent.getString("codeId"));
-					asset.setJobId(jsonObjectContent.getString("jobId"));
-					asset.setUserName(jsonObjectContent.optString("user"));
-					asset.setName(jsonObjectContent.getString("name"));
-					asset.setBoard(jsonObjectContent.getString("board"));
-					asset.setBox(jsonObjectContent.getString("box"));
-					asset.setBuild(jsonObjectContent.getString("build"));
-					asset.setCenter(jsonObjectContent.getString("center"));
-					asset.setCost(jsonObjectContent.getString("cost"));
-					asset.setCostIt(jsonObjectContent.getString("costIt"));
-					asset.setCount(jsonObjectContent.getString("count"));
-					asset.setCpu(jsonObjectContent.getString("cpu"));
-					asset.setDisk(jsonObjectContent.getString("disk"));
-					asset.setFloor(jsonObjectContent.getString("floor"));
-					asset.setHardDriver(jsonObjectContent.getString("hardDriver"));
-					asset.setLeavePlace(jsonObjectContent.getString("leavePlace"));
-					asset.setMemory(jsonObjectContent.getString("memory"));
-					asset.setModel(jsonObjectContent.getString("model"));
-					asset.setMoney(jsonObjectContent.getString("money"));
-					asset.setOther(jsonObjectContent.getString("other"));
-					asset.setPart(jsonObjectContent.getString("part"));
-					asset.setPlace(jsonObjectContent.getString("place"));
-					asset.setRealPlace(jsonObjectContent.getString("realPlace"));
-					asset.setSaver(jsonObjectContent.getString("saver"));
-					asset.setRealSaver(jsonObjectContent.getString("realSaver"));
-					asset.setPrice(jsonObjectContent.getString("price"));
-					asset.setSoftDriver(jsonObjectContent.getString("softDriver"));
-					asset.setTime(jsonObjectContent.getString("time"));
-					asset.setVideoCard(jsonObjectContent.getString("videoCard"));
-					assetList.add(asset);
+					good.setCommissionRate(jsonObjectContent.optString("commission_rate"));
+					good.setCouponClickUrl(jsonObjectContent.optString("coupon_click_url"));
+					good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
+					good.setCouponRemainCount(jsonObjectContent.optInt("coupon_remain_count"));
+					good.setCouponTotalCount(jsonObjectContent.optInt("coupon_total_count"));
+					good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
+					good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
+					good.setItemDescription(jsonObjectContent.optString("item_description"));
+					good.setItemUrl(jsonObjectContent.optString("item_url"));
+					good.setNick(jsonObjectContent.optString("nick"));
+					good.setGoodsPicturl(jsonObjectContent.optString("pict_url"));
+					good.setShopTitle(jsonObjectContent.optString("shop_title"));
+					good.setGoodsTitle(jsonObjectContent.optString("title"));
+					good.setVolume(jsonObjectContent.optInt("volume"));
+					good.setGoodsFinalPrice(jsonObjectContent.optString("zk_final_price"));
+					goodsList.add(good);
 				}
 				lastCount = jsonArray.length();
 			} else {
@@ -509,7 +482,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 			reloadNoDataList();
 			e.printStackTrace();
 		}
-		return  assetList;
+		return  goodsList;
 	}
 
 	/**
@@ -519,17 +492,17 @@ public class MfrmHomeController extends BaseFragmentController implements
 	  * @date 2017/9/9 20:59
 	*/
 	private void reloadNoDataList() {
-		if (assetList == null || assetList.size() <= 0) {
+		if (goodsList == null || goodsList.size() <= 0) {
 			mfrmHomeView.setNoDataView(true);
-			mfrmHomeView.showSearchAssetList(assetList, 0);
+			mfrmHomeView.showSearchAssetList(goodsList, 0);
 		}
 	}
 
 	@Override
 	public void onFailed(int i, Response response) {
 		if (refreshList == true) {
-			if (assetList != null) {
-				assetList.clear();
+			if (goodsList != null) {
+				goodsList.clear();
 			}
 		}
 		Exception exception = response.getException();

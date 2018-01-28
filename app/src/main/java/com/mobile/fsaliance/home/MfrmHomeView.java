@@ -15,8 +15,8 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.fsaliance.common.vo.Asset;
 import com.mobile.fsaliance.common.vo.Favorite;
+import com.mobile.fsaliance.common.vo.Good;
 
 
 import java.util.List;
@@ -149,7 +149,7 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 
 
 	@Override
-	public void onClickItem(Asset asset) {
+	public void onClickItem(Good asset) {
 		if (super.delegate instanceof MfrmSearchDelegate) {
 			((MfrmSearchDelegate) super.delegate).onClickToDetail(asset);
 		}
@@ -231,7 +231,7 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 	 * @Description 刷新并显示数据
 	 * @date 2017/9/8 14:44
 	 */
-	public void showSearchAssetList(List<Asset> myAssetList, int i) {
+	public void showSearchAssetList(List<Good> myAssetList, int i) {
 		if (myAssetList == null) {
 			L.e("myAssetList == null");
 			return;
@@ -292,7 +292,7 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 
 		void onClickLoadMore(String searchTxt); //上拉加载
 
-		void onClickToDetail(Asset asset); //上啦加载
+		void onClickToDetail(Good asset); //上啦加载
 
 		void onClickToDetailEx(int position);//点击详情
  	}

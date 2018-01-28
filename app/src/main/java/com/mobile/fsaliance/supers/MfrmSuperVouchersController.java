@@ -12,8 +12,8 @@ import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
-import com.mobile.fsaliance.common.vo.Asset;
 
+import com.mobile.fsaliance.common.vo.Good;
 import com.mobile.fsaliance.goods.MfrmGoodsInfoController;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
@@ -39,7 +39,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	private RequestQueue queue;
 	private static final int GET_ASSET_LIST = 0;
 	private Object cancelObject = new Object();
-	private List<Asset> assetList;
+	private List<Good> assetList;
 	private boolean refreshList = false;
 	private boolean loadMoreList = false;
 	private boolean mHasLoadedOnce;
@@ -121,7 +121,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	 * @date 2017/12/26 22:08
 	 */
 	@Override
-	public void onClickToDetail(Asset asset) {
+	public void onClickToDetail(Good asset) {
 		Intent intent = new Intent();
 		intent.setClass(context, MfrmGoodsInfoController.class);
 		startActivity(intent);
@@ -178,7 +178,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	 * @Description 解析查询到的资产
 	 * @date 2017/9/9 20:57
 	 */
-	private List<Asset> analyzeAssetsData(String result) {
+	private List<Good> analyzeAssetsData(String result) {
 		if (!loadMoreList) {
 			if (assetList != null) {
 				assetList.clear();
@@ -228,40 +228,40 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 					}
 				}
 				for (int i = 0; i < jsonArray.length(); i++) {
-					Asset asset = new Asset();
-					JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
-					asset.setState(jsonObjectContent.getInt("state"));
-					asset.setType(jsonObjectContent.getString("type"));
-					asset.setCodeId(jsonObjectContent.getString("codeId"));
-					asset.setJobId(jsonObjectContent.getString("jobId"));
-					asset.setUserName(jsonObjectContent.optString("user"));
-					asset.setName(jsonObjectContent.getString("name"));
-					asset.setBoard(jsonObjectContent.getString("board"));
-					asset.setBox(jsonObjectContent.getString("box"));
-					asset.setBuild(jsonObjectContent.getString("build"));
-					asset.setCenter(jsonObjectContent.getString("center"));
-					asset.setCost(jsonObjectContent.getString("cost"));
-					asset.setCostIt(jsonObjectContent.getString("costIt"));
-					asset.setCount(jsonObjectContent.getString("count"));
-					asset.setCpu(jsonObjectContent.getString("cpu"));
-					asset.setDisk(jsonObjectContent.getString("disk"));
-					asset.setFloor(jsonObjectContent.getString("floor"));
-					asset.setHardDriver(jsonObjectContent.getString("hardDriver"));
-					asset.setLeavePlace(jsonObjectContent.getString("leavePlace"));
-					asset.setMemory(jsonObjectContent.getString("memory"));
-					asset.setModel(jsonObjectContent.getString("model"));
-					asset.setMoney(jsonObjectContent.getString("money"));
-					asset.setOther(jsonObjectContent.getString("other"));
-					asset.setPart(jsonObjectContent.getString("part"));
-					asset.setPlace(jsonObjectContent.getString("place"));
-					asset.setRealPlace(jsonObjectContent.getString("realPlace"));
-					asset.setSaver(jsonObjectContent.getString("saver"));
-					asset.setRealSaver(jsonObjectContent.getString("realSaver"));
-					asset.setPrice(jsonObjectContent.getString("price"));
-					asset.setSoftDriver(jsonObjectContent.getString("softDriver"));
-					asset.setTime(jsonObjectContent.getString("time"));
-					asset.setVideoCard(jsonObjectContent.getString("videoCard"));
-					assetList.add(asset);
+//					Asset asset = new Asset();
+//					JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
+//					asset.setState(jsonObjectContent.getInt("state"));
+//					asset.setType(jsonObjectContent.getString("type"));
+//					asset.setCodeId(jsonObjectContent.getString("codeId"));
+//					asset.setJobId(jsonObjectContent.getString("jobId"));
+//					asset.setUserName(jsonObjectContent.optString("user"));
+//					asset.setName(jsonObjectContent.getString("name"));
+//					asset.setBoard(jsonObjectContent.getString("board"));
+//					asset.setBox(jsonObjectContent.getString("box"));
+//					asset.setBuild(jsonObjectContent.getString("build"));
+//					asset.setCenter(jsonObjectContent.getString("center"));
+//					asset.setCost(jsonObjectContent.getString("cost"));
+//					asset.setCostIt(jsonObjectContent.getString("costIt"));
+//					asset.setCount(jsonObjectContent.getString("count"));
+//					asset.setCpu(jsonObjectContent.getString("cpu"));
+//					asset.setDisk(jsonObjectContent.getString("disk"));
+//					asset.setFloor(jsonObjectContent.getString("floor"));
+//					asset.setHardDriver(jsonObjectContent.getString("hardDriver"));
+//					asset.setLeavePlace(jsonObjectContent.getString("leavePlace"));
+//					asset.setMemory(jsonObjectContent.getString("memory"));
+//					asset.setModel(jsonObjectContent.getString("model"));
+//					asset.setMoney(jsonObjectContent.getString("money"));
+//					asset.setOther(jsonObjectContent.getString("other"));
+//					asset.setPart(jsonObjectContent.getString("part"));
+//					asset.setPlace(jsonObjectContent.getString("place"));
+//					asset.setRealPlace(jsonObjectContent.getString("realPlace"));
+//					asset.setSaver(jsonObjectContent.getString("saver"));
+//					asset.setRealSaver(jsonObjectContent.getString("realSaver"));
+//					asset.setPrice(jsonObjectContent.getString("price"));
+//					asset.setSoftDriver(jsonObjectContent.getString("softDriver"));
+//					asset.setTime(jsonObjectContent.getString("time"));
+//					asset.setVideoCard(jsonObjectContent.getString("videoCard"));
+//					assetList.add(asset);
 				}
 				lastCount = jsonArray.length();
 			} else {

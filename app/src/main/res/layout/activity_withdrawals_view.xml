@@ -9,7 +9,7 @@
     <include android:id="@+id/title_include"
         layout="@layout/include_toolbar_title"/>
     <ImageView
-        android:src="@mipmap/bga_refresh_loading"
+        android:src="@drawable/moredetails_arrow"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:layout_width="150dp"
