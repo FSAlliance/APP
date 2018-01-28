@@ -10,9 +10,6 @@ public class Good {
 
 
     private String goodsId;//ID
-    private String goodsDescribe;//商品简介
-    private double goodsPriceDiscount;//商品优惠券价格
-    private double goodsPrice;//商品价格
     private int goodsSaleNum;//商品销量
     private String goodsImg;//商品图
     private String goodsCode;//商品的优惠卷的码
@@ -45,9 +42,7 @@ public class Good {
         this.goodsId = goodsId;
     }
 
-    public String getGoodsDescribe() {
-        return goodsDescribe;
-    }
+
 
     public String getGoodsFinalPriceWap() {
         return goodsFinalPriceWap;
@@ -82,9 +77,7 @@ public class Good {
         this.goodStatus = goodStatus;
     }
 
-    public void setGoodsDescribe(String goodsDescribe) {
-        this.goodsDescribe = goodsDescribe;
-    }
+
 
     public String getSellerId() {
         return sellerId;
@@ -102,21 +95,9 @@ public class Good {
         this.reservePrice = reservePrice;
     }
 
-    public double getGoodsPriceDiscount() {
-        return goodsPriceDiscount;
-    }
 
-    public void setGoodsPriceDiscount(double goodsPriceDiscount) {
-        this.goodsPriceDiscount = goodsPriceDiscount;
-    }
 
-    public double getGoodsPrice() {
-        return goodsPrice;
-    }
 
-    public void setGoodsPrice(double goodsPrice) {
-        this.goodsPrice = goodsPrice;
-    }
 
     public int getGoodsSaleNum() {
         return goodsSaleNum;
@@ -257,9 +238,6 @@ public class Good {
     public String toString() {
         return "Good{" +
                 "goodsId='" + goodsId + '\'' +
-                ", goodsDescribe='" + goodsDescribe + '\'' +
-                ", goodsPriceDiscount=" + goodsPriceDiscount +
-                ", goodsPrice=" + goodsPrice +
                 ", goodsSaleNum=" + goodsSaleNum +
                 ", goodsImg='" + goodsImg + '\'' +
                 ", goodsCode='" + goodsCode + '\'' +

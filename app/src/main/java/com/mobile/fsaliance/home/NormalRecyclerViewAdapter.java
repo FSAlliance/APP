@@ -1,7 +1,9 @@
 package com.mobile.fsaliance.home;
 
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.vo.Good;
 
@@ -27,8 +29,14 @@ public class NormalRecyclerViewAdapter extends BGARecyclerViewAdapter<Good> {
     }
 
     @Override
-    protected void fillData(BGAViewHolderHelper helper, int position, Good model) {
-        helper.setText(R.id.home_goods_describe, position+"");
+    protected void fillData(BGAViewHolderHelper helper, int position, Good good) {
+        helper.setText(R.id.home_goods_describe, good.getItemDescription());
+       ImageView imageView = helper.getImageView(R.id.home_goods_img);
+        Glide.with(mContext).load(good.getGoodsPicturl()).into(imageView);
+//        String newStr = good.getCouponInfo().substring(good.getCouponInfo().indexOf("减"),good.getCouponInfo().indexOf("元"));
+        helper.setText(R.id.home_goods_price_discount, good.getCouponInfo()); //优惠券价值
+        helper.setText(R.id.home_goods_price, good.getGoodsFinalPrice()); //折扣价
+        helper.setText(R.id.home_goods_sale_num, String.valueOf(good.getVolume())); //月销量
     }
 
 }

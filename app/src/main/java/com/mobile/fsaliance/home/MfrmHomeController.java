@@ -46,7 +46,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	private static final int GET_FAVORITE = 3;//获取选品库
 	private List<Good> goodsList;
 	private int pageNo = 0;
-	private static final int PAGE_SIZE = 5;//每页数据条数
+	private static final int PAGE_SIZE = 10;//每页数据条数
 	private static final int FIRST_PAGE = 0;//第几页
 	private boolean refreshList = false;
 	private boolean loadMoreList = false;
@@ -283,7 +283,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	public void onClickPullDown(String strSearch) {
 		refreshList = true;
 		pageNo = 0;
-		getCustomGoodsData(SEARCH_ASSET_LIST, AppMacro.ADZONEID, FIRST_PAGE);
+		getCustomGoodsData(SEARCH_ASSET_LIST, AppMacro.ADZONEID, pageNo);
 	}
 
 	/**
@@ -473,12 +473,12 @@ public class MfrmHomeController extends BaseFragmentController implements
 				}
 				lastCount = jsonArray.length();
 			} else {
-				T.showShort(context, R.string.get_myasset_failed);
+				T.showShort(context, R.string.get_goods_failed);
 				reloadNoDataList();
 				return null;
 			}
 		} catch (JSONException e) {
-			T.showShort(context, R.string.get_myasset_failed);
+			T.showShort(context, R.string.get_goods_failed);
 			reloadNoDataList();
 			e.printStackTrace();
 		}
@@ -523,7 +523,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 			T.showShort(context, R.string.network_error);
 			return;
 		}
-		T.showShort(context, R.string.login_failed);
+		T.showShort(context, R.string.get_goods_failed);
 	}
 
 	@Override
