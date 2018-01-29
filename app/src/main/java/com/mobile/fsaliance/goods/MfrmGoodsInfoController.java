@@ -236,7 +236,7 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
             String result = (String) response.get();
             L.i("QQQQQQQ", "result: " + result);
             switch (i) {
-                //获取选品库中的信息
+                //获取套口令
                 case GET_GOOD_CODE:
                     if (result == null || "".equals(result)) {
                         L.e("result == null");

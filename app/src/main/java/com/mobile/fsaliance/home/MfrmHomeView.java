@@ -34,7 +34,6 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate,AssetListViewAdapter.AssetListViewAdapterDelegate, AbsListView.OnScrollListener ,BGAOnItemChildClickListener {
 	private RecyclerView searchListView;
 	private TextView assetListNoDataTxt;
-//	private AssetListViewAdapter assetListViewAdapter;
 	private NormalRecyclerViewAdapter assetListViewAdapter;
 	public CircleProgressBarView circleProgressBarView;
 	private BGARefreshLayout mRefreshLayout;

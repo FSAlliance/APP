@@ -93,6 +93,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 		Request<String> request = NoHttp.createStringRequest(uri);
 		request.cancelBySign(cancelObject);
 		request.add("adzoneid", adzoneid);
+		request.add("platform", AppMacro.PLATFORM);
 		request.add("pageNo", pageNo);
 		request.add("pageSize", PAGE_SIZE);
 		queue.add(i, request, this);
@@ -314,7 +315,6 @@ public class MfrmHomeController extends BaseFragmentController implements
 			L.e("assetList == null ");
 			return;
 		}
-
 		if ((goodsList.size() - 1) < position) {
 			L.e("assetList == null ");
 			return;
@@ -322,10 +322,9 @@ public class MfrmHomeController extends BaseFragmentController implements
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
 		intent.setClass(context, MfrmGoodsInfoController.class);
-		//TODO 填写具体的参数
+		bundle.putSerializable("good", goodsList.get(position));
 		intent.putExtras(bundle);
 		startActivity(intent);
-
 	}
 
 
@@ -418,7 +417,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 			}
 		}
 		if (null == result || "".equals(result)) {
-			T.showShort(context, R.string.get_myasset_failed);
+			T.showShort(context, R.string.get_goods_failed);
 			reloadNoDataList();
 			L.e("result == null");
 			return null;
@@ -460,11 +459,10 @@ public class MfrmHomeController extends BaseFragmentController implements
 					good.setCouponRemainCount(jsonObjectContent.optInt("coupon_remain_count"));
 					good.setCouponTotalCount(jsonObjectContent.optInt("coupon_total_count"));
 					good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
-					good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
 					good.setItemDescription(jsonObjectContent.optString("item_description"));
 					good.setItemUrl(jsonObjectContent.optString("item_url"));
 					good.setNick(jsonObjectContent.optString("nick"));
-					good.setGoodsPicturl(jsonObjectContent.optString("pict_url"));
+					good.setGoodsImg(jsonObjectContent.optString("pict_url"));
 					good.setShopTitle(jsonObjectContent.optString("shop_title"));
 					good.setGoodsTitle(jsonObjectContent.optString("title"));
 					good.setVolume(jsonObjectContent.optInt("volume"));

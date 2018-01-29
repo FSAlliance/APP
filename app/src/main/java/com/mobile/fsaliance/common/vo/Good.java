@@ -12,7 +12,6 @@ public class Good implements Serializable{
 
 
     private String goodsId;//ID
-    private int goodsSaleNum;//商品销量
     private String goodsImg;//商品图
     private String goodsCode;//商品的优惠卷的码
     private String sellerId;// 卖家id
@@ -22,7 +21,6 @@ public class Good implements Serializable{
     private String goodsFinalPriceWap;//无线折扣价
     private String nick;//卖家名称
     private int volume; //30天销量
-    private String goodsPicturl;//商品主图
     private String itemUrl; //商品详情页链接地址
     private int  couponTotalCount;//优惠券总量
     private String commissionRate;//佣金比率(%)
@@ -98,17 +96,6 @@ public class Good implements Serializable{
     }
 
 
-
-
-
-    public int getGoodsSaleNum() {
-        return goodsSaleNum;
-    }
-
-    public void setGoodsSaleNum(int goodsSaleNum) {
-        this.goodsSaleNum = goodsSaleNum;
-    }
-
     public String getGoodsImg() {
         return goodsImg;
     }
@@ -163,14 +150,6 @@ public class Good implements Serializable{
 
     public void setVolume(int volume) {
         this.volume = volume;
-    }
-
-    public String getGoodsPicturl() {
-        return goodsPicturl;
-    }
-
-    public void setGoodsPicturl(String goodsPicturl) {
-        this.goodsPicturl = goodsPicturl;
     }
 
     public String getItemUrl() {
@@ -240,7 +219,6 @@ public class Good implements Serializable{
     public String toString() {
         return "Good{" +
                 "goodsId='" + goodsId + '\'' +
-                ", goodsSaleNum=" + goodsSaleNum +
                 ", goodsImg='" + goodsImg + '\'' +
                 ", goodsCode='" + goodsCode + '\'' +
                 ", shopTitle='" + shopTitle + '\'' +
@@ -248,7 +226,6 @@ public class Good implements Serializable{
                 ", goodsFinalPrice='" + goodsFinalPrice + '\'' +
                 ", nick='" + nick + '\'' +
                 ", volume='" + volume + '\'' +
-                ", goodsPicturl='" + goodsPicturl + '\'' +
                 ", itemUrl='" + itemUrl + '\'' +
                 ", couponTotalCount=" + couponTotalCount +
                 ", commissionRate='" + commissionRate + '\'' +
