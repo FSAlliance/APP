@@ -49,6 +49,7 @@
 
             <!--优惠卷-->
             <RelativeLayout
+                android:id="@+id/rl_goods_price_discount"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp">
 

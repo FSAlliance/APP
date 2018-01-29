@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -74,6 +75,7 @@ public class GoodListViewAdapter extends BaseAdapter {
             holder = new Holder();
             holder.goodsDescribeText = (TextView) view.findViewById(R.id.home_goods_describe);
             holder.goodsPriceDiscountText = (TextView) view.findViewById(R.id.home_goods_price_discount);
+            holder.goodsPriceDiscountRl = (RelativeLayout) view.findViewById(R.id.rl_goods_price_discount);
             holder.goodsPriceText = (TextView) view.findViewById(R.id.home_goods_price);
             holder.goodsSaleNumText = (TextView) view.findViewById(R.id.home_goods_sale_num);
             holder.goodsImg = (ImageView) view.findViewById(R.id.home_goods_img);
@@ -86,7 +88,11 @@ public class GoodListViewAdapter extends BaseAdapter {
             final Good good = goods.get(position);
             if (good != null) {
                 holder.goodsDescribeText.setText(good.getGoodsTitle()); //描述
-                holder.goodsPriceDiscountText.setText(good.getGoodsCode()); //商品优惠卷价格
+                if (good.getGoodsCode() == null || "".equals(good.getGoodsCode())) {
+                    holder.goodsPriceDiscountRl.setVisibility(View.GONE);
+                } else {
+                    holder.goodsPriceDiscountText.setText(good.getGoodsCode()); //商品优惠卷价格
+                }
                 holder.goodsPriceText.setText(good.getGoodsFinalPrice()); //商品价格
                 holder.goodsSaleNumText.setText(good.getVolume()+"");//商品销量
                 Glide.with(context).load(good.getGoodsImg()).into(holder.goodsImg);
@@ -110,6 +116,7 @@ public class GoodListViewAdapter extends BaseAdapter {
         private TextView goodsPriceDiscountText;
         private TextView goodsPriceText;
         private TextView goodsSaleNumText;
+        private RelativeLayout goodsPriceDiscountRl;
     }
 
 

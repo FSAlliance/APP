@@ -281,8 +281,30 @@ public class MfrmSearchGoodListController extends BaseController
                     good.setGoodType(goodType);
                     good.setUserType(userType);
                     good.setVolume(goodVolume);
-                    good.setGoodsFinalPrice(goodFinalPrice);
                     good.setGoodsFinalPriceWap(goodFinalPriceWap);
+                    double price = 0;
+                    if (goodCouponInfo != null && !"".equals(goodCouponInfo)) {
+                        String[]  strs = goodCouponInfo.split("元");
+                        if (strs.length >= 2){
+                            goodCouponInfo = strs[1];
+                            goodCouponInfo = goodCouponInfo.replace("减","");
+                            try {
+                                price = Double.parseDouble(goodCouponInfo);
+                            } catch (Exception e) {
+                                L.e(e.getMessage());
+                            }
+                        }
+                    }
+                    double goodPrice = 0;
+                    if (goodFinalPrice != null && !"".equals(goodFinalPrice)) {
+                        try {
+                            goodPrice = Double.parseDouble(goodFinalPrice);
+                        } catch (Exception e) {
+                            L.e(e.getMessage());
+                        }
+                    }
+                    goodPrice = goodPrice - price;
+                    good.setGoodsFinalPrice(goodPrice+"");
                     good.setGoodsCode(goodCouponInfo);
                     good.setCouponClickUrl(goodCouponClickUrl);
                     good.setCouponRemainCount(goodCouponRemainCount);
