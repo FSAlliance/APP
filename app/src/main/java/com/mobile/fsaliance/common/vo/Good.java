@@ -1,12 +1,14 @@
 package com.mobile.fsaliance.common.vo;
 
+import java.io.Serializable;
+
 /**
  * @author yuanxueyuan
  * @Description: 商品信息
  * @date 2017/12/25  21:52
  * ${tags}
  */
-public class Good {
+public class Good implements Serializable{
 
 
     private String goodsId;//ID

@@ -17,6 +17,7 @@ public class AppMacro {
 	//具体的接口
 	public static final String REQUEST_FAVORITE_LIST = "/Goods/favoriteGroup";//获取选品库列表
 	public static final String REQUEST_FAVORITE_ITEMS = "/Goods/favoriteItem";//获取选品库中的数据
+	public static final String REQUEST_GET_GOOD_CODE = "/Goods/code";//获取选品库中的数据
 
 	//淘宝联盟所需常量
 	public static final int PLATFORM = 2;//链接形式：1：PC，2：无线，默认：１

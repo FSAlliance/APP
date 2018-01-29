@@ -143,11 +143,11 @@ public class MfrmSearchGoodListController extends BaseController
     }
 
     @Override
-    public void onClickToGoodDetail(Good asset) {
+    public void onClickToGoodDetail(Good good) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         intent.setClass(this, MfrmGoodsInfoController.class);
-        //TODO 填写具体的参数
+        bundle.putSerializable("good", good);
         intent.putExtras(bundle);
         startActivity(intent);
     }

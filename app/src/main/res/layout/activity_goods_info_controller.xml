@@ -12,9 +12,9 @@
     <!--商品的图片-->
     <ImageView
         android:id="@+id/goods_info_img"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/goods_price_discount"
+        android:layout_marginTop="10dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"/>
 
     <!--使用说明-->
@@ -68,7 +68,7 @@
         android:textIsSelectable="true"
         android:textSize="30dp"
         android:textColor="@color/qrcode_transparent_bg"
-        android:text="sdjskdksf"/>
+        android:text="@string/goods_info_error"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -98,5 +98,18 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <com.mobile.fsaliance.common.common.CircleProgressBarView
+            android:id="@+id/good_info_circleProgressBarView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </LinearLayout>
 
 </LinearLayout>
