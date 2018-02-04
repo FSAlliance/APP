@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
     <!--中间分类-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +24,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/home_top_img"
+                    android:layout_height="@dimen/home_top_img"
                     android:src="@drawable/img_home_middle_female" />
 
                 <TextView
@@ -44,8 +45,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/home_top_img"
+                    android:layout_height="@dimen/home_top_img"
                     android:src="@drawable/img_home_middle_male" />
 
                 <TextView
@@ -64,8 +65,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/home_top_img"
+                    android:layout_height="@dimen/home_top_img"
                     android:src="@drawable/img_home_middle_underclothes" />
 
                 <TextView
@@ -84,8 +85,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/home_top_img"
+                    android:layout_height="@dimen/home_top_img"
                     android:src="@drawable/img_home_middle_cosmetics" />
 
                 <TextView
@@ -110,8 +111,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/home_top_img"
+                    android:layout_height="@dimen/home_top_img"
                     android:src="@drawable/img_home_middle_cate" />
 
                 <TextView
@@ -131,8 +132,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/home_top_img"
+                    android:layout_height="@dimen/home_top_img"
                     android:src="@drawable/img_home_middle_baby" />
 
                 <TextView
@@ -151,8 +152,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/home_top_img"
+                    android:layout_height="@dimen/home_top_img"
                     android:src="@drawable/img_home_middle_furniture" />
 
                 <TextView
@@ -171,8 +172,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/home_top_img"
+                    android:layout_height="@dimen/home_top_img"
                     android:src="@drawable/img_home_middle_other" />
 
                 <TextView
@@ -185,24 +186,19 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_marginTop="10dp"
-        android:background="@color/common_txt_bg" />
+        android:background="@color/login_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp">
+        android:layout_height="40dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/app_name" />
+            android:text="@string/home_middle_like" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/common_txt_bg" />
 
 </LinearLayout>

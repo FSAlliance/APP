@@ -17,7 +17,6 @@ import com.mobile.fsaliance.common.vo.Good;
 import com.mobile.fsaliance.goods.MfrmGoodsInfoController;
 import com.mobile.fsaliance.goods.MfrmSearchGoodListController;
 import com.mobile.fsaliance.goods.MfrmSearchGoodsController;
-
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -300,17 +299,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 	}
 
 	@Override
-	public void onClickToDetail(Good asset) {
-		Intent intent = new Intent();
-		Bundle bundle = new Bundle();
-		intent.setClass(context, MfrmGoodsInfoController.class);
-		//TODO 填写具体的参数
-		intent.putExtras(bundle);
-		startActivity(intent);
-	}
-
-	@Override
-	public void onClickToDetailEx(int position) {
+	public void onClickToDetail(int position) {
 		if (goodsList == null || goodsList.size() <= 0) {
 			L.e("assetList == null ");
 			return;
@@ -465,7 +454,6 @@ public class MfrmHomeController extends BaseFragmentController implements
 					good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
 					good.setCouponRemainCount(jsonObjectContent.optInt("coupon_remain_count"));
 					good.setCouponTotalCount(jsonObjectContent.optInt("coupon_total_count"));
-					good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
 					good.setItemDescription(jsonObjectContent.optString("item_description"));
 					good.setItemUrl(jsonObjectContent.optString("item_url"));
 					good.setNick(jsonObjectContent.optString("nick"));

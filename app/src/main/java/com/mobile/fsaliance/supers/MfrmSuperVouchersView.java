@@ -14,7 +14,7 @@ import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Good;
-import com.mobile.fsaliance.home.AssetListViewAdapter;
+import com.mobile.fsaliance.home.GoodListViewAdapter;
 
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
-public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate, AssetListViewAdapter.AssetListViewAdapterDelegate,AbsListView.OnScrollListener {
+public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate, GoodListViewAdapter.GoodListViewAdapterDelegate, AbsListView.OnScrollListener {
 	private ListView superGoodListView;
 	private TextView superListNoDataTxt;
 	public CircleProgressBarView circleProgressBarView;
@@ -30,7 +30,7 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 	private TextView titleTxt;
 	private LinearLayout backLL;
 
-	private AssetListViewAdapter superListViewAdapter;
+	private GoodListViewAdapter superListViewAdapter;
 
 	public boolean isLoadMore;
 
@@ -95,23 +95,23 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 	}
 
 	/**
-	 * @param myAssetList 数据
+	 * @param superGoodsList 数据
 	 * @author yuanxueyuan
 	 * @Title: showMyAssetList
 	 * @Description: 刷新并显示数据
 	 * @date 2017/12/26 21:59
 	 */
-	public void showMyAssetList(List<Good> myAssetList) {
-		if (myAssetList == null) {
-			L.e("myAssetList == null");
+	public void showMyAssetList(List<Good> superGoodsList) {
+		if (superGoodsList == null) {
+			L.e("superGoodsList == null");
 			return;
 		}
 		if (superListViewAdapter == null) {
-			superListViewAdapter = new AssetListViewAdapter(context, myAssetList);
+			superListViewAdapter = new GoodListViewAdapter(context, superGoodsList);
 			superGoodListView.setAdapter(superListViewAdapter);
 			superListViewAdapter.setDelegate(this);
 		} else {
-			superListViewAdapter.update(myAssetList);
+			superListViewAdapter.update(superGoodsList);
 			superListViewAdapter.notifyDataSetChanged();
 		}
 	}
@@ -167,9 +167,9 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 	}
 
 	@Override
-	public void onClickItem(Good asset) {
+	public void onClickItem(Good good) {
 		if (super.delegate instanceof MfrmMineAssetDelegate) {
-			((MfrmMineAssetDelegate) super.delegate).onClickToDetail(asset);
+			((MfrmMineAssetDelegate) super.delegate).onClickToDetail(good);
 		}
 	}
 

@@ -13,8 +13,13 @@
     <string name="home_middle_baby">母婴</string>
     <string name="home_middle_furniture">家具</string>
     <string name="home_middle_other">其他</string>
+    <string name="home_goods_voucher_price">券后价</string>
+    <string name="home_goods_money_unit">￥</string>
+    <string name="home_goods_money">元</string>
+    <string name="home_goods_sale">月销</string>
     <string name="home_goods_sale_num">件</string>
     <string name="get_goods_failed">获取商品失败</string>
+    <string name="home_middle_like">猜你喜欢</string>
 
     <!-- loading 加载 -->
     <string name="text_gif_loading">加载中</string>

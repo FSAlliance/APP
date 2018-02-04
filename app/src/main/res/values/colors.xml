@@ -6,6 +6,7 @@
     <color name="colorAccent_press">#f76194</color>
     <color name="green_light">#41D228</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
     <!-- loading 字体颜色 -->
     <color name="gif_loading">#afafaf</color>

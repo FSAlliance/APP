@@ -15,9 +15,7 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
-import com.mobile.fsaliance.common.vo.Favorite;
 import com.mobile.fsaliance.common.vo.Good;
-
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
   * @author tanyadong
   * @Description 首页
 */
-public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate,AssetListViewAdapter.AssetListViewAdapterDelegate, AbsListView.OnScrollListener ,BGAOnItemChildClickListener {
+public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate, AbsListView.OnScrollListener ,BGAOnItemChildClickListener {
 	private RecyclerView searchListView;
 	private TextView assetListNoDataTxt;
 	private NormalRecyclerViewAdapter assetListViewAdapter;
@@ -145,15 +143,6 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 		return isLoadMore;
 	}
 
-
-
-	@Override
-	public void onClickItem(Good asset) {
-		if (super.delegate instanceof MfrmSearchDelegate) {
-			((MfrmSearchDelegate) super.delegate).onClickToDetail(asset);
-		}
-	}
-
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -264,7 +253,7 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 	@Override
 	public void onItemChildClick(ViewGroup parent, View childView, int position) {
 		if (super.delegate instanceof MfrmSearchDelegate) {
-			((MfrmSearchDelegate) super.delegate).onClickToDetailEx(position);
+			((MfrmSearchDelegate) super.delegate).onClickToDetail(position);
 		}
 	}
 
@@ -291,9 +280,7 @@ public class MfrmHomeView extends BaseView implements BGARefreshLayout.BGARefres
 
 		void onClickLoadMore(String searchTxt); //上拉加载
 
-		void onClickToDetail(Good asset); //上啦加载
-
-		void onClickToDetailEx(int position);//点击详情
+		void onClickToDetail(int position);//点击详情
  	}
 
 }

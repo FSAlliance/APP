@@ -7,7 +7,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_color"></View>
+        android:background="@color/line_color"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -23,8 +23,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/img_home"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="9dp"
                 android:src="@drawable/img_tab_home"/>
             <TextView
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="10sp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="3dp"
                 android:text="@string/tabbar_bottom_home"/>
         </LinearLayout>
@@ -47,8 +47,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/img_super"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="9dp"
                 android:src="@drawable/img_tab_supers"/>
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="10sp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="3dp"
                 android:text="@string/tabbar_bottom_super_voucher"/>
         </LinearLayout>
@@ -71,8 +71,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/img_mine"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="9dp"
                 android:src="@drawable/img_tab_mine"/>
             <TextView
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="10sp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="3dp"
                 android:text="@string/tabbar_bottom_mine"/>
         </LinearLayout>

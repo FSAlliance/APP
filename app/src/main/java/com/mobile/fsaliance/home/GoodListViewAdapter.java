@@ -80,16 +80,22 @@ public class GoodListViewAdapter extends BaseAdapter {
             holder.goodsSaleNumText = (TextView) view.findViewById(R.id.home_goods_sale_num);
             holder.goodsImg = (ImageView) view.findViewById(R.id.home_goods_img);
             holder.goodsLL = (LinearLayout) view.findViewById(R.id.home_goods);
+            holder.lineView = (ImageView) view.findViewById(R.id.view_item_line);
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();
         }
+        //第一个不显示
+        if (position == 0) {
+            holder.lineView.setVisibility(View.GONE);
+        }
+
         if (goods != null && goods.get(position) != null) {
             final Good good = goods.get(position);
             if (good != null) {
                 holder.goodsDescribeText.setText(good.getGoodsTitle()); //描述
                 if (good.getGoodsCode() == null || "".equals(good.getGoodsCode())) {
-                    holder.goodsPriceDiscountRl.setVisibility(View.GONE);
+                    holder.goodsPriceDiscountRl.setVisibility(View.INVISIBLE);
                 } else {
                     holder.goodsPriceDiscountText.setText(good.getGoodsCode()); //商品优惠卷价格
                 }
@@ -117,6 +123,7 @@ public class GoodListViewAdapter extends BaseAdapter {
         private TextView goodsPriceText;
         private TextView goodsSaleNumText;
         private RelativeLayout goodsPriceDiscountRl;
+        private ImageView lineView;
     }
 
 
