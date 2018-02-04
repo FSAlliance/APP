@@ -143,7 +143,7 @@
             android:layout_height="@dimen/picture_size"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/img_user_myorder" />
+            android:src="@drawable/img_user_myorder" />
 
         <TextView
             android:id="@+id/txt_mine_order"
@@ -168,7 +168,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/line_color"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"></View>
+            android:layout_height="0.5dp"/>
     </RelativeLayout>
     <!--找回订单-->
     <RelativeLayout
@@ -182,7 +182,7 @@
             android:layout_height="@dimen/picture_size"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/img_my_order_find" />
+            android:src="@drawable/img_my_order_find" />
 
         <TextView
             android:id="@+id/txt_mine_order_find"
@@ -227,7 +227,7 @@
                     android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/img_user_incomerecord" />
+                    android:src="@drawable/img_user_incomerecord" />
 
                 <TextView
                     android:id="@+id/txt_record_of_income"
@@ -253,7 +253,7 @@
                     android:background="@color/line_color"
                     android:layout_marginLeft="27dp"
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"></View>
+                    android:layout_height="0.5dp"/>
             </RelativeLayout>
             <!-- 提现记录-->
             <RelativeLayout
@@ -267,7 +267,7 @@
                     android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/img_user_presentrecord" />
+                    android:src="@drawable/img_user_presentrecord" />
 
                 <TextView
                     android:id="@+id/txt_present_record"
@@ -292,7 +292,7 @@
                     android:background="@color/line_color"
                     android:layout_marginLeft="27dp"
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"></View>
+                    android:layout_height="0.5dp"/>
             </RelativeLayout>
             <!--立即提现-->
             <RelativeLayout
@@ -306,7 +306,7 @@
                     android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/img_user_present" />
+                    android:src="@drawable/img_user_present" />
 
                 <TextView
                     android:id="@+id/txt_immediate_cash"
@@ -331,7 +331,7 @@
                     android:background="@color/line_color"
                     android:layout_width="match_parent"
                     android:layout_marginLeft="27dp"
-                    android:layout_height="0.5dp"></View>
+                    android:layout_height="0.5dp"/>
             </RelativeLayout>
             <!--分享-->
             <RelativeLayout
@@ -345,7 +345,7 @@
                     android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/img_user_share" />
+                    android:src="@drawable/img_user_share" />
 
                 <TextView
                     android:id="@+id/txt_share"
@@ -370,7 +370,7 @@
                     android:background="@color/line_color"
                     android:layout_width="match_parent"
                     android:layout_marginLeft="27dp"
-                    android:layout_height="0.5dp"></View>
+                    android:layout_height="0.5dp"/>
             </RelativeLayout>
             <!--绑定支付宝-->
             <RelativeLayout
@@ -384,7 +384,7 @@
                     android:layout_height="@dimen/picture_size"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/img_user_alipay" />
+                    android:src="@drawable/img_user_alipay" />
 
                 <TextView
                     android:id="@+id/txt_bound_alipay"
@@ -409,7 +409,7 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/line_color"
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"></View>
+                    android:layout_height="0.5dp"/>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

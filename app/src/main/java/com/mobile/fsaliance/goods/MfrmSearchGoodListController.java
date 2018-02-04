@@ -305,8 +305,9 @@ public class MfrmSearchGoodListController extends BaseController
                         }
                     }
                     goodPrice = goodPrice - price;
-                    good.setGoodsFinalPrice(goodPrice+"");
-                    good.setGoodsCode(goodCouponInfo);
+                    String goodPriceStr = String.format("%.2f", goodPrice);
+                    good.setGoodsFinalPrice(goodPriceStr);
+                    good.setCouponInfo(goodCouponInfo);
                     good.setCouponClickUrl(goodCouponClickUrl);
                     good.setCouponRemainCount(goodCouponRemainCount);
                     good.setCouponTotalCount(goodCouponTotalCount);

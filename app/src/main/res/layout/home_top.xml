@@ -29,6 +29,7 @@
                     android:src="@drawable/img_home_middle_female" />
 
                 <TextView
+                    android:id="@+id/text_home_middle_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_middle_female"
@@ -50,6 +51,7 @@
                     android:src="@drawable/img_home_middle_male" />
 
                 <TextView
+                    android:id="@+id/text_home_middle_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_middle_male" />
@@ -70,6 +72,7 @@
                     android:src="@drawable/img_home_middle_underclothes" />
 
                 <TextView
+                    android:id="@+id/text_home_middle_three"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_middle_underclothes" />
@@ -90,6 +93,7 @@
                     android:src="@drawable/img_home_middle_cosmetics" />
 
                 <TextView
+                    android:id="@+id/text_home_middle_four"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_middle_cosmetics" />
@@ -116,6 +120,7 @@
                     android:src="@drawable/img_home_middle_cate" />
 
                 <TextView
+                    android:id="@+id/text_home_middle_five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_middle_cate"
@@ -137,6 +142,7 @@
                     android:src="@drawable/img_home_middle_baby" />
 
                 <TextView
+                    android:id="@+id/text_home_middle_six"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_middle_baby" />
@@ -157,6 +163,7 @@
                     android:src="@drawable/img_home_middle_furniture" />
 
                 <TextView
+                    android:id="@+id/text_home_middle_seven"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_middle_furniture" />
@@ -177,6 +184,7 @@
                     android:src="@drawable/img_home_middle_other" />
 
                 <TextView
+                    android:id="@+id/text_home_middle_eight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_middle_other" />

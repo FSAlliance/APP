@@ -19,7 +19,7 @@
     <color name="hint_text_color">#999999</color>
     <color name="xml_bg">#F6F7FE</color>
     <color name="asset_child">#666666</color>
-    <color name="read">#FEF70418</color>
+    <color name="read">#ff0000</color>
     <color name="login_bg">#EFEEF5</color>
     <color name="login_btn_color">#F54277</color>
     <color name="login_register">#70BDCF</color>

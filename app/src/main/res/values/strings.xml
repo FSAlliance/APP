@@ -112,7 +112,9 @@
     <string name="mine_user_info">个人信息</string>
     <string name="mine_bound_alipay">设置支付宝</string>
     <string name="mine_bound_alipay_ok">确定</string>
+    <string name="mine_bound_alipay_hint_attention">注意事项</string>
     <string name="mine_bound_alipay_hint">请输入正确的支付宝账号,错误的账号将收不到返利!</string>
+    <string name="mine_bound_alipay_input_hint">请输入支付宝账号</string>
     <string name="mine_bound_alipay_no">您还没有绑定支付宝!</string>
     <string name="mine_bound_alipay_current">您当前账号为:</string>
 

@@ -15,7 +15,6 @@ import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Good;
-import com.mobile.fsaliance.home.AssetListViewAdapter;
 import com.mobile.fsaliance.home.GoodListViewAdapter;
 
 import java.util.List;
@@ -29,9 +28,8 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * @date 创建时间 2017/9/5
  * @Description 搜索
  */
-public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate, AssetListViewAdapter.AssetListViewAdapterDelegate, GoodListViewAdapter.GoodListViewAdapterDelegate, AbsListView.OnScrollListener {
+public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout.BGARefreshLayoutDelegate, GoodListViewAdapter.GoodListViewAdapterDelegate, AbsListView.OnScrollListener {
     private TextView assetListNoDataTxt;
-    private AssetListViewAdapter assetListViewAdapter;
     private GoodListViewAdapter goodListViewAdapter;
     public CircleProgressBarView circleProgressBarView;
     public boolean isLoadMore;
@@ -164,27 +162,6 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
         }
     }
 
-    /**
-     * @author tanyadong
-     * @Title showSearchAssetList
-     * @Description 刷新并显示数据
-     * @date 2017/9/8 14:44
-     */
-    public void showSearchAssetList(List<Good> myAssetList) {
-        if (myAssetList == null) {
-            L.e("myAssetList == null");
-            return;
-        }
-        if (assetListViewAdapter == null) {
-            assetListViewAdapter = new AssetListViewAdapter(context,
-                    myAssetList);
-            searchGoodList.setAdapter(assetListViewAdapter);
-            assetListViewAdapter.setDelegate(this);
-        } else {
-            assetListViewAdapter.update(myAssetList);
-            assetListViewAdapter.notifyDataSetChanged();
-        }
-    }
 
     /**
      * @param goodList 商品列表

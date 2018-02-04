@@ -34,18 +34,8 @@ public class NormalRecyclerViewAdapter extends BGARecyclerViewAdapter<Good> {
         helper.setText(R.id.home_goods_describe, good.getGoodsTitle());
         ImageView imageView = helper.getImageView(R.id.home_goods_img);
         Glide.with(mContext).load(good.getGoodsImg()).into(imageView);
-        Double price = 0.00;
-        String goodCouponInfo = good.getCouponInfo();
-        if (goodCouponInfo != null && !goodCouponInfo.equals("")) {
-            String[] strs = goodCouponInfo.split("元");
-            if (strs.length >= 2) {
-                goodCouponInfo = strs[1];
-                goodCouponInfo = goodCouponInfo.replace("减", "");
-                price = Double.parseDouble(goodCouponInfo);
-            }
-        }
-        helper.setText(R.id.home_goods_price_discount, price + ""); //优惠券价值
-        helper.setText(R.id.home_goods_price, (Double.parseDouble(good.getGoodsFinalPrice()) - price) + ""); //折扣价
+        helper.setText(R.id.home_goods_price_discount, good.getCouponInfo()); //优惠券价值
+        helper.setText(R.id.home_goods_price, good.getGoodsFinalPrice()); //折扣价
         helper.setText(R.id.home_goods_sale_num, String.valueOf(good.getVolume())); //月销量
     }
 }

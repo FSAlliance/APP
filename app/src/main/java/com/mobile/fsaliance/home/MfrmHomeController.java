@@ -451,7 +451,22 @@ public class MfrmHomeController extends BaseFragmentController implements
 					JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
 					good.setCommissionRate(jsonObjectContent.optString("commission_rate"));
 					good.setCouponClickUrl(jsonObjectContent.optString("coupon_click_url"));
+					good.setGoodsFinalPrice(jsonObjectContent.optString("zk_final_price"));
 					good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
+					Double price = 0.00;
+					String goodCouponInfo = good.getCouponInfo();
+					if (goodCouponInfo != null && !goodCouponInfo.equals("")) {
+						String[] strs = goodCouponInfo.split("元");
+						if (strs.length >= 2) {
+							goodCouponInfo = strs[1];
+							goodCouponInfo = goodCouponInfo.replace("减", "");
+							price = Double.parseDouble(goodCouponInfo);
+						}
+					}
+					double money = Double.parseDouble(good.getGoodsFinalPrice()) - price;
+					String goodPriceStr = String.format("%.2f", money);
+					good.setCouponInfo(goodCouponInfo);
+					good.setGoodsFinalPrice(goodPriceStr);
 					good.setCouponRemainCount(jsonObjectContent.optInt("coupon_remain_count"));
 					good.setCouponTotalCount(jsonObjectContent.optInt("coupon_total_count"));
 					good.setItemDescription(jsonObjectContent.optString("item_description"));
@@ -461,7 +476,6 @@ public class MfrmHomeController extends BaseFragmentController implements
 					good.setShopTitle(jsonObjectContent.optString("shop_title"));
 					good.setGoodsTitle(jsonObjectContent.optString("title"));
 					good.setVolume(jsonObjectContent.optInt("volume"));
-					good.setGoodsFinalPrice(jsonObjectContent.optString("zk_final_price"));
 					goodsList.add(good);
 				}
 				lastCount = jsonArray.length();

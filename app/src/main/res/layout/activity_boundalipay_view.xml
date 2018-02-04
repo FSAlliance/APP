@@ -4,68 +4,120 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/login_bg"
-    android:orientation="vertical"
-    >
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:orientation="vertical">
 
-        <include android:id="@+id/title_include"
-            layout="@layout/include_toolbar_title"/>
-        <TextView
-            android:textColor="@color/optiontext_color_black"
-            android:textSize="18dp"
-            android:text="@string/mine_bound_alipay_hint"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/title_include"
+            layout="@layout/include_toolbar_title" />
+
+        <LinearLayout
+            android:id="@+id/ll_share_to_invite_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/common_txt_bg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/read"
+                    android:text="@string/mine_bound_alipay_hint_attention" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/common_txt_bg" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:text="@string/mine_bound_alipay_hint" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/common_txt_bg" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/txt_bound_account"
-            android:textColor="@color/optiontext_color_black"
-            android:textSize="18dp"
-            android:text="@string/mine_bound_alipay_no"
-            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="10dp"
+            android:textColor="@color/optiontext_color_black"
+            android:textSize="18dp" />
+
         <EditText
             android:id="@+id/edit_alipay_acount"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/edit_bg"/>
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:hint="@string/mine_bound_alipay_input_hint"
+            android:background="@drawable/edit_bg" />
+
         <TextView
             android:id="@+id/txt_bound_ok"
-            android:text="@string/mine_bound_alipay_ok"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:layout_marginTop="25dp"
-            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/bg_logoff_corner"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:gravity="center"
+            android:text="@string/mine_bound_alipay_ok"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <com.mobile.fsaliance.common.common.CircleProgressBarView
             android:id="@+id/circleProgressBarView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 
 </RelativeLayout>

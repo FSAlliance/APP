@@ -94,10 +94,10 @@ public class GoodListViewAdapter extends BaseAdapter {
             final Good good = goods.get(position);
             if (good != null) {
                 holder.goodsDescribeText.setText(good.getGoodsTitle()); //描述
-                if (good.getGoodsCode() == null || "".equals(good.getGoodsCode())) {
+                if (good.getCouponInfo() == null || "".equals(good.getCouponInfo())) {
                     holder.goodsPriceDiscountRl.setVisibility(View.INVISIBLE);
                 } else {
-                    holder.goodsPriceDiscountText.setText(good.getGoodsCode()); //商品优惠卷价格
+                    holder.goodsPriceDiscountText.setText(good.getCouponInfo()); //商品优惠卷价格
                 }
                 holder.goodsPriceText.setText(good.getGoodsFinalPrice()); //商品价格
                 holder.goodsSaleNumText.setText(good.getVolume()+"");//商品销量
