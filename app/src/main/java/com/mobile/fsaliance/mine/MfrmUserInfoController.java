@@ -202,7 +202,7 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
                     if (user == null) {
                         return;
                     }
-                    mfrmUserInfoView.setNickName(user.getUserName());
+                    mfrmUserInfoView.setNickName(user.getNickName());
                     break;
                 default:
                     break;

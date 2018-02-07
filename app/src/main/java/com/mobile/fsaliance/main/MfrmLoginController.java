@@ -67,7 +67,7 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
             user = new User();
         }
         user.setPassword(password);
-        user.setUserName(jobId);
+        user.setPhoneNum(jobId);
         LoginUtils.saveUserInfo(this, user);
         if (jobId == null || "".equals(jobId) || password == null || "".equals(password)) {
             L.e("username == null || password == null");
@@ -142,7 +142,7 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
                     if (user == null) {
                         user = new User();
                     }
-                    user.setUserName(jsonUser.optString("jobId"));
+                    user.setPhoneNum(jsonUser.optString("jobId"));
                     user.setPassword(jsonUser.optString("password"));
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent(this, MainActivity.class);

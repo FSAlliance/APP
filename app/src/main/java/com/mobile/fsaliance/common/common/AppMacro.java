@@ -10,7 +10,8 @@ public class AppMacro {
 	public static final String CRASH_MESSAGE_PATH = APP_PATH + "CrashMeaasge/";
 	public static final String PHOTO_PATH = APP_PATH + "photo/";
 	public static final String REQUEST_URL = "http://221.238.227.82:10086/rest";//接口
-	public static final String REQUEST_IP_PORT = "http://39.107.106.248:3389";//接口http://39.107.106.248
+	public static final String REQUEST_IP_PORT = "http://192.168.0.109:8080";//接口http://39.107.106.248
+
 	public static final String REQUEST_GOODS_PATH = "/FSAlliance/rest";//接口
 	public static final int RESPONCESUCCESS = 200; //请求接口能调通
 
@@ -23,7 +24,6 @@ public class AppMacro {
 	//淘宝联盟所需常量
 	public static final int PLATFORM = 2;//链接形式：1：PC，2：无线，默认：１
 	public static final long ADZONEID = 210792050;//推广位id，
-
 	//用常量来定义每个界面
 	public static final int FROM_HOME = 0;//主界面
 	public static final int FROM_SEARCH = 1;//搜索界面

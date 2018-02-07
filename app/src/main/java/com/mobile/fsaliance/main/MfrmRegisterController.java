@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
@@ -53,22 +54,21 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
      * @date 2017/9/6 22:15
      */
     @Override
-    public void onClickRegister(String jobID, String userName, String password) {
+    public void onClickRegister(String refereeAcount, String userName, String password) {
         User user = LoginUtils.getUserInfo(this);
         if (user == null) {
             user = new User();
         }
-//        user.setJobId(jobID);
-//        user.setName(userName);
         user.setPassword(password);
         LoginUtils.saveUserInfo(this, user);
-        String uri = AppMacro.REQUEST_URL + "/user/register";
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH +"/user/register";
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
-        request.add("jobid", jobID);
-        request.add("name", userName);
-        request.add("password",password);
+        request.add("phoneNum", userName);
+        request.add("passWord",password);
+        request.add("shareCode",refereeAcount);
         queue.add(0, request, this);
+        L.e("tyd   "+request.url());
     }
 
 
@@ -139,12 +139,21 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
             }
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                if (jsonObject.has("code") && jsonObject.getInt("code") == 0) {
+                if (jsonObject.has("ret") && jsonObject.getInt("ret") == 0) {
+                    User user = new User();
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("content");
+                    user.setNickName(jsonObject1.optString("SName"));
+                    user.setPhoneNum(jsonObject1.optString("SPhoneNum"));
+                    user.setPassword(jsonObject1.optString("SPassword"));
+                    user.setShareCode(jsonObject1.optString("SInviteNum"));
+                    LoginUtils.saveUserInfo(this,user);
                     Intent intent = new Intent(this, MfrmLoginController.class);
                     startActivity(intent);
                     finish();
+                } else if (jsonObject.getInt("ret") == -15 ){
+                    T.showShort(this, R.string.register_exist);
                 } else {
-                    T.showShort(this, R.string.register_failed);
+                    T.showShort(this, R.string.register_exist);
                 }
             } catch (JSONException e) {
                 T.showShort(this, R.string.register_failed);

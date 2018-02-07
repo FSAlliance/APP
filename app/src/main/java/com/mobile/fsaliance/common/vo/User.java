@@ -7,7 +7,8 @@ import java.io.Serializable;
  */
 public class User implements Serializable{
     private Long id;//序号
-    private String userName;//用户名。昵称
+    private String phoneNum;//用户名
+    private String nickName; //昵称
     private String password;//密码
     private String userHead; //头像
     private String aliPayAccount; //支付宝账号
@@ -21,12 +22,13 @@ public class User implements Serializable{
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+
+    public String getPhoneNum() {
+        return phoneNum;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public String getPassword() {
@@ -59,5 +61,13 @@ public class User implements Serializable{
 
     public void setShareCode(String shareCode) {
         this.shareCode = shareCode;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

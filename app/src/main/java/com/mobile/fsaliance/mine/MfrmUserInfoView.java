@@ -52,7 +52,7 @@ public class MfrmUserInfoView extends BaseView {
         if (user == null) {
             return;
         }
-        if (user.getUserHead() == null || user.getUserName() == null) {
+        if (user.getUserHead() == null || user.getNickName() == null) {
             return;
         }
 
@@ -60,7 +60,7 @@ public class MfrmUserInfoView extends BaseView {
             alipayAccountTxt.setText(user.getAliPayAccount());
         }
 
-        userNickNameTxt.setText(user.getUserName());
+        userNickNameTxt.setText(user.getNickName());
         setSelectPhoto(Uri.parse(user.getUserHead()));
     }
 

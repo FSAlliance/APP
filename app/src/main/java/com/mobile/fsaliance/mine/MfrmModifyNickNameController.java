@@ -62,8 +62,8 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
     }
 
     private void initData() {
-        if (user.getUserName() != null) {
-            modifyNickNameEdit.setText(user.getUserName());
+        if (user.getNickName() != null) {
+            modifyNickNameEdit.setText(user.getNickName());
         }
     }
 
@@ -116,7 +116,7 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
                     if (user == null) {
                         user = new User();
                     }
-                    user.setUserName(modifyNickNameEdit.getText().toString().trim());
+                    user.setNickName(modifyNickNameEdit.getText().toString().trim());
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent();
                     intent.putExtra("user", user);

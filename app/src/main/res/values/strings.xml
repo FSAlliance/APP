@@ -71,7 +71,7 @@
     <string name="register_info_two">2.喜欢就分享吧，还能赚钱!</string>
     <string name="register_has_count">已有账号?</string>
     <string name="register_direct_login">直接登录</string>
-
+    <string name="register_exist">该用户已存在</string>
     <!--dialog-->
     <string name="common_dialog_hint">提示</string>
     <string name="common_dialog_cancel">取消</string>

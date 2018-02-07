@@ -125,7 +125,7 @@ public class MfrmRegisterView extends BaseView {
    */
     public interface MfrmRegisterDelegate {
         //点击注册
-        void onClickRegister(String jobID, String userName, String passwor);
+        void onClickRegister(String refereeAcount, String userName, String passwor);
         //点击返回
         void onClickBack();
         //点击登录

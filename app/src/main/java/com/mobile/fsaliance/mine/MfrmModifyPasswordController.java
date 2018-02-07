@@ -132,7 +132,7 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
                     if (user == null) {
                         user = new User();
                     }
-                    user.setUserName(jsonUser.optString("jobId"));
+                    user.setNickName(jsonUser.optString("jobId"));
                     user.setPassword(jsonUser.optString("password"));
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent();
