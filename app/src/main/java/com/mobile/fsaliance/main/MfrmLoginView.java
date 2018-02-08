@@ -63,14 +63,14 @@ public class MfrmLoginView extends BaseView {
     protected void onClickListener(View v) {
         switch (v.getId()) {
             case R.id.txt_login:
-                String jobId = usernameEditTxt.getText().toString().trim();
+                String phoneNum = usernameEditTxt.getText().toString().trim();
                 String password = passwordEditTxt.getText().toString().trim();
 
-                if (!checkInfo(jobId, password)) {
+                if (!checkInfo(phoneNum, password)) {
                     return;
                 }
                 if (super.delegate instanceof MfrmLoginViewDelegate) {
-                    ((MfrmLoginViewDelegate) super.delegate).onClickLogin(jobId, password);
+                    ((MfrmLoginViewDelegate) super.delegate).onClickLogin(phoneNum, password);
                 }
                 break;
             case R.id.rl_trgister:
@@ -88,8 +88,8 @@ public class MfrmLoginView extends BaseView {
      * @Description: 检验输入字段
      * @date 2017.0.23
      */
-    private boolean checkInfo(String jobId, String password) {
-        if (null == jobId || "".equals(jobId)) {
+    private boolean checkInfo(String phoneNum, String password) {
+        if (null == phoneNum || "".equals(phoneNum)) {
             T.showShort(context, R.string.username_is_empty);
             return false;
         }
@@ -108,7 +108,7 @@ public class MfrmLoginView extends BaseView {
     */
     public interface MfrmLoginViewDelegate {
         //点击登入
-        void onClickLogin(String jobId, String password);
+        void onClickLogin(String phoneNum, String password);
 
         //点击注册跳转到注册界面
         void onClickRegister();

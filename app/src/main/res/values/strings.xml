@@ -65,6 +65,8 @@
     <string name="asset_detail">资产详情</string>
     <!--登录注册-->
     <string name="login_failed">登录失败</string>
+    <string name="login_failed_no_username">对不起，用户不存在</string>
+    <string name="login_failed_no_password">对不起，密码不正确</string>
     <string name="register_failed">注册失败</string>
     <string name="please_input_username">请输入用户名</string>
     <string name="register_info_one">1.超多淘宝优惠券，直接省钱</string>

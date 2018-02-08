@@ -61,22 +61,22 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
       * @date 2017/9/6 22:16
     */
     @Override
-    public void onClickLogin(String jobId, String password) {
+    public void onClickLogin(String phoneNum, String password) {
         user = LoginUtils.getUserInfo(this);
         if (user == null) {
             user = new User();
         }
         user.setPassword(password);
-        user.setPhoneNum(jobId);
+        user.setPhoneNum(phoneNum);
         LoginUtils.saveUserInfo(this, user);
-        if (jobId == null || "".equals(jobId) || password == null || "".equals(password)) {
+        if (phoneNum == null || "".equals(phoneNum) || password == null || "".equals(password)) {
             L.e("username == null || password == null");
             return;
         }
-        String uri = AppMacro.REQUEST_URL + "/user/login";
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH +AppMacro.REQUEST_LOGIN;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
-        request.add("jobid", jobId);
+        request.add("phoneNum", phoneNum);
         request.add("password", password);
         queue.add(LOGON_IN, request, this);
     }
@@ -137,17 +137,32 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
             }
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                if (jsonObject.has("code") && jsonObject.getInt("code") == 0) {
+                int ret = -1;
+                if (jsonObject.has("ret")) {
+                    ret = jsonObject.getInt("ret");
+                }
+                if (ret == AppMacro.GET_DATA_RET_SUCCESS) {
                     JSONObject jsonUser = jsonObject.optJSONObject("content");
                     if (user == null) {
                         user = new User();
                     }
-                    user.setPhoneNum(jsonUser.optString("jobId"));
-                    user.setPassword(jsonUser.optString("password"));
+                    user.setId(jsonUser.optLong("id"));
+                    user.setPhoneNum(jsonUser.optString("SPhoneNum"));
+                    user.setPassword(jsonUser.optString("SPassword"));
+                    user.setNickName(jsonUser.optString("SName"));
+                    user.setAliPayAccount(jsonUser.optString("alipay"));
+                    user.setShareCode(jsonUser.optString("shareCode"));
+                    user.setUserHead(jsonUser.optString("userHead"));
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     finish();
+                } else if (ret == AppMacro.GET_DATA_RET_NO_USERNAME) {
+                    //没有此用户
+                    T.showShort(this, R.string.login_failed_no_username);
+                } else if (ret == AppMacro.GET_DATA_RET_NO_PASSWORD) {
+                    //密码不正确
+                    T.showShort(this, R.string.login_failed_no_password);
                 } else {
                     T.showShort(this, R.string.login_failed);
                 }
