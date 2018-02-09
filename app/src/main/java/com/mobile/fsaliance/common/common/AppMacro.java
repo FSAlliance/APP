@@ -21,6 +21,7 @@ public class AppMacro {
 	public static final String REQUEST_GET_GOOD_CODE = "/Goods/code";//获取选品库中的数据
 	public static final String REQUEST_SEARCH_GOOD = "/Goods/searchGoods";//搜索商品
 	public static final String REQUEST_LOGIN = "/user/checkSign";//登录
+	public static final String REQUEST_UPDATE_LOGIN_TIME = "/user/updateLoginTime";//更新登录时间
 
 	//淘宝联盟所需常量
 	public static final int PLATFORM = 2;//链接形式：1：PC，2：无线，默认：１
