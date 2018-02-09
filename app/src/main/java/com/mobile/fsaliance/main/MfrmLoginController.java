@@ -153,6 +153,9 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
                     user.setAliPayAccount(jsonUser.optString("SAlipayNum"));
                     user.setShareCode(jsonUser.optString("SInviteNum"));
                     user.setUserHead(jsonUser.optString("SUserPic"));
+                    user.setScoreNum(jsonUser.optString("IScoreNum"));
+                    user.setCashing(jsonUser.optString("DCashing"));
+                    user.setCashed(jsonUser.optString("DCashed"));
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);

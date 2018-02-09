@@ -13,6 +13,9 @@ public class User implements Serializable{
     private String userHead; //头像
     private String aliPayAccount; //支付宝账号
     private String  shareCode; //推荐码
+    private String  scoreNum; //积分
+    private String  cashing; //提现中
+    private String  cashed; //已提现
 
     public Long getId() {
         return id;
@@ -69,5 +72,45 @@ public class User implements Serializable{
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public String getScoreNum() {
+        return scoreNum;
+    }
+
+    public void setScoreNum(String scoreNum) {
+        this.scoreNum = scoreNum;
+    }
+
+    public String getCashing() {
+        return cashing;
+    }
+
+    public void setCashing(String cashing) {
+        this.cashing = cashing;
+    }
+
+    public String getCashed() {
+        return cashed;
+    }
+
+    public void setCashed(String cashed) {
+        this.cashed = cashed;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", password='" + password + '\'' +
+                ", userHead='" + userHead + '\'' +
+                ", aliPayAccount='" + aliPayAccount + '\'' +
+                ", shareCode='" + shareCode + '\'' +
+                ", scoreNum='" + scoreNum + '\'' +
+                ", cashing='" + cashing + '\'' +
+                ", cashed='" + cashed + '\'' +
+                '}';
     }
 }

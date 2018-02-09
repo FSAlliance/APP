@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
+import com.mobile.fsaliance.common.common.InitApplication;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.vo.User;
 
@@ -59,7 +60,11 @@ public class MfrmWelcomController extends BaseController {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == WHAT) {
-                gotoMainView();
+                if (LoginUtils.getUserInfo(InitApplication.getInstance()) == null) {
+                    gotoLoginView();
+                } else {
+                    gotoMainView();
+                }
             }
         }
     }
@@ -78,22 +83,18 @@ public class MfrmWelcomController extends BaseController {
         finish();
     }
 
-
-
-
-
-
-
     /**
-     * @author zengCheng
-     * @Description: 保存登录信息
-     * @date 2017.03.22
+     * @author yuanxueyuan
+     * @Title: gotoLoginView
+     * @Description: 跳转到登录界面
+     * @date 2018/2/9 11:54
      */
-    private void saveUserInfo(){
-        LoginUtils.saveUserInfo(this, user);
+    private void gotoLoginView() {
+        Intent intent = new Intent();
+        intent.setClass(this, MfrmLoginController.class);
+        startActivity(intent);
+        finish();
     }
-
-
 
     @Override
     protected void onDestroy() {
