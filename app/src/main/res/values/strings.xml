@@ -127,6 +127,8 @@
     <string name="present_all">全部提现</string>
     <string name="please_input_present_moneny">请输入要提现的金额</string>
    <string name="please_input_alipayaccount">请输入支付宝账号</string>
+   <string name="please_input_user_name">请输入用户名</string>
+   <string name="please_input_user_error">设置用户名失败</string>
     <string name="bound_fail">绑定失败</string>
     <string name="present_fail">提现失败</string>
     <string name="present_ok">确认提现</string>

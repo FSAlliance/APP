@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
@@ -32,13 +33,15 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
     private RequestQueue queue;
     private User user;
     private String alipayAccount;
+    private final int UPDATE_USER_ALIPAY = 0;
     @Override
     protected void getBundleData() {
-        Bundle bundle= getIntent().getExtras();
-        if (bundle == null) {
-            return;
-        }
-        user = (User) bundle.getSerializable("user");
+        user = LoginUtils.getUserInfo(this);
+//        Bundle bundle= getIntent().getExtras();
+//        if (bundle == null) {
+//            return;
+//        }
+//        user = (User) bundle.getSerializable("user");
 
     }
 
@@ -53,17 +56,7 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
         mfrmBoundAlipayView.setDelegate(this);
         queue = NoHttp.newRequestQueue();
         mfrmBoundAlipayView.initData(user);
-//        user = LoginUtils.getUserInfo(this);
-//        if (user == null) {
-//            return;
-//        }
-
     }
-
-
-
-
-
 
     @Override
     protected void onDestroy() {
@@ -71,25 +64,19 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
         queue.cancelBySign(cancelObject);
     }
 
-
-
-
-
     @Override
     public void onClickBoundAlipay(String alipayAcount) {
-        user = LoginUtils.getUserInfo(this);
         alipayAccount = alipayAcount;
         if (user == null) {
-            user = new User();
+            T.showShort(this, R.string.bound_fail);
+            L.e("user == null");
         }
-        LoginUtils.saveUserInfo(this, user);
-
-        String uri = AppMacro.REQUEST_URL + "/user/login";
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH+ AppMacro.REQUEST_UPDATE_USER_ALIPAY;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
-        request.add("user", "aaa");
-        request.add("alipayAcount", alipayAcount);
-        queue.add(0, request, this);
+        request.add("userId", user.getId());
+        request.add("alipayNum", alipayAcount);
+        queue.add(UPDATE_USER_ALIPAY, request, this);
     }
 
     @Override
@@ -112,14 +99,12 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
             }
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                if (jsonObject.has("code") && jsonObject.getInt("code") == 0) {
-                    JSONObject jsonUser = jsonObject.optJSONObject("content");
-                    if (user == null) {
-                        user = new User();
-                    }
+                if (jsonObject.has("ret") && jsonObject.getInt("ret") == 0) {
                     user.setAliPayAccount(alipayAccount);
                     LoginUtils.saveUserInfo(this, user);
-                    Intent intent = new Intent(this, MainActivity.class);
+                    Intent intent = new Intent();
+                    intent.putExtra("boundAlipay", alipayAccount);
+                    setResult(RESULT_OK, intent);
                     finish();
                 } else {
                     T.showShort(this, R.string.bound_fail);
@@ -156,10 +141,5 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
     @Override
     public void onFinish(int i) {
         mfrmBoundAlipayView.circleProgressBarView.hideProgressBar();
-        // TODO: 2018/1/18 0018 临时数据测试 
-        Intent intent = new Intent();
-        intent.putExtra("boundAlipay", "aaaaa");
-        setResult(RESULT_OK, intent);
-        finish();
     }
 }

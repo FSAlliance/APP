@@ -38,8 +38,8 @@ public class MfrmBoundAlipayView extends BaseView {
         if (user == null) {
             return;
         }
-        if (user.getAliPayAccount() != null && !user.getAliPayAccount().equals("")) {
-            boundAccountTxt.setText(context.getText(R.string.mine_bound_alipay_current)+" " + user.getAliPayAccount());
+        if (user.getAliPayAccount() != null && !("").equals(user.getAliPayAccount())) {
+            boundAccountTxt.setText(context.getText(R.string.mine_bound_alipay_current)+ user.getAliPayAccount());
         } else {
             boundAccountTxt.setText(context.getText(R.string.mine_bound_alipay_no));
         }
@@ -71,7 +71,7 @@ public class MfrmBoundAlipayView extends BaseView {
         switch (v.getId()) {
             case R.id.txt_bound_ok:
                 String alipayAcount = alipayAcountEdit.getText().toString().trim();
-                if (alipayAcount== "" || alipayAcount.equals("")) {
+                if ( alipayAcount == null || alipayAcount.equals("")) {
                     T.showShort(context, context.getResources().getString(R.string.please_input_alipayaccount));
                     return;
                 }

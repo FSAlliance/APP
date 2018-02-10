@@ -121,9 +121,9 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
     public void onClickBoundAlipay() {
         Intent intent = new Intent();
         intent.setClass(this, MfrmBoundAlipayController.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("user", user);
-        intent.putExtras(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("user", user);
+//        intent.putExtras(bundle);
         startActivityForResult(intent, 2);
     }
 

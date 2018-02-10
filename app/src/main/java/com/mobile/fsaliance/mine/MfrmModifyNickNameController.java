@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
@@ -39,13 +40,11 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
     private TextView titleTxt, modifyNickNameOkTxt;
     private LinearLayout titleLiftLl, titleRightLl;
     private EditText modifyNickNameEdit;
+    private final int UPDATE_USER_NAME = 0;
+    private String userName;//用户名
     @Override
     protected void getBundleData() {
-        Bundle bundle= getIntent().getExtras();
-        if (bundle == null) {
-            return;
-        }
-        user = (User) bundle.getSerializable("user");
+        user = LoginUtils.getUserInfo(this);
     }
 
     @Override
@@ -85,17 +84,11 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
 
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         queue.cancelBySign(cancelObject);
     }
-
-
-
-
-
 
     @Override
     public void onStart(int i) {
@@ -106,31 +99,27 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
         if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
             String result = (String) response.get();
             if (result == null || "".equals(result)) {
-                T.showShort(this, R.string.bound_fail);
+                T.showShort(this, R.string.please_input_user_error);
                 return;
             }
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                if (jsonObject.has("code") && jsonObject.getInt("code") == 0) {
-                    JSONObject jsonUser = jsonObject.optJSONObject("content");
-                    if (user == null) {
-                        user = new User();
-                    }
-                    user.setNickName(modifyNickNameEdit.getText().toString().trim());
+                if (jsonObject.has("ret") && jsonObject.getInt("ret") == 0) {
+                    user.setNickName(userName);
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent();
                     intent.putExtra("user", user);
-                    startActivity(intent);
+                    setResult(0,intent);
                     finish();
                 } else {
-                    T.showShort(this, R.string.bound_fail);
+                    T.showShort(this, R.string.please_input_user_error);
                 }
             } catch (JSONException e) {
-                T.showShort(this, R.string.bound_fail);
+                T.showShort(this, R.string.please_input_user_error);
                 e.printStackTrace();
             }
         } else {
-            T.showShort(this, R.string.bound_fail);
+            T.showShort(this, R.string.please_input_user_error);
         }
     }
 
@@ -149,7 +138,7 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
             T.showShort(this, R.string.network_socket_timeout_error);
             return;
         }
-        T.showShort(this, R.string.bound_fail);
+        T.showShort(this, R.string.please_input_user_error);
     }
 
     @Override
@@ -160,18 +149,13 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_confirm_modify:
-                user = LoginUtils.getUserInfo(this);
-                if (user == null) {
-                    user = new User();
+                if (modifyNickNameEdit == null) {
+                    L.e("modifyNickNameEdit == null");
+                    T.showShort(this, R.string.please_input_user_error);
+                    return;
                 }
-                LoginUtils.saveUserInfo(this, user);
-
-                String uri = AppMacro.REQUEST_URL + "/user/login";
-                Request<String> request = NoHttp.createStringRequest(uri);
-                request.setCancelSign(cancelObject);
-                request.add("user", user.getId());
-                request.add("alipayAcount", "");
-                queue.add(0, request, this);
+                String userName = modifyNickNameEdit.getText().toString().trim();
+                updateUserName(userName);
                 break;
             case R.id.ll_title_left:
                 finish();
@@ -180,5 +164,26 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
                 break;
         }
 
+    }
+
+    /**
+     * @param userName 用户名
+     * @author yuanxueyuan
+     * @Title: updateUserName
+     * @Description: 更新用户名称
+     * @date 2018/2/10 15:15
+     */
+    private void updateUserName(String userName) {
+        if (userName == null || "".equals(userName)) {
+            T.showShort(this, R.string.please_input_user_name);
+            return;
+        }
+        this.userName = userName;
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_UPDATE_USER_NAME;
+        Request<String> request = NoHttp.createStringRequest(uri);
+        request.setCancelSign(cancelObject);
+        request.add("userId", user.getId());
+        request.add("userName", userName);
+        queue.add(UPDATE_USER_NAME, request, this);
     }
 }
