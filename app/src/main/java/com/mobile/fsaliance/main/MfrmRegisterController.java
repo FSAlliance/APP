@@ -65,7 +65,7 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
         request.add("phoneNum", userName);
-        request.add("passWord",password);
+        request.add("password",password);
         request.add("shareCode",refereeAcount);
         queue.add(0, request, this);
         L.e("tyd   "+request.url());
@@ -142,18 +142,19 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
                 if (jsonObject.has("ret") && jsonObject.getInt("ret") == 0) {
                     User user = new User();
                     JSONObject jsonObject1 = jsonObject.getJSONObject("content");
+                    user.setId(jsonObject1.optString("SUserId"));
                     user.setNickName(jsonObject1.optString("SName"));
                     user.setPhoneNum(jsonObject1.optString("SPhoneNum"));
                     user.setPassword(jsonObject1.optString("SPassword"));
                     user.setShareCode(jsonObject1.optString("SInviteNum"));
                     LoginUtils.saveUserInfo(this,user);
-                    Intent intent = new Intent(this, MfrmLoginController.class);
+                    Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else if (jsonObject.getInt("ret") == -15 ){
                     T.showShort(this, R.string.register_exist);
                 } else {
-                    T.showShort(this, R.string.register_exist);
+                    T.showShort(this, R.string.register_failed);
                 }
             } catch (JSONException e) {
                 T.showShort(this, R.string.register_failed);

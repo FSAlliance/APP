@@ -77,6 +77,7 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
         request.add("userId", user.getId());
         request.add("alipayNum", alipayAcount);
         queue.add(UPDATE_USER_ALIPAY, request, this);
+        L.e("tyd---"+request.url());
     }
 
     @Override

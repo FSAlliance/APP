@@ -79,7 +79,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/optiontext_color_black"
-            android:textSize="18dp" />
+            android:textSize="15dp" />
 
         <EditText
             android:id="@+id/edit_alipay_acount"
@@ -88,6 +88,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
+            android:singleLine="true"
             android:paddingLeft="10dp"
             android:hint="@string/mine_bound_alipay_input_hint"
             android:background="@drawable/edit_bg" />

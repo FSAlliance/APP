@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by 78326 on 2017.9.9.
  */
 public class User implements Serializable{
-    private Long id;//序号
+    private String id;//序号
     private String phoneNum;//用户名
     private String nickName; //昵称
     private String password;//密码
@@ -14,14 +14,14 @@ public class User implements Serializable{
     private String aliPayAccount; //支付宝账号
     private String  shareCode; //推荐码
     private String  scoreNum; //积分
-    private String  cashing; //提现中
-    private String  cashed; //已提现
-
-    public Long getId() {
+    private Double  cashing; //提现中
+    private Double  cashed; //已提现
+    private Double balanceNum;//余额
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -82,20 +82,28 @@ public class User implements Serializable{
         this.scoreNum = scoreNum;
     }
 
-    public String getCashing() {
+    public Double getCashing() {
         return cashing;
     }
 
-    public void setCashing(String cashing) {
+    public void setCashing(Double cashing) {
         this.cashing = cashing;
     }
 
-    public String getCashed() {
+    public Double getCashed() {
         return cashed;
     }
 
-    public void setCashed(String cashed) {
+    public void setCashed(Double cashed) {
         this.cashed = cashed;
+    }
+
+    public Double getBalanceNum() {
+        return balanceNum;
+    }
+
+    public void setBalanceNum(Double balanceNum) {
+        this.balanceNum = balanceNum;
     }
 
     @Override

@@ -9,8 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
+import com.mobile.fsaliance.common.vo.User;
 
 /**
  * @author tanyadong
@@ -21,7 +23,7 @@ import com.mobile.fsaliance.common.base.BaseView;
 
 public class MfrmMineView extends BaseView {
     private LinearLayout userNameLl, userBalanceLl, inPresentLl, hasBalanceLl;
-    private TextView userAccountIdTxt, userBalanceTxt, inPresentTxt, hasBalanceTxt;
+    private TextView userAccountIdTxt, userNameTxt, userBalanceTxt, inPresentTxt, hasBalanceTxt;
     private ImageView userHeadImg; //头像
     private RelativeLayout mineOrderRl, findMyOrderRl, mineRecordIncomeRl, presentRecordRl, immediateCashRl, mineShareRl,
     boundAlipayRl;
@@ -40,8 +42,16 @@ public class MfrmMineView extends BaseView {
         if (data == null) {
             return;
         }
-
-
+        User user = (User) data[0];
+        if (user == null) {
+            return;
+        }
+        Glide.with(context).load(user.getUserHead()).placeholder(R.drawable.img_user_head).into(userHeadImg);
+        userNameTxt.setText(user.getNickName());
+        userAccountIdTxt.setText(user.getPhoneNum());
+        userBalanceTxt.setText(String.valueOf(user.getBalanceNum()));
+        inPresentTxt.setText(String.valueOf(user.getCashing()));
+        hasBalanceTxt.setText(String.valueOf(user.getCashed()));
     }
 
 
@@ -50,6 +60,7 @@ public class MfrmMineView extends BaseView {
     protected void initViews() {
         userNameLl = (LinearLayout) findViewById(R.id.ll_username);
         userAccountIdTxt = (TextView) findViewById(R.id.txt_account_id);
+        userNameTxt = (TextView) findViewById(R.id.txt_username);
         userHeadImg = (ImageView) findViewById(R.id.img_user);
         userBalanceLl = (LinearLayout) findViewById(R.id.ll_balance);
         inPresentLl = (LinearLayout) findViewById(R.id.ll_in_the_present);

@@ -77,7 +77,7 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
         request.add("phoneNum", phoneNum);
-        request.add("passWord", password);
+        request.add("password", password);
         queue.add(LOGON_IN, request, this);
     }
     /**
@@ -146,7 +146,7 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
                     if (user == null) {
                         user = new User();
                     }
-                    user.setId(jsonUser.optLong("SUserId"));
+                    user.setId(jsonUser.optString("SUserId"));
                     user.setPhoneNum(jsonUser.optString("SPhoneNum"));
                     user.setPassword(jsonUser.optString("SPassword"));
                     user.setNickName(jsonUser.optString("SName"));
@@ -154,8 +154,8 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
                     user.setShareCode(jsonUser.optString("SInviteNum"));
                     user.setUserHead(jsonUser.optString("SUserPic"));
                     user.setScoreNum(jsonUser.optString("IScoreNum"));
-                    user.setCashing(jsonUser.optString("DCashing"));
-                    user.setCashed(jsonUser.optString("DCashed"));
+                    user.setCashing(jsonUser.optDouble("DCashing"));
+                    user.setCashed(jsonUser.optDouble("DCashed"));
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);

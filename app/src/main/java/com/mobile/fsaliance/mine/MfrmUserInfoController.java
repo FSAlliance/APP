@@ -43,7 +43,8 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
     private String phoroPath = AppMacro.PHOTO_PATH + "photo.jpeg";
     @Override
     protected void getBundleData() {
-
+        Bundle bundle = getIntent().getExtras();
+        user = (User) bundle.getSerializable("user");
     }
 
     @Override
@@ -56,7 +57,7 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
         mfrmUserInfoView = (MfrmUserInfoView) findViewById(R.id.activity_userinfo_view);
         mfrmUserInfoView.setDelegate(this);
         queue = NoHttp.newRequestQueue();
-        user = LoginUtils.getUserInfo(this);
+//        user = LoginUtils.getUserInfo(this);
         if (user == null) {
             return;
         }
@@ -129,6 +130,7 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
 
     @Override
     public void onClickClickOff() {
+        LoginUtils.saveUserInfo(this, null);
         Intent intent = new Intent();
         intent.setClass(this, MfrmLoginController.class);
         startActivity(intent);
