@@ -10,6 +10,7 @@ import android.content.pm.ResolveInfo;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,8 +19,10 @@ import android.widget.TextView;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.FileUtils;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
+import com.mobile.fsaliance.common.vo.User;
 
 import java.io.File;
 import java.util.Collections;
@@ -49,6 +52,9 @@ public class ShareToInviteActivity extends Activity implements View.OnClickListe
     private String strWeChatFriendActivityName = "com.tencent.mm.ui.tools.ShareToTimeLineUI";
     private ShareItem wechatShareItem, qqShareItem;
     private String intentOrder = "android.intent.action.SEND";
+
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +63,8 @@ public class ShareToInviteActivity extends Activity implements View.OnClickListe
         if (result != 0) {
             StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
         }
+        user = LoginUtils.getUserInfo(this);
+
         initView();
 
         initValues();
@@ -92,13 +100,13 @@ public class ShareToInviteActivity extends Activity implements View.OnClickListe
      * @date 2017/12/27 21:22
      */
     private void initValues() {
-        if (titleText == null) {
+        if (titleText == null || user == null) {
             L.e("titleText == null");
             return;
         }
         titleText.setText(R.string.share_to_invite_title);
-
-        codeText.setText("WWWWWWWWW");
+        String inviteNum = user.getShareCode();
+        codeText.setText(inviteNum);
     }
 
     /**
@@ -204,6 +212,26 @@ public class ShareToInviteActivity extends Activity implements View.OnClickListe
                 break;
             //复制邀请码
             case R.id.text_share_to_invite_copy:
+                if (codeText == null) {
+                    T.showShort(this, R.string.share_copy_error);
+                    return;
+                }
+                String myShareNum = codeText.getText().toString().trim();
+                if ("".equals(myShareNum)) {
+                    T.showShort(this, R.string.share_copy_error);
+                    return;
+                }
+                // 复制到剪切板
+                // 从API11开始android推荐使用android.content.ClipboardManager
+                // 为了兼容低版本我们这里使用旧版的android.text.ClipboardManager，虽然提示deprecated，但不影响使用。
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                if (cm == null) {
+                    T.showShort(this, R.string.share_copy_error);
+                    return;
+                }
+                // 将文本内容放到系统剪贴板里。
+                cm.setText(myShareNum);
+                T.showShort(this, R.string.share_copy_success);
                 break;
             //分享到QQ
             case R.id.img_share_to_invite_qq:

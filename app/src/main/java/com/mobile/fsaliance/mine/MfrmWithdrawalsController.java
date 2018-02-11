@@ -33,7 +33,6 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
     private Object cancelObject = new Object();
     private RequestQueue queue;
     private User user;
-    private double present;
     @Override
     protected void getBundleData() {
 
@@ -79,8 +78,12 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
         request.add("userId",user.getId());
-        present = Double.parseDouble(presentMoneny) / 100;
-        request.add("money", present);
+        double present = Double.parseDouble(presentMoneny);
+        if (present < AppMacro.MIN_MONEY_TO_GET) {
+            T.showShort(this, getResources().getString(R.string.present_moneny_min));
+            return;
+        }
+        request.add("money", present / 100);
         queue.add(0, request, this);
         L.e("tyd--"+request.url());
     }

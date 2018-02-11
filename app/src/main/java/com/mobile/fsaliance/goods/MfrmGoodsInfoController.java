@@ -198,16 +198,20 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
             case R.id.goods_info_copy_one_key:
                 String goodCode = getGoodCode();
                 if ("".equals(goodCode)) {
-                    T.showShort(this, "出现错误啦");
+                    T.showShort(this, R.string.share_copy_error);
                     return;
                 }
                 // 复制到剪切板
                 // 从API11开始android推荐使用android.content.ClipboardManager
                 // 为了兼容低版本我们这里使用旧版的android.text.ClipboardManager，虽然提示deprecated，但不影响使用。
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                if (cm == null) {
+                    T.showShort(this, R.string.share_copy_error);
+                    return;
+                }
                 // 将文本内容放到系统剪贴板里。
                 cm.setText(goodCode);
-                T.showShort(this, "复制成功");
+                T.showShort(this, R.string.share_copy_success);
                 break;
             //直接领券
             case R.id.goods_info_to_taobao:
