@@ -1,6 +1,9 @@
 package com.mobile.fsaliance.mine;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,6 +26,7 @@ import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
+import com.yanzhenjie.nohttp.rest.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +34,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.util.UUID;
 
 
 public class MfrmUserInfoController extends BaseController implements MfrmUserInfoView.MfrmUserInfoViewDelegate, OnResponseListener<String> {
@@ -69,19 +74,28 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
      * @Title: updatePicture
      * @Description: 上传头像照片
      * @date 2018/1/15 0015 22:45
-     * @param phoroPath
+     * @param
      */
 
-    private void updatePicture(Uri phoroPath) {
-        Request<String> request = NoHttp.createStringRequest(String.valueOf(phoroPath), RequestMethod.POST);
+    private void updatePicture(File file) {
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH+ AppMacro.REQUEST_UPDATE_USER_PHOTO;
+        Request<String> request = NoHttp.createStringRequest(uri, RequestMethod.POST);
         request.setCancelSign(cancelObject);
-//        request.add("json", paramJson.toString());
-//        if (type == 0) {
-//            request.add("pic", new File(picPath));
-//        } else if (type == 1) {
-//            request.add("video", new File(videoPath));
-//        }
+        request.add("file", file);
+        request.setMultipartFormEnable(true);
         queue.add(0, request, this);
+        L.e("tyd----"+request.url());
+    }
+
+    private void updateUserHeadInfo(String phoro1Path, String userId) {
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH+ AppMacro.REQUEST_UPDATE_USER_HEAD;
+        Request<String> request = NoHttp.createStringRequest(uri);
+        request.setCancelSign(cancelObject);
+        request.add("userPic",phoro1Path);
+//        request.add("userId","8732ed2f-edfd-40c5-a05d-3ae326e594c6");
+        request.add("userId", userId);
+        queue.add(1, request, this);
+        L.e("tyd----"+request.url());
     }
 
 
@@ -149,6 +163,7 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
         // "拍照"按钮被点击了
         Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // 下面这句指定调用相机拍照后的照片存储的路径
+        phoroPath =AppMacro.PHOTO_PATH +  UUID.randomUUID().toString()+".jpg";
         takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(phoroPath)));
         startActivityForResult(takeIntent, CAMERA_REQUEST_CODE);
     }
@@ -187,11 +202,13 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
                 case CAMERA_REQUEST_CODE:
                     File temp = new File(phoroPath);
                     mfrmUserInfoView.setSelectPhoto(Uri.fromFile(temp));
-                    updatePicture(Uri.fromFile(temp));
+                    updatePicture(temp);
                     break;
                 case GALLERY_REQUEST_CODE:
                     mfrmUserInfoView.setSelectPhoto(data.getData());
-                    updatePicture(data.getData());
+                    String path = getRealFilePath(this, data.getData());
+                    L.e("tyd------path"+path);
+                    updatePicture(new File(path));
                     break;
                 case 2:
                     mfrmUserInfoView.setAlipayBound(data.getStringExtra("boundAlipay"));
@@ -217,38 +234,58 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
     public void onStart(int i) {
 
     }
-
+    public static String getRealFilePath(final Context context, final Uri uri ) {
+        if ( null == uri ) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if ( scheme == null )
+            data = uri.getPath();
+        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+            data = uri.getPath();
+        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
+            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
+            if ( null != cursor ) {
+                if ( cursor.moveToFirst() ) {
+                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
+                    if ( index > -1 ) {
+                        data = cursor.getString( index );
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
     @Override
     public void onSucceed(int i, Response<String> response) {
-        try {
-            JSONObject object;
-            if (!response.isSucceed()) {
-                T.showShort(this, R.string.video_update_fail);
-                return;
-            }
-            object = new JSONObject(response.get().toString());
-            if (object.has("ret") && object.getInt("ret") == 0) {
-                JSONObject content = object.optJSONObject("content");
-                if (content == null) {
-                    T.showShort(this, R.string.video_update_fail);
-                    return;
-                }
-                JSONObject platJSON = content.optJSONObject("platformRet");
-                if (platJSON == null) {
-                    T.showShort(this, R.string.video_update_fail);
-                    return;
-                }
-                if (platJSON.has("ret") && platJSON.getInt("ret") == 0) {
-//                    mfrmVideoCollectionView.showUploadPicView(null, false);
-                } else {
-                    T.showShort(this, R.string.video_update_fail);
-                }
-            }else{
-                T.showShort(this, R.string.video_update_fail);
-            }
-        } catch (JSONException e) {
+        if (!response.isSucceed()) {
             T.showShort(this, R.string.video_update_fail);
-            e.printStackTrace();
+            return;
+        }
+        switch (i) {
+            case 0:
+                    String path = response.get().toString();
+                    L.e("tyd--"+path);
+                    if (path == null) {
+                        T.showShort(this, R.string.video_update_fail);
+                    } else {
+                        updateUserHeadInfo(path, user.getId());
+                    }
+                break;
+            case 1:
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.get().toString());
+                    if (jsonObject.optInt("ret") == 0) {
+                    } else {
+                        T.showShort(this, getResources().getString(R.string.video_update_fail));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    T.showShort(this, getResources().getString(R.string.video_update_fail));
+                }
+
+                break;
         }
     }
 

@@ -25,6 +25,7 @@ import com.mobile.fsaliance.common.util.CropCircleTransformation;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.User;
 
+import java.io.File;
 import java.util.ArrayList;
 
 

@@ -24,7 +24,8 @@ public class AppMacro {
 	public static final String REQUEST_UPDATE_LOGIN_TIME = "/user/updateLoginTime";//更新登录时间
 	public static final String REQUEST_UPDATE_USER_ALIPAY = "/user/updateAlipayNum";//更新支付宝帐号
 	public static final String REQUEST_UPDATE_USER_NAME = "/user/updateUserName";//更新用户名
-
+	public static final String REQUEST_UPDATE_USER_PHOTO = "/user/updateUserPhoto";//更新头像
+	public static final String REQUEST_UPDATE_USER_HEAD = "/user/updateUserHeadInfo";//更新头像
 	//淘宝联盟所需常量
 	public static final int PLATFORM = 2;//链接形式：1：PC，2：无线，默认：１
 	public static final long ADZONEID = 210792050;//推广位id，
