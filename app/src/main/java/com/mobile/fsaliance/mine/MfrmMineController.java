@@ -78,7 +78,11 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
     @Override
     public void onResume() {
         super.onResume();
-        getUserInfoData("");
+        // 获取网络用户数据
+        if (user != null) {
+            String userId = user.getId();
+            getUserInfoData(userId);
+        }
 
     }
 
@@ -90,10 +94,10 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
      */
 
     private void getUserInfoData(String userid) {
-        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/user/getuserinfo";
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_GET_USER_INFO;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
-        request.add("userId", "8732ed2f-edfd-40c5-a05d-3ae326e594c6");
+        request.add("userId", userid);
         queue.add(0, request, this);
         L.e("tyd----"+request.url());
     }
@@ -198,7 +202,6 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
                     if (user == null) {
                         user = new User();
                     }
-                    // TODO: 2018/2/9 0009  
                     user.setShareCode(jsonObject1.optString("SInviteNum"));
                     user.setUserHead(jsonObject1.optString("SUserPic"));
                     user.setPassword(jsonObject1.optString("SPhoneNum"));
@@ -210,12 +213,15 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
                     user.setAliPayAccount(jsonObject1.optString("SAlipayNum"));
                     user.setPhoneNum(jsonObject1.optString("SPhoneNum"));
                     mfrmMineView.initData(user);
+                    //保存用户信息
+                    LoginUtils.saveUserInfo(getContext(), user);
                 } else {
-                    T.showShort(context, getResources().getString(R.string.get_userinfo_failed));
+                    // 不用提示
+//                    T.showShort(context, getResources().getString(R.string.get_userinfo_failed));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                T.showShort(context, getResources().getString(R.string.get_userinfo_failed));
+//                T.showShort(context, getResources().getString(R.string.get_userinfo_failed));
             }
 
         }
@@ -224,23 +230,23 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
     @Override
     public void onFailed(int i, Response<String> response) {
         Exception exception = response.getException();
-        if (exception instanceof NetworkError) {
-            T.showShort(context, R.string.network_error);
-            return;
-        }
-        if (exception instanceof UnKnownHostError) {
-            T.showShort(context, R.string.network_unknown_host_error);
-            return;
-        }
-        if (exception instanceof SocketTimeoutException) {
-            T.showShort(context, R.string.network_socket_timeout_error);
-            return;
-        }
-        if (exception instanceof ConnectException) {
-            T.showShort(context, R.string.network_error);
-            return;
-        }
-        T.showShort(context, R.string.get_userinfo_failed);
+//        if (exception instanceof NetworkError) {
+//            T.showShort(context, R.string.network_error);
+//            return;
+//        }
+//        if (exception instanceof UnKnownHostError) {
+//            T.showShort(context, R.string.network_unknown_host_error);
+//            return;
+//        }
+//        if (exception instanceof SocketTimeoutException) {
+//            T.showShort(context, R.string.network_socket_timeout_error);
+//            return;
+//        }
+//        if (exception instanceof ConnectException) {
+//            T.showShort(context, R.string.network_error);
+//            return;
+//        }
+//        T.showShort(context, R.string.get_userinfo_failed);
     }
 
     @Override
