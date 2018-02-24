@@ -61,7 +61,7 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
         }
         user.setPassword(password);
         LoginUtils.saveUserInfo(this, user);
-        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH +"/user/register";
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH +AppMacro.REQUEST_REGISTER;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
         request.add("phoneNum", userName);

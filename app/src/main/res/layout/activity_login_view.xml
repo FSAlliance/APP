@@ -72,6 +72,7 @@
             android:layout_marginRight="15dp"
             android:singleLine="true"
             android:maxLength="11"
+            android:inputType="number"
             android:textColor="@color/optiontext_color_black"
             android:textSize="15dp"/>
 

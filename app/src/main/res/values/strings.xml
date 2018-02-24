@@ -26,6 +26,7 @@
     <string name="hint_input_job_num">请输入工号</string>
     <string name="hint_input_goods_keywords">请输入商品关键字</string>
     <string name="hint_input_phone_num">请输入手机号</string>
+    <string name="phone_is_error">请输入正确的手机号</string>
     <string name="hint_input_name">请输入用户名</string>
     <string name="name_is_empty">用户名不能为空</string>
     <string name="hint_input_password">请输入密码</string>
@@ -42,6 +43,7 @@
     <string name="username_is_empty">手机号不能为空</string>
     <string name="username_is_error">用户名错误</string>
     <string name="password_is_error">密码错误</string>
+    <string name="referee_acount_is_null">推荐码不能为空</string>
     <string name="log_off">退出登录</string>
     <string name="my_asset">我的资产</string>
     <string name="register_info">提示:手机端暂不支持密码修改,请您牢记密码!</string>
@@ -127,6 +129,7 @@
     <string name="present_all">全部提现</string>
     <string name="please_input_present_moneny">请输入要提现的金额</string>
    <string name="please_input_alipayaccount">请输入支付宝账号</string>
+   <string name="please_input_alipayaccount_error">请输入正确的支付宝账号</string>
    <string name="please_input_user_name">请输入用户名</string>
    <string name="please_input_user_error">设置用户名失败</string>
     <string name="bound_fail">绑定失败</string>

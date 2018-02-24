@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
+import com.mobile.fsaliance.common.util.PhoneUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
 
@@ -91,6 +92,10 @@ public class MfrmLoginView extends BaseView {
     private boolean checkInfo(String phoneNum, String password) {
         if (null == phoneNum || "".equals(phoneNum)) {
             T.showShort(context, R.string.username_is_empty);
+            return false;
+        }
+        if (!PhoneUtil.checkPhoneNum(phoneNum)) {
+            T.showShort(context, R.string.phone_is_error);
             return false;
         }
         if (null == password || "".equals(password)) {

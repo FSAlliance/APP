@@ -20,6 +20,7 @@ public class AppMacro {
 	public static final String REQUEST_FAVORITE_ITEMS = "/Goods/favoriteItem";//获取选品库中的数据
 	public static final String REQUEST_GET_GOOD_CODE = "/Goods/code";//获取选品库中的数据
 	public static final String REQUEST_SEARCH_GOOD = "/Goods/searchGoods";//搜索商品
+	public static final String REQUEST_REGISTER = "/user/register";//注册
 	public static final String REQUEST_LOGIN = "/user/checkSign";//登录
 	public static final String REQUEST_UPDATE_LOGIN_TIME = "/user/updateLoginTime";//更新登录时间
 	public static final String REQUEST_UPDATE_USER_ALIPAY = "/user/updateAlipayNum";//更新支付宝帐号

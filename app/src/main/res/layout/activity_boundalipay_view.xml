@@ -90,6 +90,9 @@
             android:layout_marginTop="10dp"
             android:singleLine="true"
             android:paddingLeft="10dp"
+            android:inputType="number"
+            android:textSize="15dp"
+            android:maxLength="11"
             android:hint="@string/mine_bound_alipay_input_hint"
             android:background="@drawable/edit_bg" />
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
+import com.mobile.fsaliance.common.util.PhoneUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
 
@@ -73,6 +74,10 @@ public class MfrmBoundAlipayView extends BaseView {
                 String alipayAcount = alipayAcountEdit.getText().toString().trim();
                 if ( alipayAcount == null || alipayAcount.equals("")) {
                     T.showShort(context, context.getResources().getString(R.string.please_input_alipayaccount));
+                    return;
+                }
+                if (!PhoneUtil.checkPhoneNum(alipayAcount)) {
+                    T.showShort(context, R.string.please_input_alipayaccount_error);
                     return;
                 }
                 if (super.delegate instanceof MfrmBoundAlipayViewDelegate) {

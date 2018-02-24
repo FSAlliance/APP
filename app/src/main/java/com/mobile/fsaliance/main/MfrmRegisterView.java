@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
+import com.mobile.fsaliance.common.util.PhoneUtil;
 import com.mobile.fsaliance.common.util.T;
 
 public class MfrmRegisterView extends BaseView {
@@ -102,17 +103,21 @@ public class MfrmRegisterView extends BaseView {
      * @Description: 检验输入字段
      * @date 2017.0.23
      */
-    private boolean checkInfo(String username, String password, String jobId) {
-        if (null == jobId || "".equals(jobId)) {
+    private boolean checkInfo(String username, String password, String refereeAcount) {
+        if (null == username || "".equals(username)) {
             T.showShort(context, R.string.username_is_empty);
             return false;
         }
-        if (null == username || "".equals(username)) {
-            T.showShort(context, R.string.password_is_empty);
+        if (!PhoneUtil.checkPhoneNum(username)) {
+            T.showShort(context, R.string.phone_is_error);
             return false;
         }
         if (null == password || "".equals(password)) {
             T.showShort(context, R.string.password_is_empty);
+            return false;
+        }
+        if (null == refereeAcount || "".equals(refereeAcount)) {
+            T.showShort(context, R.string.referee_acount_is_null);
             return false;
         }
         return true;

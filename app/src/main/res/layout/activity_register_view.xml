@@ -70,6 +70,7 @@
                android:inputType="number"
                android:singleLine="true"
                android:textSize="15dp"
+               android:maxLength="11"
                android:textColorHint="@color/hint_text_color"
                android:hint="@string/hint_input_phone_num"
                android:layout_width="match_parent"
