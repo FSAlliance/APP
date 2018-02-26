@@ -39,7 +39,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	private RequestQueue queue;
 	private static final int GET_ASSET_LIST = 0;
 	private Object cancelObject = new Object();
-	private List<Good> assetList;
+	private List<Good> goodsList;
 	private boolean refreshList = false;
 	private boolean loadMoreList = false;
 	private boolean mHasLoadedOnce;
@@ -62,7 +62,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 			StatusBarUtil.initWindows(getActivity(), getResources().getColor(R.color.white));
 		}
 		queue = NoHttp.newRequestQueue();
-		assetList = new ArrayList<>();
+		goodsList = new ArrayList<>();
 		isPrepared = true;
 		refreshList = false;
 		loadMoreList = false;
@@ -70,14 +70,24 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 		return view;
 	}
 
-	private void getSearchAssetData(String param, int pageNo) {
-		String uri = AppMacro.REQUEST_URL + "/asset/query";
+
+
+
+	/**
+	 * @author tanyadong
+	 * @Title getSearchAssetData
+	 * @Description 获取搜索数据
+	 * @date 2017/9/9 10:42
+	 */
+	private void getCustomGoodsData(long adzoneid, long pageNo) {
+		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/Goods/Custom";
 		Request<String> request = NoHttp.createStringRequest(uri);
 		request.cancelBySign(cancelObject);
-		request.add("param", param);
-		request.add("page", pageNo);
-		request.add("limit", PAGE_SIZE);
-		queue.add(GET_ASSET_LIST, request, this);
+		request.add("adzoneid", adzoneid);
+		request.add("platform", AppMacro.PLATFORM);
+		request.add("pageNo", pageNo);
+		request.add("pageSize", PAGE_SIZE);
+		queue.add(0, request, this);
 	}
 
 	@Override
@@ -90,7 +100,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 		if (!isPrepared || !isVisible || mHasLoadedOnce) {
 			return;
 		}
-		getSearchAssetData("", FIRST_PAGE);
+		getCustomGoodsData(AppMacro.ADZONEID, FIRST_PAGE);
 		mHasLoadedOnce = true;
 	}
 
@@ -122,8 +132,15 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	 */
 	@Override
 	public void onClickToDetail(Good asset) {
+		if (goodsList == null || goodsList.size() <= 0) {
+			L.e("assetList == null ");
+			return;
+		}
 		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
 		intent.setClass(context, MfrmGoodsInfoController.class);
+		bundle.putSerializable("good", asset);
+		intent.putExtras(bundle);
 		startActivity(intent);
 	}
 
@@ -137,7 +154,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	@Override
 	public void pullDownRefresh() {
 		refreshList = true;
-		getSearchAssetData("", FIRST_PAGE);
+		getCustomGoodsData(AppMacro.ADZONEID, FIRST_PAGE);
 	}
 
 
@@ -150,7 +167,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	@Override
 	public void onClickLoadMore() {
 		loadMoreList = true;
-		getSearchAssetData("", pageNo);
+		getCustomGoodsData(AppMacro.ADZONEID, pageNo);
 	}
 
 	@Override
@@ -167,8 +184,8 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	public void onSucceed(int i, Response response) {
 		if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
 			String result = (String) response.get();
-			assetList = analyzeAssetsData(result);
-			mfrmSuperVouchersView.showMyAssetList(assetList);
+			goodsList = analyzeAssetsData(result);
+			mfrmSuperVouchersView.showMyAssetList(goodsList);
 		}
 	}
 
@@ -180,101 +197,126 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	 */
 	private List<Good> analyzeAssetsData(String result) {
 		if (!loadMoreList) {
-			if (assetList != null) {
-				assetList.clear();
+			if (goodsList != null) {
+				goodsList.clear();
 			}
 		}
 		if (null == result || "".equals(result)) {
-			T.showShort(context, R.string.get_myasset_failed);
+			T.showShort(context, R.string.get_goods_failed);
 			reloadNoDataList();
 			L.e("result == null");
 			return null;
 		}
 		try {
 			JSONObject jsonObject = new JSONObject(result);
-			if (jsonObject.has("code") && jsonObject.optInt("code") == 0) {
-				JSONArray jsonArray = jsonObject.optJSONArray("content");
+			if (jsonObject.has("tbk_dg_item_coupon_get_response")) {
+				JSONObject optJSONObject = jsonObject.optJSONObject("tbk_dg_item_coupon_get_response");
+				if (optJSONObject == null) {
+					return null;
+				}
+				JSONObject jsonObjectResult= optJSONObject.optJSONObject("results");
+				if (jsonObjectResult == null) {
+					return null;
+				}
+				JSONArray jsonArray = jsonObjectResult.optJSONArray("tbk_coupon");
 				mfrmSuperVouchersView.isLoadMore = true;
 				if (jsonArray.length() <= 0) {
 					if (loadMoreList) {
 						mfrmSuperVouchersView.isLoadMore = false;
-						T.showShort(context, R.string.check_asset_no_more);
+						T.showShort(getActivity(), R.string.check_asset_no_more);
 					} else {
 						reloadNoDataList();
 					}
 					return null;
 				} else {
+					pageNo++;
 					mfrmSuperVouchersView.setNoDataView(false);
 				}
-				if (assetList == null){
-					assetList = new ArrayList<>();
+				if (goodsList == null){
+					goodsList = new ArrayList<>();
 				}
-				int arrCount = 0;
-				if (assetList != null) {
-					arrCount = assetList.size();
-				}
-				if (jsonArray.length() >= PAGE_SIZE) {
-					pageNo++;
-				} else {
-					if (lastCount < PAGE_SIZE && arrCount > 0) {
-						int index = (pageNo - 1) * PAGE_SIZE;//开始从某一位移除
-						for (int i = index; i < arrCount; i++) {
-							if (i >= index && i < index + lastCount) {
-								if (index < assetList.size()){
-									assetList.remove(index);
-								}
-							}
+//			if (jsonObject.has("code") && jsonObject.optInt("code") == 0) {
+//				JSONArray jsonArray = jsonObject.optJSONArray("content");
+//				mfrmSuperVouchersView.isLoadMore = true;
+//				if (jsonArray.length() <= 0) {
+//					if (loadMoreList) {
+//						mfrmSuperVouchersView.isLoadMore = false;
+//						T.showShort(context, R.string.check_asset_no_more);
+//					} else {
+//						reloadNoDataList();
+//					}
+//					return null;
+//				} else {
+//					mfrmSuperVouchersView.setNoDataView(false);
+//				}
+//				if (assetList == null){
+//					assetList = new ArrayList<>();
+//				}
+//				int arrCount = 0;
+//				if (assetList != null) {
+//					arrCount = assetList.size();
+//				}
+//				if (jsonArray.length() >= PAGE_SIZE) {
+//					pageNo++;
+//				} else {
+//					if (lastCount < PAGE_SIZE && arrCount > 0) {
+//						int index = (pageNo - 1) * PAGE_SIZE;//开始从某一位移除
+//						for (int i = index; i < arrCount; i++) {
+//							if (i >= index && i < index + lastCount) {
+//								if (index < assetList.size()){
+//									assetList.remove(index);
+//								}
+//							}
+//						}
+//					}
+//				}
+				for (int i = 0; i < jsonArray.length(); i++) {
+					Good good = new Good();
+					JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
+					good.setCommissionRate(jsonObjectContent.optString("commission_rate"));
+					good.setCouponClickUrl(jsonObjectContent.optString("coupon_click_url"));
+					good.setGoodsFinalPrice(jsonObjectContent.optString("zk_final_price"));
+					good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
+					Double price = 0.00;
+					String goodCouponInfo = good.getCouponInfo();
+					if (goodCouponInfo != null && !goodCouponInfo.equals("")) {
+						String[] strs = goodCouponInfo.split("元");
+						if (strs.length >= 2) {
+							goodCouponInfo = strs[1];
+							goodCouponInfo = goodCouponInfo.replace("减", "");
+							price = Double.parseDouble(goodCouponInfo);
 						}
 					}
-				}
-				for (int i = 0; i < jsonArray.length(); i++) {
-//					Asset asset = new Asset();
-//					JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
-//					asset.setState(jsonObjectContent.getInt("state"));
-//					asset.setType(jsonObjectContent.getString("type"));
-//					asset.setCodeId(jsonObjectContent.getString("codeId"));
-//					asset.setJobId(jsonObjectContent.getString("jobId"));
-//					asset.setUserName(jsonObjectContent.optString("user"));
-//					asset.setName(jsonObjectContent.getString("name"));
-//					asset.setBoard(jsonObjectContent.getString("board"));
-//					asset.setBox(jsonObjectContent.getString("box"));
-//					asset.setBuild(jsonObjectContent.getString("build"));
-//					asset.setCenter(jsonObjectContent.getString("center"));
-//					asset.setCost(jsonObjectContent.getString("cost"));
-//					asset.setCostIt(jsonObjectContent.getString("costIt"));
-//					asset.setCount(jsonObjectContent.getString("count"));
-//					asset.setCpu(jsonObjectContent.getString("cpu"));
-//					asset.setDisk(jsonObjectContent.getString("disk"));
-//					asset.setFloor(jsonObjectContent.getString("floor"));
-//					asset.setHardDriver(jsonObjectContent.getString("hardDriver"));
-//					asset.setLeavePlace(jsonObjectContent.getString("leavePlace"));
-//					asset.setMemory(jsonObjectContent.getString("memory"));
-//					asset.setModel(jsonObjectContent.getString("model"));
-//					asset.setMoney(jsonObjectContent.getString("money"));
-//					asset.setOther(jsonObjectContent.getString("other"));
-//					asset.setPart(jsonObjectContent.getString("part"));
-//					asset.setPlace(jsonObjectContent.getString("place"));
-//					asset.setRealPlace(jsonObjectContent.getString("realPlace"));
-//					asset.setSaver(jsonObjectContent.getString("saver"));
-//					asset.setRealSaver(jsonObjectContent.getString("realSaver"));
-//					asset.setPrice(jsonObjectContent.getString("price"));
-//					asset.setSoftDriver(jsonObjectContent.getString("softDriver"));
-//					asset.setTime(jsonObjectContent.getString("time"));
-//					asset.setVideoCard(jsonObjectContent.getString("videoCard"));
-//					assetList.add(asset);
+					if (price < 10) {
+						continue;
+					}
+					double money = Double.parseDouble(good.getGoodsFinalPrice()) - price;
+					String goodPriceStr = String.format("%.2f", money);
+					good.setCouponInfo(goodCouponInfo);
+					good.setGoodsFinalPrice(goodPriceStr);
+					good.setCouponRemainCount(jsonObjectContent.optInt("coupon_remain_count"));
+					good.setCouponTotalCount(jsonObjectContent.optInt("coupon_total_count"));
+					good.setItemDescription(jsonObjectContent.optString("item_description"));
+					good.setItemUrl(jsonObjectContent.optString("item_url"));
+					good.setNick(jsonObjectContent.optString("nick"));
+					good.setGoodsImg(jsonObjectContent.optString("pict_url"));
+					good.setShopTitle(jsonObjectContent.optString("shop_title"));
+					good.setGoodsTitle(jsonObjectContent.optString("title"));
+					good.setVolume(jsonObjectContent.optInt("volume"));
+					goodsList.add(good);
 				}
 				lastCount = jsonArray.length();
 			} else {
-				T.showShort(context, R.string.get_myasset_failed);
+				T.showShort(context, R.string.get_goods_failed);
 				reloadNoDataList();
 				return null;
 			}
 		} catch (JSONException e) {
-			T.showShort(context, R.string.get_myasset_failed);
+			T.showShort(context, R.string.get_goods_failed);
 			reloadNoDataList();
 			e.printStackTrace();
 		}
-		return  assetList;
+		return  goodsList;
 	}
 
 
@@ -285,9 +327,9 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	 * @date 2017/9/9 20:59
 	 */
 	private void reloadNoDataList() {
-		if (assetList == null || assetList.size() <= 0) {
+		if (goodsList == null || goodsList.size() <= 0) {
 			mfrmSuperVouchersView.setNoDataView(true);
-			mfrmSuperVouchersView.showMyAssetList(assetList);
+			mfrmSuperVouchersView.showMyAssetList(goodsList);
 		}
 	}
 
@@ -295,8 +337,8 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 	@Override
 	public void onFailed(int i, Response response) {
 		if (refreshList == true) {
-			if (assetList != null) {
-				assetList.clear();
+			if (goodsList != null) {
+				goodsList.clear();
 			}
 		}
 		Exception exception = response.getException();
@@ -317,7 +359,7 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 			T.showShort(context, R.string.network_error);
 			return;
 		}
-		T.showShort(context, R.string.login_failed);
+		T.showShort(context, R.string.get_goods_failed);
 	}
 
 	@Override

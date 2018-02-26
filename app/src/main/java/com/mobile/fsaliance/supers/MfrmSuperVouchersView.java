@@ -90,7 +90,7 @@ public class MfrmSuperVouchersView extends BaseView implements BGARefreshLayout.
 	private void initFresh() {
 		bgaRefreshLayout.setDelegate(this);
 		//true代表开启上拉加载更多
-		BGANormalRefreshViewHolder bgaNormalRefreshViewHolder = new BGANormalRefreshViewHolder(getContext(), false);
+		BGANormalRefreshViewHolder bgaNormalRefreshViewHolder = new BGANormalRefreshViewHolder(getContext(), true);
 		bgaRefreshLayout.setRefreshViewHolder(bgaNormalRefreshViewHolder);
 	}
 
