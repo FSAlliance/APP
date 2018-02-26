@@ -32,6 +32,16 @@ public class MfrmWalletView extends BaseView {
 
     @Override
     public void initData(Object... data) {
+        User user = (User) data[0];
+        if (user == null) {
+            L.e("user == null");
+            return;
+        }
+        if (myBalanceTxt == null) {
+            L.e("myBalanceTxt == null");
+            return;
+        }
+        myBalanceTxt.setText(user.getBalanceNum()+"");
     }
 
 

@@ -36,24 +36,12 @@ public class MfrmWalletController extends BaseController implements MfrmWalletVi
         queue = NoHttp.newRequestQueue();
         user = LoginUtils.getUserInfo(this);
         if (user == null) {
+            L.e("user == null");
             return;
         }
         mfrmWalletView.initData(user);
-
-        //获取数据
-        initData();
     }
 
-
-    /**
-     * @author yuanxueyuan
-     * @Title: initData
-     * @Description: 初始化数据
-     * @date 2018/1/3 21:40
-     */
-    private void initData() {
-
-    }
 
     @Override
     public void onClickBack() {
@@ -68,7 +56,6 @@ public class MfrmWalletController extends BaseController implements MfrmWalletVi
      */
     @Override
     public void onClickWalletPresent() {
-        User user = LoginUtils.getUserInfo(this);
         if (user == null) {
             L.e("user == null");
             return;

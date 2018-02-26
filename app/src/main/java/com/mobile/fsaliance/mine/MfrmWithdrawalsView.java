@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
 
@@ -35,8 +36,14 @@ public class MfrmWithdrawalsView extends BaseView {
     public void initData(Object... data) {
         User user = (User) data[0];
         if (user == null) {
+            L.e("user == null");
             return;
         }
+        if (presentmMonenyTxt == null) {
+            L.e("presentmMonenyTxt == null");
+            return;
+        }
+        presentmMonenyTxt.setText(user.getBalanceNum()+"");
     }
 
 
