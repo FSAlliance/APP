@@ -14,9 +14,9 @@ public class User implements Serializable{
     private String aliPayAccount; //支付宝账号
     private String  shareCode; //推荐码
     private String  scoreNum; //积分
-    private Double  cashing; //提现中
-    private Double  cashed; //已提现
-    private Double balanceNum;//余额
+    private long  cashing; //提现中
+    private long  cashed; //已提现
+    private long balanceNum;//余额
     public String getId() {
         return id;
     }
@@ -82,27 +82,27 @@ public class User implements Serializable{
         this.scoreNum = scoreNum;
     }
 
-    public Double getCashing() {
+    public long getCashing() {
         return cashing;
     }
 
-    public void setCashing(Double cashing) {
+    public void setCashing(long cashing) {
         this.cashing = cashing;
     }
 
-    public Double getCashed() {
+    public long getCashed() {
         return cashed;
     }
 
-    public void setCashed(Double cashed) {
+    public void setCashed(long cashed) {
         this.cashed = cashed;
     }
 
-    public Double getBalanceNum() {
+    public long getBalanceNum() {
         return balanceNum;
     }
 
-    public void setBalanceNum(Double balanceNum) {
+    public void setBalanceNum(long balanceNum) {
         this.balanceNum = balanceNum;
     }
 
