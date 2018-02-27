@@ -26,7 +26,7 @@ public class MfrmMineView extends BaseView {
     private LinearLayout userNameLl, userBalanceLl, inPresentLl, hasBalanceLl;
     private TextView userAccountIdTxt, userNameTxt, userBalanceTxt, inPresentTxt, hasBalanceTxt;
     private ImageView userHeadImg; //头像
-    private RelativeLayout mineOrderRl, findMyOrderRl, mineRecordIncomeRl, presentRecordRl, immediateCashRl, mineShareRl,
+    private RelativeLayout mineOrderRl, findMyOrderRl, mineRecordIncomeRl, presentRecordRl, immediateCashRl, mineShareRl,contactUsRl,
     boundAlipayRl;
     public MfrmMineView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -75,6 +75,7 @@ public class MfrmMineView extends BaseView {
         findMyOrderRl = (RelativeLayout) findViewById(R.id.rl_mine_order_find);
         mineRecordIncomeRl = (RelativeLayout) findViewById(R.id.rl_record_of_income);
         mineShareRl = (RelativeLayout) findViewById(R.id.rl_share);
+        contactUsRl = (RelativeLayout) findViewById(R.id.rl_contact_us);
         presentRecordRl = (RelativeLayout) findViewById(R.id.rl_present_record);
         boundAlipayRl = (RelativeLayout) findViewById(R.id.rl_bound_alipay);
         immediateCashRl = (RelativeLayout) findViewById(R.id.rl_immediate_cash);
@@ -91,6 +92,7 @@ public class MfrmMineView extends BaseView {
         findMyOrderRl.setOnClickListener(this);
         mineRecordIncomeRl.setOnClickListener(this);
         mineShareRl.setOnClickListener(this);
+        contactUsRl.setOnClickListener(this);
         presentRecordRl.setOnClickListener(this);
         boundAlipayRl.setOnClickListener(this);
         immediateCashRl.setOnClickListener(this);
@@ -162,6 +164,12 @@ public class MfrmMineView extends BaseView {
                     ((MfrmMineViewDelegate) super.delegate).onClickHasBalance();
                 }
                 break;
+            case R.id.rl_contact_us:
+                //联系我们
+                if (super.delegate instanceof MfrmMineViewDelegate) {
+                    ((MfrmMineViewDelegate) super.delegate).onClickContactUs();
+                }
+                break;
             default:
                 break;
         }
@@ -190,5 +198,7 @@ public class MfrmMineView extends BaseView {
         void onClickImmediateCash();//立即提现
 
         void onClickRecordOfIncome();//收入记录
+
+        void onClickContactUs();//联系我们
     }
 }

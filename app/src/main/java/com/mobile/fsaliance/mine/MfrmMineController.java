@@ -194,6 +194,19 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
         startActivity(intent);
     }
 
+    /**
+     * @author yuanxueyuan
+     * @Title: onClickContactUs
+     * @Description: 点击联系我们
+     * @date 2018/2/27 20:44
+     */
+    @Override
+    public void onClickContactUs() {
+        Intent intent = new Intent();
+        intent.setClass(context, ContactUsActivity .class);
+        startActivity(intent);
+    }
+
     @Override
     public void onStart(int i) {
 

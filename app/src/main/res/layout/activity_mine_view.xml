@@ -411,6 +411,45 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
             </RelativeLayout>
+            <!--绑定支付宝-->
+            <RelativeLayout
+                android:id="@+id/rl_contact_us"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/menu_item_height"
+                android:background="@color/white">
+                <ImageView
+                    android:id="@+id/img_contact_us"
+                    android:layout_width="@dimen/picture_size"
+                    android:layout_height="@dimen/picture_size"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/img_contact_us" />
+
+                <TextView
+                    android:id="@+id/txt_contact_us"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="12dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/ming_contact_us"
+                    android:layout_toRightOf="@+id/img_contact_us"
+                    android:textColor="@color/optiontext_color_black"
+                    android:textSize="@dimen/fontSize" />
+                <ImageView
+                    android:id="@+id/img_contact_us_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="@dimen/remote_setting_menu_btn_width"
+                    android:layout_height="@dimen/remote_setting_menu_btn_height"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/moredetails_arrow" />
+
+                <View
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/line_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

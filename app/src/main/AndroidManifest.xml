@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <!-- 保存日誌服务 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
-
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
 
     <application
@@ -42,24 +41,22 @@
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
-        <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+            android:screenOrientation="portrait">
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".main.MfrmLoginController"
             android:launchMode="standard"
-            android:screenOrientation="portrait" >
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".main.MfrmRegisterController"
-            android:screenOrientation="portrait" >
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".mine.MfrmWalletController"
             android:screenOrientation="portrait" />
@@ -95,28 +92,23 @@
             android:name=".mine.MfrmPresentRecordListController"
             android:screenOrientation="portrait" />
         <activity android:name=".share.ShareActivity" />
-        <activity android:name=".share.ShareToInviteActivity"/>
-
+        <activity android:name=".share.ShareToInviteActivity" />
         <activity
             android:name=".mine.MfrmMyOrderActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".share.ShareAppActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-
+        <activity
+            android:name=".share.ShareAppActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".mine.MfrmModifyNickNameController"
-            android:screenOrientation="portrait" >
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".mine.MfrmModifyPasswordController"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".mine.MfrmFindMyOrderController"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".mine.ContactUsActivity"></activity>
     </application>
 
 </manifest>

@@ -39,13 +39,35 @@
             android:textColor="@color/read"
             android:textSize="18dp" />
     </LinearLayout>
-    <TextView
-        android:text="@string/present_moneny"
-        android:background="@color/login_bg"
+    <!--可提取金额-->
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:gravity="center|left"
-        android:layout_marginLeft="15dp"
-        android:layout_height="50dp" />
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/present_moneny_able"
+            android:background="@color/login_bg"
+            android:layout_width="wrap_content"
+            android:gravity="center|left"
+            android:layout_marginLeft="15dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:id="@+id/txt_money_able"
+            android:background="@color/login_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/read"
+            android:text="0"/>
+        <TextView
+            android:background="@color/login_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/read"
+            android:text="@string/home_goods_money"/>
+    </LinearLayout>
+
     <RelativeLayout
         android:background="@color/white"
         android:layout_width="match_parent"

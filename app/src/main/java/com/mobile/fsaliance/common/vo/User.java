@@ -17,6 +17,7 @@ public class User implements Serializable{
     private long  cashing; //提现中
     private long  cashed; //已提现
     private long balanceNum;//余额
+    private long canPresentMoney;//可提现金额
     private String myOrder;//订单编号
     public String getId() {
         return id;
@@ -115,6 +116,14 @@ public class User implements Serializable{
         this.myOrder = myOrder;
     }
 
+    public long getCanPresentMoney() {
+        return canPresentMoney;
+    }
+
+    public void setCanPresentMoney(long canPresentMoney) {
+        this.canPresentMoney = canPresentMoney;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -129,6 +138,7 @@ public class User implements Serializable{
                 ", cashing=" + cashing +
                 ", cashed=" + cashed +
                 ", balanceNum=" + balanceNum +
+                ", canPresentMoney=" + canPresentMoney +
                 ", myOrder='" + myOrder + '\'' +
                 '}';
     }

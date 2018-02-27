@@ -76,6 +76,7 @@
     <string name="register_has_count">已有账号?</string>
     <string name="register_direct_login">直接登录</string>
     <string name="register_exist">该用户已存在</string>
+    <string name="register_invite_num_error">邀请码不正确</string>
     <!--dialog-->
     <string name="common_dialog_hint">提示</string>
     <string name="common_dialog_cancel">取消</string>
@@ -108,6 +109,7 @@
     <string name="mine_immediate_cash">立即提现</string>
     <string name="ming_share">分享</string>
     <string name="ming_bound_alipay">绑定</string>
+    <string name="ming_contact_us">联系我们</string>
     <string name="ming_user_img">头像</string>
     <string name="ming_user_nickname">昵称</string>
     <string name="mine_user_alipay">支付宝账号</string>
@@ -126,16 +128,17 @@
     <string name="my_money_balance">我的余额</string>
     <string name="mine_wallet_present">提现</string>
     <string name="present_moneny">提现金额</string>
+    <string name="present_moneny_able">可提取金额</string>
     <string name="present_all">全部提现</string>
     <string name="please_input_present_moneny">请输入要提现的金额</string>
-   <string name="please_input_alipayaccount">请输入支付宝账号</string>
-   <string name="please_input_alipayaccount_error">请输入正确的支付宝账号</string>
-   <string name="please_input_user_name">请输入用户名</string>
-   <string name="please_input_user_error">设置用户名失败</string>
+    <string name="please_input_alipayaccount">请输入支付宝账号</string>
+    <string name="please_input_alipayaccount_error">请输入正确的支付宝账号</string>
+    <string name="please_input_user_name">请输入用户名</string>
+    <string name="please_input_user_error">设置用户名失败</string>
     <string name="bound_fail">绑定失败</string>
     <string name="present_fail">提现失败</string>
     <string name="present_ok">确认提现</string>
-    <string name="present_moneny_overrun">转出金额超限</string>
+    <string name="present_moneny_overrun">提现金额超限</string>
     <string name="present_moneny_min">未达到最小的提现积分</string>
     <string name="present_moneny_null">没有积分可以提现</string>
     <string name="tack_picture">拍照</string>
@@ -196,4 +199,10 @@
     <string name="find_my_order_success">找回订单成功</string>
     <string name="find_my_order_max">对不起，已达到最大订单数</string>
     <string name="find_my_order_good_name">商品名称:</string>
+
+    <!--联系我们-->
+    <string name="contact_us_title">联系我们</string>
+    <string name="contact_us_about_qq">梵森联盟QQ群</string>
+    <string name="contact_us_about_num">QQ群号:721023665</string>
+    <string name="contact_us_tip">服务时间: 周一到周五 9:00 - 18:00</string>
 </resources>
