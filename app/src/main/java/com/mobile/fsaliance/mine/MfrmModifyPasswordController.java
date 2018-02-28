@@ -154,11 +154,7 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
     @Override
     public void onFinish(int i) {
         circleProgressBarView.hideProgressBar();
-        user.setPassword("aaaaaaaaaaaaaaaaaaaaa");
-        LoginUtils.saveUserInfo(this, user);
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
+
     }
 
     @Override
@@ -196,7 +192,6 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
             T.showShort(this,R.string.password_is_empty);
             return false;
         }
-        user.setPassword("aa");
         if (user.getPassword() == null) {
             return false;
         }

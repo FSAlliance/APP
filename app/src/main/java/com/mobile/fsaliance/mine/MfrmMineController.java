@@ -204,7 +204,7 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
                     }
                     user.setShareCode(jsonObject1.optString("SInviteNum"));
                     user.setUserHead(jsonObject1.optString("SUserPic"));
-                    user.setPassword(jsonObject1.optString("SPhoneNum"));
+                    user.setPassword(jsonObject1.optString("SPassword"));
                     user.setNickName(jsonObject1.optString("SName"));
                     double cashed = jsonObject1.optDouble("DCashed") * 100;
                     user.setCashed((long)cashed);

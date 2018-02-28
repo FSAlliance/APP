@@ -109,7 +109,7 @@ public class MfrmModifyNickNameController extends BaseController implements OnRe
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent();
                     intent.putExtra("user", user);
-                    setResult(0,intent);
+                    setResult(RESULT_OK,intent);
                     finish();
                 } else {
                     T.showShort(this, R.string.please_input_user_error);
