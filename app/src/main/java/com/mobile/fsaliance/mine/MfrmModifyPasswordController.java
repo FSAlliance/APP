@@ -138,6 +138,7 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
                     Intent intent = new Intent();
                     setResult(RESULT_OK, intent);
                     finish();
+
                 } else {
                     T.showShort(this, R.string.modify_pwd_fail);
                 }
