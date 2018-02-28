@@ -38,10 +38,6 @@ public class MfrmLoginView extends BaseView {
 
     @Override
     public void initData(Object... data) {
-        User user = (User) data[0];
-        if (user == null) {
-            return;
-        }
     }
 
 

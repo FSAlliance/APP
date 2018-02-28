@@ -149,10 +149,13 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
                     user.setShareCode(jsonObject1.optString("SInviteNum"));
                     LoginUtils.saveUserInfo(this,user);
                     Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("id",1);
                     startActivity(intent);
                     finish();
-                } else if (jsonObject.getInt("ret") == -15 ){
+                } else if (jsonObject.getInt("ret") == AppMacro.ERROR_USERID_EXIST ){
                     T.showShort(this, R.string.register_exist);
+                } else if (jsonObject.getInt("ret") == AppMacro.ERROR_INITE_NUM ){
+                    T.showShort(this, R.string.register_invite_num_error);
                 } else {
                     T.showShort(this, R.string.register_failed);
                 }

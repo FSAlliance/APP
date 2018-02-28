@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
@@ -55,11 +56,15 @@ public class MainActivity extends AppCompatActivity
         initView();
         //点击事件
         click();
-    }
 
+    }
 
     @Override
     protected void onPostResume() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            id = intent.getIntExtra("id",1);
+        }
         if(id==1){
             showHome();
             viewPager.setCurrentItem(0);

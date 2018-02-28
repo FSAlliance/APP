@@ -17,7 +17,6 @@ import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
-import com.mobile.fsaliance.main.MainActivity;
 import com.mobile.fsaliance.main.MfrmLoginController;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;

@@ -110,6 +110,7 @@ public class MfrmWelcomController extends BaseController implements OnResponseLi
     private void gotoMainView() {
         Intent intent = new Intent();
         intent.setClass(this, MainActivity.class);
+        intent.putExtra("id",1);
         startActivity(intent);
         finish();
     }

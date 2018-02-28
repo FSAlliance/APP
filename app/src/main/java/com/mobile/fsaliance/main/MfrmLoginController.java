@@ -49,11 +49,11 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
         mfrmLoginView = (MfrmLoginView) findViewById(R.id.activity_login_view);
         mfrmLoginView.setDelegate(this);
         queue = NoHttp.newRequestQueue();
-        user = LoginUtils.getUserInfo(this);
-        if (user == null) {
-            return;
-        }
-        mfrmLoginView.initData(user);
+//        user = LoginUtils.getUserInfo(this);
+//        if (user == null) {
+//            return;
+//        }
+//        mfrmLoginView.initData(user);
     }
 
     /**
@@ -156,12 +156,15 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
                     user.setShareCode(jsonUser.optString("SInviteNum"));
                     user.setUserHead(jsonUser.optString("SUserPic"));
                     user.setScoreNum(jsonUser.optString("IScoreNum"));
+                    double anBalance = jsonUser.optDouble("DCanBalance") * 100;
+                    user.setCanPresentMoney((long)anBalance);
                     double cashing = jsonUser.optDouble("DCashing") * 100;
                     user.setCashing((long)cashing);
                     double cashed = jsonUser.optDouble("DCashed") * 100;
                     user.setCashed((long)cashed);
                     LoginUtils.saveUserInfo(this, user);
                     Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("id",1);
                     startActivity(intent);
                     finish();
                 } else if (ret == AppMacro.GET_DATA_RET_NO_USERNAME) {

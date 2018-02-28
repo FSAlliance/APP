@@ -230,6 +230,8 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
                     user.setUserHead(jsonObject1.optString("SUserPic"));
                     user.setPassword(jsonObject1.optString("SPassword"));
                     user.setNickName(jsonObject1.optString("SName"));
+                    double anBalance = jsonObject1.optDouble("DCanBalance") * 100;
+                    user.setCanPresentMoney((long)anBalance);
                     double cashed = jsonObject1.optDouble("DCashed") * 100;
                     user.setCashed((long)cashed);
                     double cashing = jsonObject1.optDouble("DCashing") * 100;
