@@ -17,6 +17,7 @@ public class User implements Serializable{
     private long  cashing; //提现中
     private long  cashed; //已提现
     private long balanceNum;//余额
+    private String myOrder;//订单编号
     public String getId() {
         return id;
     }
@@ -106,10 +107,18 @@ public class User implements Serializable{
         this.balanceNum = balanceNum;
     }
 
+    public String getMyOrder() {
+        return myOrder;
+    }
+
+    public void setMyOrder(String myOrder) {
+        this.myOrder = myOrder;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", phoneNum='" + phoneNum + '\'' +
                 ", nickName='" + nickName + '\'' +
                 ", password='" + password + '\'' +
@@ -117,8 +126,10 @@ public class User implements Serializable{
                 ", aliPayAccount='" + aliPayAccount + '\'' +
                 ", shareCode='" + shareCode + '\'' +
                 ", scoreNum='" + scoreNum + '\'' +
-                ", cashing='" + cashing + '\'' +
-                ", cashed='" + cashed + '\'' +
+                ", cashing=" + cashing +
+                ", cashed=" + cashed +
+                ", balanceNum=" + balanceNum +
+                ", myOrder='" + myOrder + '\'' +
                 '}';
     }
 }

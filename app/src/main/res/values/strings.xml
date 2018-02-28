@@ -181,4 +181,10 @@
     <string name="device_share_msgTitle">可分享的应用</string>
     <string name="video_update_fail">上传失败</string>
     <string name="get_userinfo_failed">获取信息失败</string>
+
+    <!--找回订单-->
+    <string name="find_my_order_null">请输入要找回的订单号</string>
+    <string name="find_my_order_error">找回失败</string>
+    <string name="find_my_order_success">找回订单成功</string>
+    <string name="find_my_order_max">对不起，已达到最大订单数</string>
 </resources>

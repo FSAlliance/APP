@@ -28,6 +28,7 @@ public class AppMacro {
 	public static final String REQUEST_UPDATE_USER_PHOTO = "/user/updateUserPhoto";//更新头像
 	public static final String REQUEST_UPDATE_USER_HEAD = "/user/updateUserHeadInfo";//更新头像
 	public static final String REQUEST_GET_USER_INFO = "/user/getuserinfo";//获取用户信息
+	public static final String REQUEST_FIND_MY_ORDER = "/userOrder/addOrderTaobao";//找回订单
 	//淘宝联盟所需常量
 	public static final int PLATFORM = 2;//链接形式：1：PC，2：无线，默认：１
 	public static final long ADZONEID = 210792050;//推广位id，
@@ -43,5 +44,7 @@ public class AppMacro {
 	public static final int GET_DATA_RET_SUCCESS = 0;//获取成功
 	public static final int GET_DATA_RET_NO_USERNAME = -5;//没有此用户
 	public static final int GET_DATA_RET_NO_PASSWORD = -6;//没有此用户
+	public static final int FIND_MY_ORDER_MAX = -16;//已达到最大绑定个数
+	public static final int FIND_MY_ORDER_HAVE = -17;//已找回
 
 }
