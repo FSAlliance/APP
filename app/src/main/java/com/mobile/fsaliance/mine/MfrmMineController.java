@@ -110,7 +110,7 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
         intent.putExtras(bundle);
         intent.setClass(context, MfrmUserInfoController.class);
         startActivity(intent);
-        getActivity().finish();
+//        getActivity().finish();
     }
 
     @Override

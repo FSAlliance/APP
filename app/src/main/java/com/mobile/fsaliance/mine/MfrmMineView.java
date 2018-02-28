@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
+import com.mobile.fsaliance.common.util.CropCircleTransformation;
 import com.mobile.fsaliance.common.vo.User;
 
 /**
@@ -46,7 +47,7 @@ public class MfrmMineView extends BaseView {
         if (user == null) {
             return;
         }
-        Glide.with(context).load(user.getUserHead()).placeholder(R.drawable.img_user_head).into(userHeadImg);
+        Glide.with(context).load(user.getUserHead()).placeholder(R.drawable.img_user_head).bitmapTransform(new CropCircleTransformation(context)).crossFade(1000).into(userHeadImg);
         userNameTxt.setText(user.getNickName());
         userAccountIdTxt.setText(user.getPhoneNum());
         userBalanceTxt.setText(String.valueOf(user.getBalanceNum()));
