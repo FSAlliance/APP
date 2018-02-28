@@ -152,6 +152,7 @@
     <string name="hint_input_new_pwd">请输入新密码</string>
     <string name="original_pwd_is_error">原密码有误</string>
     <string name="new_pwd_is_error">两次密码不一致</string>
+    <string name="new_pwd_is_equals_original_pwd">新密码和原密码一致</string>
     <string name="modify_pwd_fail">修改密码失败</string>
     <string name="password_is_empty">密码不能为空</string>
 

@@ -27,6 +27,7 @@ public class AppMacro {
 	public static final String REQUEST_UPDATE_USER_NAME = "/user/updateUserName";//更新用户名
 	public static final String REQUEST_UPDATE_USER_PHOTO = "/user/updateUserPhoto";//更新头像
 	public static final String REQUEST_UPDATE_USER_HEAD = "/user/updateUserHeadInfo";//更新头像
+	public static final String REQUEST_UPDATE_PASSWORD = "/user/updatePassword";//更改密码
 	public static final String REQUEST_GET_USER_INFO = "/user/getuserinfo";//获取用户信息
 	public static final String REQUEST_FIND_MY_ORDER = "/userOrder/addOrderTaobao";//找回订单
 	//淘宝联盟所需常量

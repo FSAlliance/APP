@@ -43,13 +43,10 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
     private LinearLayout titleLeftLl;
     private ImageView titleLeftImg;
     private CircleProgressBarView circleProgressBarView;
+    private String newPassword;//新密码
     @Override
     protected void getBundleData() {
-        Bundle bundle= getIntent().getExtras();
-        if (bundle == null) {
-            return;
-        }
-        user = (User) bundle.getSerializable("user");
+        user = LoginUtils.getUserInfo(this);
     }
 
     @Override
@@ -62,11 +59,6 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
         initView();
         addLinster();
         queue = NoHttp.newRequestQueue();
-        initData(user);
-    }
-
-    private void initData(User user) {
-
     }
 
     private void addLinster() {
@@ -127,18 +119,10 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
             }
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                if (jsonObject.has("code") && jsonObject.getInt("code") == 0) {
-                    JSONObject jsonUser = jsonObject.optJSONObject("content");
-                    if (user == null) {
-                        user = new User();
-                    }
-                    user.setNickName(jsonUser.optString("jobId"));
-                    user.setPassword(jsonUser.optString("password"));
+                if (jsonObject.has("ret") && jsonObject.getInt("ret") == 0) {
+                    user.setPassword(newPassword);
                     LoginUtils.saveUserInfo(this, user);
-                    Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
                     finish();
-
                 } else {
                     T.showShort(this, R.string.modify_pwd_fail);
                 }
@@ -155,7 +139,6 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
     @Override
     public void onFinish(int i) {
         circleProgressBarView.hideProgressBar();
-
     }
 
     @Override
@@ -166,12 +149,14 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
                 break;
             case R.id.txt_confirm_modify:
                 String originalPwd = originalPwdEdit.getText().toString().trim();
-                String newPwd = newPwdEdit.getText().toString().trim();
+                newPassword = newPwdEdit.getText().toString().trim();
                 String confirmPwd = confirmPwdEdit.getText().toString().trim();
-                if (checkPwd(originalPwd, newPwd, confirmPwd)) {
-                    String uri = AppMacro.REQUEST_URL + "/user/login";
+                if (checkPwd(originalPwd, newPassword, confirmPwd)) {
+                    String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_UPDATE_PASSWORD;
                     Request<String> request = NoHttp.createStringRequest(uri);
                     request.setCancelSign(cancelObject);
+                    request.add("userId",  user.getId());
+                    request.add("password",  newPassword);
                     queue.add(MODIFY_PWD, request, this);
                 }
                 break;
@@ -193,9 +178,11 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
             T.showShort(this,R.string.password_is_empty);
             return false;
         }
-        if (user.getPassword() == null) {
+
+        if (user == null || user.getPassword() == null) {
             return false;
         }
+
         if (!user.getPassword().equals(originalPwd)) {
             T.showShort(this,R.string.original_pwd_is_error);
             return false;
@@ -203,6 +190,11 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
 
         if (!newPwd.equals(confirmPwd)) {
             T.showShort(this, R.string.new_pwd_is_error);
+            return false;
+        }
+
+        if (newPwd.equals(user.getPassword())) {
+            T.showShort(this, R.string.new_pwd_is_equals_original_pwd);
             return false;
         }
         return true;
