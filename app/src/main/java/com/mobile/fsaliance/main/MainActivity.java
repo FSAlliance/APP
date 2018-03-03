@@ -39,12 +39,13 @@ public class MainActivity extends AppCompatActivity
     private long lastCall_ACTION_BACT_Time = 0L;
     // 默认判断为连续点击的最大间隔时间
     private final long DOUBLE_CLICK_TIME_DELAY = 2000;
+    int result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int result = StatusBarUtil.StatusBarLightMode(this);
+        result = StatusBarUtil.StatusBarLightMode(this);
         if (result != 0) {
-            StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
         }
         setContentView(R.layout.activity_main);
         //初始化界面
@@ -174,14 +175,23 @@ public class MainActivity extends AppCompatActivity
             case R.id.ll_home_page:
                 showHome();
                 viewPager.setCurrentItem(0);
+                if (result != 0) {
+                    StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
+                }
                 break;
             case R.id.ll_super_page:
                 showSuperVoucher();
                 viewPager.setCurrentItem(1);
+                if (result != 0) {
+                    StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
+                }
                 break;
             case R.id.ll_mine_page:
                 showMine();
                 viewPager.setCurrentItem(2);
+                if (result != 0) {
+                    StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
+                }
                 break;
         }
     }

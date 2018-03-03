@@ -13,10 +13,12 @@ import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.common.InitApplication;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.IncomeRecord;
 import com.mobile.fsaliance.common.vo.PresentRecord;
+import com.mobile.fsaliance.common.vo.User;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -30,7 +32,10 @@ import org.json.JSONObject;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
@@ -48,11 +53,14 @@ public class MfrmPresentRecordListController extends BaseController implements V
     private TextView titleTxt;
     private LinearLayout titleLiftLl, titleRightLl;
     private BGARefreshLayout refreshLayout;
-    private int index = 0;
     private int pageSize = 20;
+    private int pageNo = 0;
     private PresentRecordListViewAdapter presentRecordListViewAdapter;
     public CircleProgressBarView circleProgressBarView;
-    List<PresentRecord> list = new ArrayList<>();
+    private boolean refreshList = false;
+    private boolean loadMoreList = false;
+    private List<PresentRecord> presentRecordList;
+    private User user;
     @Override
     protected void getBundleData() {
 
@@ -65,7 +73,11 @@ public class MfrmPresentRecordListController extends BaseController implements V
             StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
         }
         setContentView(R.layout.activity_presentlist_controller);
+        user = LoginUtils.getUserInfo(this);
+        loadMoreList = false;
+        refreshList = false;
         queue = NoHttp.newRequestQueue();
+        presentRecordList = new ArrayList<>();
         initView();
         addListener();
     }
@@ -73,19 +85,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
     @Override
     protected void onResume() {
         super.onResume();
-
-        for (int i = 0; i < 20; i ++) {
-            PresentRecord presentRecord = new PresentRecord();
-            presentRecord.setPresentMoneny("20");
-            presentRecord.setPresentTime("2017-10-30");
-            if (i < 8) {
-                presentRecord.setState(0);
-            } else {
-                presentRecord.setState(1);
-            }
-            list.add(presentRecord);
-        }
-        showPresentRecordList(list);
+        getPresentListData(0, pageSize);
     }
 
     private void initView() {
@@ -120,14 +120,18 @@ public class MfrmPresentRecordListController extends BaseController implements V
      * @date 2018/1/14 0014 13:00
      */
 
-    public void getPresentListData() {
-        String uri = AppMacro.REQUEST_URL + "/asset/query";
+    public void getPresentListData( int pageNo, int pageSize) {
+        if (user == null) {
+            return;
+        }
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_GET_PRESENT_RECORD;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
-//        request.add("param", param);
-//        request.add("page", pageNo);
-//        request.add("limit", PAGE_SIZE);
+        request.add("userId", user.getId());
+        request.add("pageNo", pageNo);
+        request.add("pageSize", pageSize);
         queue.add(0, request, this);
+        L.e("tyd---"+request.url());
     }
 
     @Override
@@ -152,7 +156,6 @@ public class MfrmPresentRecordListController extends BaseController implements V
             presentRecordListViewAdapter = new PresentRecordListViewAdapter(this,
                     presentRecordList);
             presentReccordListview.setAdapter(presentRecordListViewAdapter);
-//            incomeListViewAdapter.setDelegate(this);
         } else {
             presentRecordListViewAdapter.update(presentRecordList);
             presentRecordListViewAdapter.notifyDataSetChanged();
@@ -171,18 +174,22 @@ public class MfrmPresentRecordListController extends BaseController implements V
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        index = 0;
-        getPresentListData();
+        refreshList = true;
+        getPresentListData(0,pageSize);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        getPresentListData();
+        loadMoreList = true;
+        getPresentListData(pageNo,pageSize);
         return true;
     }
 
     @Override
     public void onStart(int i) {
+        if (refreshList == true || loadMoreList == true) {
+            return;
+        }
         circleProgressBarView.showProgressBar();
     }
 
@@ -190,10 +197,9 @@ public class MfrmPresentRecordListController extends BaseController implements V
     public void onSucceed(int i, Response<String> response) {
         if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
             String result = (String) response.get();
-            list = analyzeListData(result);
-            if (list != null) {
-                showPresentRecordList(list);
-                index = list.size();
+            presentRecordList = analyzeListData(result);
+            if (presentRecordList != null) {
+                showPresentRecordList(presentRecordList);
             }
         } else {
             T.showShort(this, R.string.get_record_failed);
@@ -208,35 +214,49 @@ public class MfrmPresentRecordListController extends BaseController implements V
      */
 
     private ArrayList<PresentRecord> analyzeListData(String result) {
+        if (!loadMoreList) {
+            if (presentRecordList != null) {
+                presentRecordList.clear();
+            }
+        }
         if (null == result || "".equals(result)) {
             L.e("result == null");
             T.showShort(this, R.string.get_record_failed);
             return null;
         }
+
         ArrayList<PresentRecord> list = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(result);
             if (jsonObject.has("ret")) {
                 int ret = jsonObject.optInt("ret");
                 if (ret == 0) {
-                    JSONObject jsonContent = jsonObject.optJSONObject("content");
+                    JSONArray jsonArray = jsonObject.optJSONArray("content");
 
-                    if (jsonContent == null || "".equals(jsonContent)) {
+                    if (jsonArray == null || "".equals(jsonArray)) {
                         T.showShort(this, R.string.get_record_failed);
                         return null;
-                    } else {
-                        JSONArray jsonPublics = jsonContent.optJSONArray("channels");
-                        for (int i = 0; i < jsonPublics.length(); i++) {
-                            PresentRecord presentRecord = new PresentRecord();
-//                            JSONObject jsPublic = (JSONObject) jsonPublics.get(i);
-//                            publics.setHostId(jsPublic.optString("hostId"));
-//                            publics.setChannelNum(jsPublic.optInt("channelNum"));
-//                            publics.setUserName(jsPublic.optString("username"));
-//                            publics.setPassword(AESUtil.decrypt(jsPublic.optString("password")));
-//                            publics.setShareName(jsPublic.optString("shareName"));
-//                            publics.setImageUrl(jsPublic.optString("imgUrl"));
-                            list.add(presentRecord);
+                    }
+                    if (jsonArray.length() <= 0) {
+                        if (loadMoreList) {
+                            T.showShort(this, R.string.check_asset_no_more);
                         }
+//                        else {
+//                            reloadNoDataList();
+//                        }
+                        return null;
+                    } else {
+                        pageNo++;
+                    }
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        PresentRecord presentRecord = new PresentRecord();
+                        JSONObject presentRecotdJson = (JSONObject) jsonArray.get(i);
+                        presentRecord.setId(presentRecotdJson.optString("id"));
+                        presentRecord.setState(presentRecotdJson.optInt("state"));
+                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                         presentRecord.setPresentTime(df.format(df.parse(presentRecotdJson.getString("presentTime"))));
+                        presentRecord.setPresentMoneny(presentRecotdJson.optString("presentMoneny"));
+                        list.add(presentRecord);
                     }
                 } else {
                     T.showShort(this, R.string.get_record_failed);
@@ -248,7 +268,6 @@ public class MfrmPresentRecordListController extends BaseController implements V
             e.printStackTrace();
             T.showShort(this, R.string.get_record_failed);
         }
-
         return list;
     }
 
@@ -278,7 +297,8 @@ public class MfrmPresentRecordListController extends BaseController implements V
     public void onFinish(int i) {
         refreshLayout.endRefreshing();
         refreshLayout.endLoadingMore();
-        circleProgressBarView.showProgressBar();
-
+        circleProgressBarView.hideProgressBar();
+        refreshList = false;
+        loadMoreList = false;
     }
 }

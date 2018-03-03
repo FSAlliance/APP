@@ -160,8 +160,8 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
                     queue.add(MODIFY_PWD, request, this);
                 }
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
 
     }

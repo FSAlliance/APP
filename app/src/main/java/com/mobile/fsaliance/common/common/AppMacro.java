@@ -10,7 +10,7 @@ public class AppMacro {
 	public static final String CRASH_MESSAGE_PATH = APP_PATH + "CrashMeaasge/";
 	public static final String PHOTO_PATH = APP_PATH + "photo/";
 	public static final String REQUEST_URL = "http://221.238.227.82:10086/rest";//接口
-	public static final String REQUEST_IP_PORT = "http://39.107.106.248:3389";//接口http://39.107.106.248:3389
+	public static final String REQUEST_IP_PORT = "http://192.168.0.115:8080";//接口http://39.107.106.248:3389
 
 	public static final String REQUEST_GOODS_PATH = "/FSAlliance/rest";//接口
 	public static final int RESPONCESUCCESS = 200; //请求接口能调通
@@ -30,6 +30,8 @@ public class AppMacro {
 	public static final String REQUEST_UPDATE_PASSWORD = "/user/updatePassword";//更改密码
 	public static final String REQUEST_GET_USER_INFO = "/user/getuserinfo";//获取用户信息
 	public static final String REQUEST_FIND_MY_ORDER = "/userOrder/addOrderTaobao";//找回订单
+	public static final String REQUEST_GET_PRESENT_RECORD = "/user/getPresentRecordList";//获取提现记录
+	public static final String REQUEST_GET_INCOME_RECORD = "/user/getIncomeRecordList";//获取收入记录
 	//淘宝联盟所需常量
 	public static final int PLATFORM = 2;//链接形式：1：PC，2：无线，默认：１
 	public static final long ADZONEID = 210792050;//推广位id，

@@ -41,7 +41,6 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
 //            return;
 //        }
 //        user = (User) bundle.getSerializable("user");
-
     }
 
     @Override
@@ -135,7 +134,6 @@ public class MfrmBoundAlipayController extends BaseController implements MfrmBou
             return;
         }
         T.showShort(this, R.string.bound_fail);
-
     }
 
     @Override

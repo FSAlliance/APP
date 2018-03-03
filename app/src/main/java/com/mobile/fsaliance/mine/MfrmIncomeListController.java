@@ -13,10 +13,13 @@ import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.common.InitApplication;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.IncomeRecord;
 import com.mobile.fsaliance.common.vo.Order;
+import com.mobile.fsaliance.common.vo.PresentRecord;
+import com.mobile.fsaliance.common.vo.User;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -30,6 +33,8 @@ import org.json.JSONObject;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +56,12 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
     private static Object cancelObject = new Object();
     ArrayList<IncomeRecord> list;
     private int index = 0;
-    private int pageSize = 20;
+    private static final int PAGE_SIZE = 20;
+    private int pageNo = 0;
     private BGARefreshLayout refreshLayout;
+    private boolean refreshList = false;
+    private boolean loadMoreList = false;
+    private User user;
     @Override
     protected void getBundleData() {
 
@@ -66,7 +75,10 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
         }
         setContentView(R.layout.activity_incomelist_controller);
         queue = NoHttp.newRequestQueue();
+        user = LoginUtils.getUserInfo(this);
         list = new ArrayList<>();
+        refreshList = false;
+        loadMoreList = false;
         initView();
         addListener();
     }
@@ -88,19 +100,7 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
     @Override
     protected void onResume() {
         super.onResume();
-//        getIncomeListData();
-        for (int i = 0; i < 20; i ++) {
-            IncomeRecord incomeRecord = new IncomeRecord();
-            incomeRecord.setIncomeMoneny("20");
-            incomeRecord.setIncomeTime("2017-10-30");
-            if (i < 8) {
-                incomeRecord.setType(0);
-            } else {
-                incomeRecord.setType(1);
-            }
-            list.add(incomeRecord);
-        }
-        showIncomeList(list);
+        getIncomeListData(0, PAGE_SIZE);
     }
 
     private void initRefresh() {
@@ -146,25 +146,18 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
      * @date 2018/1/14 0014 13:00
      */
 
-    public void getIncomeListData() {
-        String uri = AppMacro.REQUEST_URL + "/asset/query";
+    public void getIncomeListData( int pageNo, int pageSize) {
+        if (user == null) {
+            return;
+        }
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_GET_INCOME_RECORD;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
-//        request.add("param", param);
-//        request.add("page", pageNo);
-//        request.add("limit", PAGE_SIZE);
+        request.add("userId", user.getId());
+        request.add("pageNo", pageNo);
+        request.add("pageSize", pageSize);
         queue.add(0, request, this);
-        for (int i = 0; i < 20; i ++) {
-            IncomeRecord incomeRecord = new IncomeRecord();
-            incomeRecord.setIncomeMoneny("20");
-            incomeRecord.setIncomeTime("2017-10-30");
-            if (i < 8) {
-                incomeRecord.setType(0);
-            } else {
-                incomeRecord.setType(1);
-            }
-            list.add(incomeRecord);
-        }
+        L.e("tyd---"+request.url());
     }
 
 
@@ -179,6 +172,9 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
 
     @Override
     public void onStart(int i) {
+        if (refreshList == true || loadMoreList == true) {
+            return;
+        }
         circleProgressBarView.showProgressBar();
     }
 
@@ -205,35 +201,49 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
      */
 
     private ArrayList<IncomeRecord> analyzeIncomeListData(String result) {
+        if (!loadMoreList) {
+            if (list != null) {
+                list.clear();
+            }
+        }
         if (null == result || "".equals(result)) {
             L.e("result == null");
             T.showShort(this, R.string.get_record_failed);
             return null;
         }
+
         ArrayList<IncomeRecord> list = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(result);
             if (jsonObject.has("ret")) {
                 int ret = jsonObject.optInt("ret");
                 if (ret == 0) {
-                    JSONObject jsonContent = jsonObject.optJSONObject("content");
+                    JSONArray jsonArray = jsonObject.optJSONArray("content");
 
-                    if (jsonContent == null || "".equals(jsonContent)) {
+                    if (jsonArray == null || "".equals(jsonArray)) {
                         T.showShort(this, R.string.get_record_failed);
                         return null;
-                    } else {
-                        JSONArray jsonPublics = jsonContent.optJSONArray("channels");
-                        for (int i = 0; i < jsonPublics.length(); i++) {
-                            IncomeRecord incomeRecord = new IncomeRecord();
-//                            JSONObject jsPublic = (JSONObject) jsonPublics.get(i);
-//                            publics.setHostId(jsPublic.optString("hostId"));
-//                            publics.setChannelNum(jsPublic.optInt("channelNum"));
-//                            publics.setUserName(jsPublic.optString("username"));
-//                            publics.setPassword(AESUtil.decrypt(jsPublic.optString("password")));
-//                            publics.setShareName(jsPublic.optString("shareName"));
-//                            publics.setImageUrl(jsPublic.optString("imgUrl"));
-                            list.add(incomeRecord);
+                    }
+                    if (jsonArray.length() <= 0) {
+                        if (loadMoreList) {
+                            T.showShort(this, R.string.check_asset_no_more);
                         }
+//                        else {
+//                            reloadNoDataList();
+//                        }
+                        return null;
+                    } else {
+                        pageNo++;
+                    }
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        IncomeRecord incomeRecord = new IncomeRecord();
+                        JSONObject presentRecotdJson = (JSONObject) jsonArray.get(i);
+                        incomeRecord.setId(presentRecotdJson.optString("id"));
+                        incomeRecord.setType(presentRecotdJson.optInt("type"));
+                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        incomeRecord.setIncomeTime(df.format(df.parse(presentRecotdJson.getString("incomeTime"))));
+                        incomeRecord.setIncomeMoneny(presentRecotdJson.optString("incomeMoneny"));
+                        list.add(incomeRecord);
                     }
                 } else {
                     T.showShort(this, R.string.get_record_failed);
@@ -245,7 +255,6 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
             e.printStackTrace();
             T.showShort(this, R.string.get_record_failed);
         }
-
         return list;
     }
 
@@ -276,6 +285,8 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
         circleProgressBarView.hideProgressBar();
         refreshLayout.endLoadingMore();
         refreshLayout.endRefreshing();
+        refreshList = false;
+        loadMoreList = false;
     }
 
     @Override
@@ -287,12 +298,14 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         index = 0;
-        getIncomeListData();
+        refreshList = true;
+        getIncomeListData(0, PAGE_SIZE);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        getIncomeListData();
+        getIncomeListData(pageNo, PAGE_SIZE);
+        loadMoreList = true;
         return true;
     }
 }

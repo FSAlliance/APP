@@ -64,10 +64,6 @@ public class MfrmHomeController extends BaseFragmentController implements
 				null);
 		mfrmHomeView = (MfrmHomeView) view
 				.findViewById(R.id.mfrm_home_view);
-		int result = StatusBarUtil.StatusBarLightMode(getActivity());
-		if (result != 0) {
-			StatusBarUtil.initWindows(getActivity(), getResources().getColor(R.color.login_btn_color));
-		}
 		mfrmHomeView.setDelegate(this);
 		queue = NoHttp.newRequestQueue();
 		goodsList = new ArrayList<>();

@@ -57,10 +57,6 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 		View view = inflater.inflate(R.layout.fragment_super_vouchers_controller,null);
 		mfrmSuperVouchersView = (MfrmSuperVouchersView) view.findViewById(R.id.mfrm_super_vouchers_view);
 		mfrmSuperVouchersView.setDelegate(this);
-		int result = StatusBarUtil.StatusBarLightMode(getActivity());
-		if (result != 0) {
-			StatusBarUtil.initWindows(getActivity(), getResources().getColor(R.color.white));
-		}
 		queue = NoHttp.newRequestQueue();
 		goodsList = new ArrayList<>();
 		isPrepared = true;
