@@ -10,6 +10,7 @@
         layout="@layout/activity_custome_title" />
 
     <LinearLayout
+        android:id="@+id/ll_find_my_order"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/good_search"
@@ -50,6 +51,87 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!--查询状态-->
+    <LinearLayout
+        android:id="@+id/ll_find_my_order_state"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/ll_find_my_order"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/img_find_my_order_state"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/img_share_app"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/text_find_my_order_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share_wechat"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!--订单详情-->
+    <LinearLayout
+        android:id="@+id/ll_find_my_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_find_my_order_state"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <!--订单编号-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_order_id"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/text_find_my_order_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <!--商品名称-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/find_my_order_good_name"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/text_find_my_order_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <!--下单时间-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_order_time"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/text_find_my_order_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

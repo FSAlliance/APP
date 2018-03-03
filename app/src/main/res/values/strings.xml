@@ -185,7 +185,10 @@
 
     <!--找回订单-->
     <string name="find_my_order_null">请输入要找回的订单号</string>
-    <string name="find_my_order_error">找回失败</string>
+    <string name="find_my_order_error">找回订单失败</string>
+    <string name="find_my_order_no_have">对不起，没有该订单</string>
+    <string name="find_my_order_have">对不起，该订单已被认领</string>
     <string name="find_my_order_success">找回订单成功</string>
     <string name="find_my_order_max">对不起，已达到最大订单数</string>
+    <string name="find_my_order_good_name">商品名称:</string>
 </resources>

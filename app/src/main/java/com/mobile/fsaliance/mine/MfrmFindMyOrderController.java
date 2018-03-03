@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.T;
+import com.mobile.fsaliance.common.vo.Order;
 import com.mobile.fsaliance.common.vo.User;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
@@ -26,6 +28,7 @@ import com.yanzhenjie.nohttp.rest.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.net.SocketTimeoutException;
 
@@ -41,6 +44,10 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
     private TextView searchText;
     private TextView titleTxt;
     private LinearLayout backLL;
+    private LinearLayout findMyOrderStateLL,findMyOrderInfoLL;
+    private ImageView findMyOrderStateImg;
+    private TextView findMyOrderStateText,findMyOrderIdText, findMyOrderNameText, findMyOrderTimeText;
+
     private CircleProgressBarView circleProgressBarView;
     private Object cancelObject = new Object();
     private RequestQueue queue;
@@ -79,6 +86,13 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
         searchEdt = (EditText) findViewById(R.id.find_my_order_edt);
         searchText = (TextView) findViewById(R.id.find_my_order_btn);
         backLL = (LinearLayout) findViewById(R.id.ll_title_left);
+        findMyOrderStateLL = (LinearLayout) findViewById(R.id.ll_find_my_order_state);
+        findMyOrderStateImg = (ImageView) findViewById(R.id.img_find_my_order_state);
+        findMyOrderStateText = (TextView) findViewById(R.id.text_find_my_order_state);
+        findMyOrderInfoLL = (LinearLayout) findViewById(R.id.ll_find_my_order_info);
+        findMyOrderIdText = (TextView) findViewById(R.id.text_find_my_order_id);
+        findMyOrderNameText = (TextView) findViewById(R.id.text_find_my_order_name);
+        findMyOrderTimeText = (TextView) findViewById(R.id.text_find_my_order_time);
         circleProgressBarView = (CircleProgressBarView) findViewById(R.id.find_my_order_circleProgressBarView);
     }
 
@@ -102,11 +116,75 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
         if (searchEdt == null) {
             return "";
         }
-        String myOrder = searchEdt.getText().toString().trim();
-        if (myOrder.length() >= 4) {
-            return myOrder.substring(myOrder.length() - 4, myOrder.length());
+        return searchEdt.getText().toString().trim();
+    }
+
+    /**
+     * @param state 控制显隐
+     * @author yuanxueyuan
+     * @Title: showFindState
+     * @Description: 显隐找回结果
+     * @date 2018/3/3 15:29
+     */
+    private void showFindState(boolean state) {
+        if (state) {
+            findMyOrderStateLL.setVisibility(View.VISIBLE);
+        } else {
+            findMyOrderStateLL.setVisibility(View.GONE);
         }
-        return "";
+    }
+
+    /**
+     * @param state 找回订单状态
+     * @author yuanxueyuan
+     * @Title:  setFindState
+     * @Description: 设置找回订单状态
+     * @date 2018/3/3 15:40
+     */
+    private void setFindState(boolean state) {
+        //设置显示
+        showFindState(true);
+        //找回成功
+        if (state) {
+            findMyOrderStateImg.setImageResource(R.drawable.find_my_order_success);
+            findMyOrderStateText.setText(R.string.find_my_order_success);
+        } else {
+            findMyOrderStateImg.setImageResource(R.drawable.find_my_order_error);
+            findMyOrderStateText.setText(R.string.find_my_order_error);
+        }
+    }
+
+    /**
+     * @param state 控制显隐
+     * @author yuanxueyuan
+     * @Title: showFindState
+     * @Description: 显隐订单详情
+     * @date 2018/3/3 15:29
+     */
+    private void showOrderInfo(boolean state) {
+        if (state) {
+            findMyOrderInfoLL.setVisibility(View.VISIBLE);
+        } else {
+            findMyOrderInfoLL.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * @param order 订单信息
+     * @author yuanxueyuan
+     * @Title: setMyOrder
+     * @Description: 设置订单信息
+     * @date 2018/3/3 15:42
+     */
+    private void setMyOrder(Order order) {
+        if (order == null) {
+            L.e("order == null");
+            return;
+        }
+        showOrderInfo(true);
+        findMyOrderIdText.setText(order.getOrderNumber());
+        findMyOrderNameText.setText(order.getOrderItemTitle());
+        findMyOrderTimeText.setText(order.getOrderTime());
     }
 
     /**
@@ -162,23 +240,8 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
         request.setCancelSign(cancelObject);
         request.add("orderId",myOrder);
         request.add("userId",  user.getId());
+        L.i("QQQQQQQQQQ","url: "+request.url());
         queue.add(FIND_MY_ORDER, request, this);
-    }
-
-     /**
-     * @author  yuanxueyuan
-     * @Title:  saveUserOrder
-     * @Description: 保存用户信息到本地
-     * @date 2018/1/14 11:35
-     */
-    private void saveUserOrder(User user){
-        if (user == null) {
-            return;
-        }
-        String userOrder = user.getMyOrder();
-        String order = userOrder+";"+myOrder;
-        user.setMyOrder(order);
-        LoginUtils.saveUserInfo(this,user);
     }
 
     @Override
@@ -201,22 +264,31 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         int ret = jsonObject.optInt("ret");
-                        if (ret == 0 || ret == AppMacro.FIND_MY_ORDER_HAVE) {
-                            //保存数据
-                            saveUserOrder(user);
-                            T.showShort(this, R.string.find_my_order_success);
-                            finish();
-                        } else if (ret == AppMacro.FIND_MY_ORDER_MAX){
-                            T.showShort(this, R.string.find_my_order_max);
-                        } else {
-                            T.showShort(this, R.string.find_my_order_error);
+                        if (ret == 0 ) {
+                            Order order = analysisOrder(jsonObject);
+                            if (order == null) {
+                                T.showShort(this, R.string.find_my_order_error);
+                                return;
+                            }
+                            setFindState(true);
+                            setMyOrder(order);
+                        } else if (ret == AppMacro.FIND_MY_ORDER_NO_HAVE){
+                            setFindState(false);
+                            showOrderInfo(false);
+                            findMyOrderStateText.setText(R.string.find_my_order_no_have);
+                        } else if (ret == AppMacro.FIND_MY_ORDER_HAVE){
+                            setFindState(false);
+                            showOrderInfo(false);
+                            findMyOrderStateText.setText(R.string.find_my_order_have);
                         }
                     } catch (JSONException e) {
-                        T.showShort(this, R.string.find_my_order_error);
+                        setFindState(false);
+                        showOrderInfo(false);
                         e.printStackTrace();
                     }
                 } else {
-                    T.showShort(this, R.string.find_my_order_error);
+                    setFindState(false);
+                    showOrderInfo(false);
                 }
                 break;
             default:
@@ -239,7 +311,8 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
             T.showShort(this, R.string.network_socket_timeout_error);
             return;
         }
-        T.showShort(this, R.string.find_my_order_error);
+        setFindState(false);
+        showOrderInfo(false);
     }
 
     @Override
@@ -248,4 +321,32 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
             circleProgressBarView.hideProgressBar();
         }
     }
+
+    /**
+     * @param jsonObject 返回的数据
+     * @author yuanxueyuan
+     * @Title: analysisOrder
+     * @Description: 解析返回的数据
+     * @date 2018/3/3 15:51
+     */
+    private Order analysisOrder(JSONObject jsonObject) {
+        Order myOrder = new Order();
+        if (jsonObject == null) {
+            L.e("jsonObject == null");
+            return myOrder;
+        }
+        JSONObject order = jsonObject.optJSONObject("content");
+        if (order == null) {
+            L.e("order == null");
+            return myOrder;
+        }
+        String orderId = order.optString("id");
+        String orderName = order.optString("auctionTitle");
+        String orderTime = order.optString("createTime");
+        myOrder.setOrderNumber(orderId);
+        myOrder.setOrderItemTitle(orderName);
+        myOrder.setOrderTime(orderTime);
+        return myOrder;
+    }
+
 }

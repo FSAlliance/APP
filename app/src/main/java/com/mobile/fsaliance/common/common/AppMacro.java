@@ -45,7 +45,7 @@ public class AppMacro {
 	public static final int GET_DATA_RET_SUCCESS = 0;//获取成功
 	public static final int GET_DATA_RET_NO_USERNAME = -5;//没有此用户
 	public static final int GET_DATA_RET_NO_PASSWORD = -6;//没有此用户
-	public static final int FIND_MY_ORDER_MAX = -16;//已达到最大绑定个数
-	public static final int FIND_MY_ORDER_HAVE = -17;//已找回
+	public static final int FIND_MY_ORDER_HAVE = -17;//该订单已被认领
+	public static final int FIND_MY_ORDER_NO_HAVE = -18;//没有该订单
 
 }
