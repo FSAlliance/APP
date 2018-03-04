@@ -70,6 +70,7 @@ public class MfrmWalletController extends BaseController implements MfrmWalletVi
             intent.setClass(this, MfrmWithdrawalsController.class);
         }
         startActivity(intent);
+        finish();
     }
 
 

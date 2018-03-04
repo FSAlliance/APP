@@ -1,10 +1,12 @@
 package com.mobile.fsaliance.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
@@ -31,6 +33,7 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
     private Object cancelObject = new Object();
     private RequestQueue queue;
     private User user;
+    private double present;
     @Override
     protected void getBundleData() {
 
@@ -71,11 +74,15 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
         if (user == null) {
             user = new User();
         }
-        String uri = AppMacro.REQUEST_URL + "/user/login";
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_PRESENT;
+
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
-        request.add("presentMoneny", presentMoneny);
+        request.add("userId",user.getId());
+        present = Double.parseDouble(presentMoneny) / 100;
+        request.add("money", present);
         queue.add(0, request, this);
+        L.e("tyd--"+request.url());
     }
 
     @Override
@@ -98,11 +105,14 @@ public class MfrmWithdrawalsController extends BaseController implements MfrmWit
             }
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                if (jsonObject.has("code") && jsonObject.getInt("code") == 0) {
+                if (jsonObject.has("ret") && jsonObject.getInt("ret") == 0) {
                     JSONObject jsonUser = jsonObject.optJSONObject("content");
-//                    Intent intent = new Intent(this, MainActivity.class);
-//                    startActivity(intent);
-//                    finish();
+                    user.setCashing((long) jsonUser.optDouble("DCashing") * 100);
+                    user.setBalanceNum((long) jsonUser.optDouble("DBalanceNum") * 100);
+                    LoginUtils.saveUserInfo(this, user);
+                    Intent intent = new Intent(this, MfrmWalletController.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     T.showShort(this, R.string.present_fail);
                 }
