@@ -50,7 +50,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
     private RequestQueue queue;
     private ListView presentReccordListview;
     private ImageView incomeListBackImg;
-    private TextView titleTxt;
+    private TextView titleTxt, noData;
     private LinearLayout titleLiftLl, titleRightLl;
     private BGARefreshLayout refreshLayout;
     private int pageSize = 20;
@@ -97,6 +97,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
         titleRightLl.setVisibility(INVISIBLE);
         incomeListBackImg = (ImageView) findViewById(R.id.img_back);
         incomeListBackImg.setImageResource(R.drawable.goback);
+        noData = (TextView) findViewById(R.id.txt_present_list_no_data);
         titleTxt = (TextView) findViewById(R.id.txt_title);
         titleTxt.setText(getResources().getString(R.string.ming_present_record));
     }
@@ -162,7 +163,11 @@ public class MfrmPresentRecordListController extends BaseController implements V
         }
     }
 
-
+    private void reloadNoDataList() {
+        if (presentRecordList == null || presentRecordList.size() <= 0) {
+            noData.setVisibility(View.VISIBLE);
+        }
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -203,6 +208,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
             }
         } else {
             T.showShort(this, R.string.get_record_failed);
+            reloadNoDataList();
         }
     }
 
@@ -222,6 +228,7 @@ public class MfrmPresentRecordListController extends BaseController implements V
         if (null == result || "".equals(result)) {
             L.e("result == null");
             T.showShort(this, R.string.get_record_failed);
+            reloadNoDataList();
             return null;
         }
 
@@ -241,12 +248,13 @@ public class MfrmPresentRecordListController extends BaseController implements V
                         if (loadMoreList) {
                             T.showShort(this, R.string.check_asset_no_more);
                         }
-//                        else {
-//                            reloadNoDataList();
-//                        }
+                        else {
+                            reloadNoDataList();
+                        }
                         return null;
                     } else {
                         pageNo++;
+                        noData.setVisibility(View.GONE);
                     }
                     for (int i = 0; i < jsonArray.length(); i++) {
                         PresentRecord presentRecord = new PresentRecord();
@@ -259,13 +267,16 @@ public class MfrmPresentRecordListController extends BaseController implements V
                         list.add(presentRecord);
                     }
                 } else {
+                    reloadNoDataList();
                     T.showShort(this, R.string.get_record_failed);
                 }
             } else {
+                reloadNoDataList();
                 T.showShort(this, R.string.get_record_failed);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            reloadNoDataList();
             T.showShort(this, R.string.get_record_failed);
         }
         return list;
@@ -273,7 +284,13 @@ public class MfrmPresentRecordListController extends BaseController implements V
 
     @Override
     public void onFailed(int i, Response<String> response) {
+        if (refreshList == true) {
+            if (presentRecordList != null) {
+                presentRecordList.clear();
+            }
+        }
         Exception exception = response.getException();
+        reloadNoDataList();
         if (exception instanceof NetworkError) {
             T.showShort(InitApplication.getInstance().getApplicationContext(), R.string.network_error);
             return;

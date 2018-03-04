@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.StatusBarUtil;
 
 /**
  * @author yuanxueyuan
@@ -26,7 +27,10 @@ public class ShareActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
-
+        int result = StatusBarUtil.StatusBarLightMode(this);
+        if (result != 0) {
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
+        }
         //初始化界面
         initView();
 

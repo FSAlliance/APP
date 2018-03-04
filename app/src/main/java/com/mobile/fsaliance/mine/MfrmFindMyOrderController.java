@@ -15,6 +15,7 @@ import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.LoginUtils;
+import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Order;
 import com.mobile.fsaliance.common.vo.User;
@@ -65,7 +66,10 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_find_my_order_controller);
         queue = NoHttp.newRequestQueue();
-
+        int result = StatusBarUtil.StatusBarLightMode(this);
+        if (result != 0) {
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
+        }
         initView();
 
         addListener();
@@ -239,7 +243,7 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
         request.add("orderId",myOrder);
-        request.add("userId",  user.getId());
+        request.add("userId",  "10a9b01e-cdeb-441f-ab65-154ba1c64395");
         L.i("QQQQQQQQQQ","url: "+request.url());
         queue.add(FIND_MY_ORDER, request, this);
     }

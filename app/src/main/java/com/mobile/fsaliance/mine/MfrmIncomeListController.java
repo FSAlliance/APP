@@ -61,6 +61,7 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
     private BGARefreshLayout refreshLayout;
     private boolean refreshList = false;
     private boolean loadMoreList = false;
+    private TextView noData;
     private User user;
     @Override
     protected void getBundleData() {
@@ -94,6 +95,7 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
         titleTxt = (TextView) findViewById(R.id.txt_title);
         titleTxt.setText(getResources().getString(R.string.ming_record_of_income));
         circleProgressBarView = (CircleProgressBarView) findViewById(R.id.circleProgressBarView);
+        noData = (TextView) findViewById(R.id.txt_income_list_no_data);
         initRefresh();
     }
 
@@ -132,7 +134,6 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
             incomeListViewAdapter = new IncomeListViewAdapter(this,
                     incomeRecordList);
             incomeListView.setAdapter(incomeListViewAdapter);
-//            incomeListViewAdapter.setDelegate(this);
         } else {
             incomeListViewAdapter.update(incomeRecordList);
             incomeListViewAdapter.notifyDataSetChanged();
@@ -189,10 +190,15 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
             }
         } else {
             T.showShort(this, R.string.get_record_failed);
+            reloadNoDataList();
         }
     }
 
-
+    private void reloadNoDataList() {
+        if (list == null || list.size() <= 0) {
+            noData.setVisibility(View.VISIBLE);
+        }
+    }
     /**
      * @author tanyadong
      * @Title: analyzeOrderListData
@@ -209,6 +215,7 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
         if (null == result || "".equals(result)) {
             L.e("result == null");
             T.showShort(this, R.string.get_record_failed);
+            reloadNoDataList();
             return null;
         }
 
@@ -228,12 +235,13 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
                         if (loadMoreList) {
                             T.showShort(this, R.string.check_asset_no_more);
                         }
-//                        else {
-//                            reloadNoDataList();
-//                        }
+                        else {
+                            reloadNoDataList();
+                        }
                         return null;
                     } else {
                         pageNo++;
+                        noData.setVisibility(View.GONE);
                     }
                     for (int i = 0; i < jsonArray.length(); i++) {
                         IncomeRecord incomeRecord = new IncomeRecord();
@@ -246,13 +254,16 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
                         list.add(incomeRecord);
                     }
                 } else {
+                    reloadNoDataList();
                     T.showShort(this, R.string.get_record_failed);
                 }
             } else {
+                reloadNoDataList();
                 T.showShort(this, R.string.get_record_failed);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            reloadNoDataList();
             T.showShort(this, R.string.get_record_failed);
         }
         return list;
@@ -260,7 +271,13 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
 
     @Override
     public void onFailed(int i, Response<String> response) {
+        if (refreshList == true) {
+            if (list != null) {
+                list.clear();
+            }
+        }
         Exception exception = response.getException();
+        reloadNoDataList();
         if (exception instanceof NetworkError) {
             T.showShort(InitApplication.getInstance().getApplicationContext(), R.string.network_error);
             return;
@@ -304,8 +321,8 @@ public class MfrmIncomeListController extends BaseController implements View.OnC
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        getIncomeListData(pageNo, PAGE_SIZE);
         loadMoreList = true;
+        getIncomeListData(pageNo, PAGE_SIZE);
         return true;
     }
 }
