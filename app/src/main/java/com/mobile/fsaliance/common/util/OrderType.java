@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 
 public class OrderType implements Serializable {
-    private String oid;
+    private int typeId;
     private String name;
 
-    public OrderType(String name, String oid) {
-        this.oid = oid;
+    public OrderType(String name, int typeId) {
+        this.typeId = typeId;
         this.name = name;
     }
 
@@ -20,12 +20,11 @@ public class OrderType implements Serializable {
         this.name = name;
     }
 
-    public String getOid() {
-        return oid;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setOid(String oid) {
-        this.oid = oid;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
-
 }

@@ -10,7 +10,7 @@ public class AppMacro {
 	public static final String CRASH_MESSAGE_PATH = APP_PATH + "CrashMeaasge/";
 	public static final String PHOTO_PATH = APP_PATH + "photo/";
 	public static final String REQUEST_URL = "http://221.238.227.82:10086/rest";//接口
-	public static final String REQUEST_IP_PORT = "http://192.168.0.115:8080";//接口http://39.107.106.248:3389
+	public static final String REQUEST_IP_PORT = "http://192.168.0.104:8080";//接口http://39.107.106.248:3389
 
 	public static final String REQUEST_GOODS_PATH = "/FSAlliance/rest";//接口
 	public static final int RESPONCESUCCESS = 200; //请求接口能调通
@@ -30,6 +30,7 @@ public class AppMacro {
 	public static final String REQUEST_UPDATE_PASSWORD = "/user/updatePassword";//更改密码
 	public static final String REQUEST_GET_USER_INFO = "/user/getuserinfo";//获取用户信息
 	public static final String REQUEST_FIND_MY_ORDER = "/userOrder/addOrderTaobao";//找回订单
+	public static final String REQUEST_GET_ORDER = "/userOrder/getOrderByType"; //获取订单信息
 	public static final String REQUEST_GET_PRESENT_RECORD = "/user/getPresentRecordList";//获取提现记录
 	public static final String REQUEST_GET_INCOME_RECORD = "/user/getIncomeRecordList";//获取收入记录
 	public static final String REQUEST_PRESENT = "/user/persent"; //提现
@@ -50,5 +51,12 @@ public class AppMacro {
 	public static final int GET_DATA_RET_NO_PASSWORD = -6;//没有此用户
 	public static final int FIND_MY_ORDER_HAVE = -17;//该订单已被认领
 	public static final int FIND_MY_ORDER_NO_HAVE = -18;//没有该订单
+
+	//订单记录
+	public static final int ORDER_ALL = 1;//所有订单
+	public static final int ORDER_HAVE_PAY = 2;//订单付款
+	public static final int ORDER_HAVE_SETTLEMENT = 3;//订单结算
+	public static final int ORDER_HAVE_INVALID = 4;//订单失效
+
 
 }

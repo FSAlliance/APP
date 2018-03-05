@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
+import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.OrderType;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 
@@ -71,13 +72,13 @@ public class MfrmMyOrderActivity extends BaseController implements ViewPager.OnP
 
         //将名称加载tab名字列表，正常情况下，我们应该在values/arrays.xml中进行定义然后调用
         list_title = new ArrayList<>();
-        list_title.add(new OrderType("全部", "0"));
-        list_title.add(new OrderType("待付款", "1"));
-        list_title.add(new OrderType("待发货", "2"));
-        list_title.add(new OrderType("待发货", "3"));
+        list_title.add(new OrderType("全部", AppMacro.ORDER_ALL));
+        list_title.add(new OrderType("订单付款", AppMacro.ORDER_HAVE_PAY));
+        list_title.add(new OrderType("订单结算", AppMacro.ORDER_HAVE_SETTLEMENT));
+        list_title.add(new OrderType("订单失效", AppMacro.ORDER_HAVE_INVALID));
         //TabLayout加载viewpager
         for(int i = 0; i < list_title.size(); i++){
-            list_fragment.add(TabFragment.newInstance(list_title.get(i).getOid()));
+            list_fragment.add(TabFragment.newInstance(list_title.get(i).getTypeId()));
         }
         fAdapter = new FragmentAdapter(this, getSupportFragmentManager(),list_fragment , list_title);
         vp_FindFragment_pager.setAdapter(fAdapter);//给ViewPager设置适配器

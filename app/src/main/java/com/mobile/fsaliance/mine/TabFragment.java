@@ -13,8 +13,10 @@ import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.common.InitApplication;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Order;
+import com.mobile.fsaliance.common.vo.User;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.UnKnownHostError;
@@ -30,6 +32,7 @@ import org.json.JSONObject;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
@@ -52,18 +55,22 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
     private View view = null;
     private boolean isPrepared;
     private static Object cancelObject = new Object();
-    private int index = 0;
-    private int limit = 20;
     private static final int PUBLIC_DATA = 1;
     private static final int PUBLIC_DATA_PULLUPREFRESH = 2;
     private ArrayList<Order> orders = new ArrayList<>();
     private boolean flag = false;
-    private String typeId;
+    private int typeId;
     private boolean mHasLoadedOnce;
     private RequestQueue queue;
-    public static TabFragment newInstance(String typeId) {
+    private User user;
+    private final int GET_MY_ORDER = 0;
+    private final int GET_MY_ORDER_MORE = 1;
+    private int firstPage = AppMacro.FIRST_PAGE + 1;
+    private int moreData = AppMacro.FIRST_PAGE + 2;
+
+    public static TabFragment newInstance(int typeId) {
         Bundle bundle = new Bundle();
-        bundle.putString("typeId", typeId);
+        bundle.putInt("typeId", typeId);
         TabFragment fragment = new TabFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -76,8 +83,10 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         addListener();
         isPrepared = true;
         queue = NoHttp.newRequestQueue();
+        user = LoginUtils.getUserInfo(getContext());
         isPrepared = true;
-        typeId = getArguments().getString("typeId");
+        typeId = getArguments().getInt("typeId");
+        L.i("QQQQQQQQQQ","typeId: "+typeId);
         lazyLoad();
         flag = false;
         return view;
@@ -94,15 +103,14 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         if (!isPrepared || !isVisible || mHasLoadedOnce) {
             return;
         }
-        getOrderData();
+        getOrderData(firstPage, typeId, user);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         flag = true;
-        index = 0;
-        getOrderData();
+        getOrderData(firstPage, typeId, user);
     }
 
     private void initView() {
@@ -132,56 +140,49 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
     }
 
    /**
-    * @author tanyadong
-    * @Title: getOrderData
-    * @Description: 获取订单数据
-    * @date 2018/1/11 0011 22:41
-    */
+     * @author tanyadong
+     * @Title: getOrderData
+     * @Description: 获取订单数据
+     * @date 2018/1/11 0011 22:41
+     */
 
-    public void getOrderData() {
-        String uri = AppMacro.REQUEST_URL + "/asset/query";
+    public void getOrderData(int pageNo, int type,User user) {
+        if (user == null) {
+            //获取订单失败
+            return;
+        }
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_GET_ORDER;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
-//        request.add("param", param);
-//        request.add("page", pageNo);
-//        request.add("limit", PAGE_SIZE);
-        queue.add(0, request, this);
-        for (int i = 0; i < 20; i ++) {
-            Order order = new Order();
-            order.setMoney(10.0);
-            order.setOrderItemTitle("aaaaaa");
-            order.setOrderNumber("44444444");
-            order.setOrderSellerNick("aaaaa");
-            order.setOrderTime("wwwwwww");
-            order.setOrderShopTitle("dianfu");
-            if (i < 4) {
-                order.setType(i);
-            } else {
-                order.setType(1);
-            }
-
-            orders.add(order);
-        }
-        setGridviewAdapter(orders);
+        request.add("orderType", type);
+        request.add("userId", user.getId());
+        request.add("pageNo", pageNo);
+        request.add("pageSize", AppMacro.PAGE_SIZE);
+        L.i("QQQQQQQQQQQ","url: "+request.url());
+        queue.add(GET_MY_ORDER, request, this);
     }
 
     /**
      * @author tanyadong
-     * @Title: 上拉加载更多数据
-     * @Description:
+     * @Title: getOrderData
+     * @Description: 获取订单数据
      * @date 2018/1/11 0011 22:41
      */
 
-    private void getOrderPullUpRefresh() {
-        String getPublicUrl = AppMacro.REQUEST_URL + "/asset/query";
-        Request<String> request = NoHttp.createStringRequest(getPublicUrl);
-        request.setCancelSign(cancelObject);
-        request.add("index", index);
-        request.add("limit", limit);
-        request.add("typeId",typeId);
-        // 添加url?key=value形式的参数
-        //添加到访问队列中
-        queue.add(PUBLIC_DATA_PULLUPREFRESH, request, this);
+    public void getOrderMore(int pageNo, int type,User user) {
+        if (user == null) {
+            //获取订单失败
+            return;
+        }
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_GET_ORDER;
+        Request<String> request = NoHttp.createStringRequest(uri);
+        request.cancelBySign(cancelObject);
+        request.add("orderType", type);
+        request.add("userId", user.getId());
+        request.add("pageNo", pageNo);
+        request.add("pageSize", AppMacro.PAGE_SIZE);
+        L.i("QQQQQQQQQQQ","url: "+request.url());
+        queue.add(GET_MY_ORDER_MORE, request, this);
     }
 
 
@@ -227,20 +228,19 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         orders.clear();
         flag = true;
-        index = 0;
-        getOrderData();
+        getOrderData(firstPage, typeId, user);
     }
 
     /**
      * @author tanyadong
-     * @Title:
+     * @Title: onBGARefreshLayoutBeginLoadingMore
      * @Description: 加载更多
      * @date 2018/1/12 0012 21:56
      */
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        getOrderPullUpRefresh();
+        getOrderMore(moreData, typeId, user);
         return true;
     }
 
@@ -267,37 +267,43 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
   */
 
     private ArrayList<Order> analyzeOrderListData(String result) {
+        ArrayList<Order> list = new ArrayList<>();
         if (null == result || "".equals(result)) {
             L.e("result == null");
             T.showShort(getActivity(), R.string.my_order_get_failed);
-            return null;
+            return list;
         }
-        ArrayList<Order> list = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(result);
             if (jsonObject.has("ret")) {
                 int ret = jsonObject.optInt("ret");
-                if (ret == 0) {
-                    JSONObject jsonContent = jsonObject.optJSONObject("content");
-
-                    if (jsonContent == null || "".equals(jsonContent)) {
-                        T.showShort(getActivity(), R.string.my_order_get_failed);
-                        return null;
-                    } else {
-
-                        JSONArray jsonPublics = jsonContent.optJSONArray("channels");
-
-                        for (int i = 0; i < jsonPublics.length(); i++) {
-                            Order order = new Order();
-//                            JSONObject jsPublic = (JSONObject) jsonPublics.get(i);
-//                            publics.setHostId(jsPublic.optString("hostId"));
-//                            publics.setChannelNum(jsPublic.optInt("channelNum"));
-//                            publics.setUserName(jsPublic.optString("username"));
-//                            publics.setPassword(AESUtil.decrypt(jsPublic.optString("password")));
-//                            publics.setShareName(jsPublic.optString("shareName"));
-//                            publics.setImageUrl(jsPublic.optString("imgUrl"));
-                            list.add(order);
+                if (ret == 0 || ret == -18) {
+                    JSONArray orderList = jsonObject.optJSONArray("content");
+                    if (orderList == null || "".equals(orderList)) {
+//                        T.showShort(getActivity(), R.string.my_order_get_failed);
+                        //没有数据了
+                        return list;
+                    }
+                    for (int i = 0; i < orderList.length(); i++) {
+                        JSONObject orderJson = orderList.getJSONObject(i);
+                        if (orderJson == null) {
+                            continue;
                         }
+                        Order order = new Order();
+                        double money = orderJson.optDouble("totalAlipayFeeString");
+                        String title = orderJson.optString("auctionTitle");
+                        String orderNumber = orderJson.optString("id");
+                        String createTime = orderJson.optString("createTime");
+                        String shopTitle = orderJson.optString("exnickname");
+                        int type = orderJson.optInt("payStatus");
+                        order.setMoney(money);
+                        order.setOrderItemTitle(title);
+                        order.setOrderNumber(orderNumber);
+                        order.setOrderSellerNick("aaaaa");
+                        order.setOrderTime(createTime);
+                        order.setOrderShopTitle(shopTitle);
+                        order.setType(type);
+                        list.add(order);
                     }
                 } else {
                     T.showShort(getActivity(), R.string.my_order_get_failed);
@@ -315,33 +321,33 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
 
     @Override
     public void onSucceed(int i, Response response) {
-        try{
+        try {
             switch (i) {
-                case PUBLIC_DATA:
+                case GET_MY_ORDER:
                     //200为接口能调通
                     if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
                         String result = (String) response.get();
                         orders = analyzeOrderListData(result);
-                        if (orders != null) {
-//                            setGridviewAdapter(publics);
-                            index = orders.size();
+                        if (orders != null && orders.size() > 0) {
+                            setGridviewAdapter(orders);
                         }
                     }
                     break;
-                case PUBLIC_DATA_PULLUPREFRESH:
+                case GET_MY_ORDER_MORE:
                     //200为接口能调通
                     if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
                         String result = (String) response.get();
-                        ArrayList<Order> list = analyzeOrderListData(result);
-                        if (orders != null) {
-//                            publics.addAll(list);
-                            index = orders.size();
-//                            setGridviewAdapter(publics);
+                        ArrayList<Order> orders = analyzeOrderListData(result);
+                        if (orders != null && orders.size() > 0) {
+                            setGridviewAdapter(orders);
+                            moreData = moreData + 1;
                         }
                     }
                     break;
+                default:
+                    break;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             T.showShort(getActivity(), R.string.my_order_get_failed);
         }
