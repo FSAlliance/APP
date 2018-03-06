@@ -87,7 +87,6 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         user = LoginUtils.getUserInfo(getContext());
         isPrepared = true;
         typeId = getArguments().getInt("typeId");
-        L.i("QQQQQQQQQQ","typeId: "+typeId);
         lazyLoad();
         flag = false;
         return view;
