@@ -161,6 +161,7 @@
     <string name="modify_nickname">修改用户名</string>
     <!--订单-->
     <string name="my_order_get_failed">获取订单失败</string>
+    <string name="my_order_get_no_more">没有更多订单</string>
     <string name="my_order_id">订单编号:</string>
     <string name="my_order_time">下单时间:</string>
     <string name="my_order_success">订单成功</string>

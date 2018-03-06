@@ -60,6 +60,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
     private ArrayList<Order> orders = new ArrayList<>();
     private boolean flag = false;
     private int typeId;
+    private int tempTypeId;
     private boolean mHasLoadedOnce;
     private RequestQueue queue;
     private User user;
@@ -103,6 +104,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
         if (!isPrepared || !isVisible || mHasLoadedOnce) {
             return;
         }
+        tempTypeId = typeId;
         getOrderData(firstPage, typeId, user);
     }
 
@@ -330,6 +332,8 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
                         orders = analyzeOrderListData(result);
                         if (orders != null && orders.size() > 0) {
                             setGridviewAdapter(orders);
+                        } else {
+                            setNoDataTxt(0);
                         }
                     }
                     break;
@@ -339,8 +343,14 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
                         String result = (String) response.get();
                         ArrayList<Order> orders = analyzeOrderListData(result);
                         if (orders != null && orders.size() > 0) {
-                            setGridviewAdapter(orders);
-                            moreData = moreData + 1;
+                            this.orders.addAll(orders);
+                            setGridviewAdapter(this.orders);
+                            if (tempTypeId == typeId) {
+                                moreData = moreData + 1;
+                            }
+                        } else {
+                            //没有更多数据
+                            T.showShort(getActivity(),R.string.my_order_get_no_more);
                         }
                     }
                     break;
@@ -401,6 +411,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
 
     @Override
     public void onDestroy() {
+        stopNohttp();
         super.onDestroy();
     }
 
