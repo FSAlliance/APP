@@ -1,4 +1,5 @@
 package com.mobile.fsaliance.main;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v4.view.ViewPager;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseFragmentController;
+import com.mobile.fsaliance.common.util.LoginUtils;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
+import com.mobile.fsaliance.common.vo.User;
 import com.mobile.fsaliance.supers.MfrmSuperVouchersController;
 import com.mobile.fsaliance.mine.MfrmMineController;
 import com.mobile.fsaliance.home.MfrmHomeController;
@@ -71,7 +74,18 @@ public class MainActivity extends AppCompatActivity
 //        initValues();
         super.onPostResume();
     }
-
+    /**
+     * @author yuanxueyuan
+     * @Title: gotoLoginView
+     * @Description: 跳转到登录界面
+     * @date 2018/2/9 11:54
+     */
+    private void gotoLoginView() {
+        Intent intent = new Intent();
+        intent.setClass(this, MfrmLoginController.class);
+        startActivity(intent);
+        finish();
+    }
     /**
      * 点击事件
      */
@@ -187,10 +201,15 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case R.id.ll_mine_page:
-                showMine();
-                viewPager.setCurrentItem(2);
-                if (result != 0) {
-                    StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
+                User user = LoginUtils.getUserInfo(this);
+                if (user == null) {
+                    gotoLoginView();
+                } else {
+                    showMine();
+                    viewPager.setCurrentItem(2);
+                    if (result != 0) {
+                        StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
+                    }
                 }
                 break;
         }

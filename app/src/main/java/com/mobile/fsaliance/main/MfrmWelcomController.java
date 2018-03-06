@@ -91,7 +91,7 @@ public class MfrmWelcomController extends BaseController implements OnResponseLi
             if (msg.what == WHAT) {
                 User user = LoginUtils.getUserInfo(InitApplication.getInstance());
                 if (user == null) {
-                    gotoLoginView();
+                    gotoMainView();
                 } else {
                     queue = NoHttp.newRequestQueue();
                     updateLoginTime(user);

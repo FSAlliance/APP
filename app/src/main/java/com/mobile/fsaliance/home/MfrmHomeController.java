@@ -71,9 +71,11 @@ public class MfrmHomeController extends BaseFragmentController implements
 		isPrepared = true;
 		refreshList = false;
 		loadMoreList = false;
-		lazyLoad();
+
+//		lazyLoad();
 		//获取选品库
 		getFavoriteGroup();
+		getCustomGoodsData(INIT, AppMacro.ADZONEID, FIRST_PAGE);
 		return view;
 	}
 
@@ -117,11 +119,12 @@ public class MfrmHomeController extends BaseFragmentController implements
 
 	@Override
 	protected void lazyLoad() {
-		if (!isPrepared || !isVisible || mHasLoadedOnce) {
-			return;
-		}
-		getCustomGoodsData(INIT, AppMacro.ADZONEID, FIRST_PAGE);
-		mHasLoadedOnce = true;
+//		if (!isPrepared || !isVisible || mHasLoadedOnce) {
+//			return;
+//		}
+//		L.e("tyd---aaaaaa");
+//		getCustomGoodsData(INIT, AppMacro.ADZONEID, FIRST_PAGE);
+//		mHasLoadedOnce = true;
 	}
 
 	@Override
