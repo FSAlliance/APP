@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseView;
+import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.User;
@@ -78,15 +79,24 @@ public class MfrmWithdrawalsView extends BaseView {
                 }
                 break;
             case R.id.txt_present_all:
+                String money = presentmMonenyTxt.getText().toString().trim();
+                if (money == null || "".equals(money) || Integer.parseInt(money) == 0) {
+                    T.showShort(context, context.getResources().getString(R.string.present_moneny_null));
+                    return;
+                }
                 presentCountEdit.setText(presentmMonenyTxt.getText().toString());
                 break;
             case R.id.txt_present_ok:
-                if (presentCountEdit.getText().toString().trim() == "" || presentCountEdit.getText().toString().equals("")) {
+                if (presentCountEdit.getText().toString().trim() == null || presentCountEdit.getText().toString().equals("")) {
                     T.showShort(context, context.getResources().getString(R.string.please_input_present_moneny));
                     return;
                 }
                 if (Integer.parseInt(presentCountEdit.getText().toString().trim()) > Integer.parseInt( presentmMonenyTxt.getText().toString().trim())) {
                     T.showShort(context, context.getResources().getString(R.string.present_moneny_overrun));
+                    return;
+                }
+                if (Integer.parseInt(presentmMonenyTxt.getText().toString().trim()) < AppMacro.MIN_MONEY_TO_GET) {
+                    T.showShort(context, context.getResources().getString(R.string.present_moneny_min));
                     return;
                 }
                 if (super.delegate instanceof MfrmWithdrawalsViewDelegate) {

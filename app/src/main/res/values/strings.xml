@@ -136,6 +136,8 @@
     <string name="present_fail">提现失败</string>
     <string name="present_ok">确认提现</string>
     <string name="present_moneny_overrun">转出金额超限</string>
+    <string name="present_moneny_min">未达到最小的提现积分</string>
+    <string name="present_moneny_null">没有积分可以提现</string>
     <string name="tack_picture">拍照</string>
     <string name="pick_picture">从相册选择</string>
     <string name="active_income">主动收入</string>

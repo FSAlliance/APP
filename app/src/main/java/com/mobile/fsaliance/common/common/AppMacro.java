@@ -13,6 +13,7 @@ public class AppMacro {
 
 	public static final String REQUEST_GOODS_PATH = "/FSAlliance/rest";//接口
 	public static final int RESPONCESUCCESS = 200; //请求接口能调通
+	public static final int MIN_MONEY_TO_GET = 1000; //最小积分提现
 
 	//具体的接口
 	public static final String REQUEST_FAVORITE_LIST = "/Goods/favoriteGroup";//获取选品库列表

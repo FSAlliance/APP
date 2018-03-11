@@ -171,8 +171,19 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
 
     @Override
     public void onClickImmediateCash() {
+        if (user == null) {
+            L.e("user == null");
+            return;
+        }
         Intent intent = new Intent();
-        intent.setClass(context, MfrmWithdrawalsController.class);
+        String myAlipayNum = user.getAliPayAccount();
+        if (myAlipayNum == null || "".equals(myAlipayNum)) {
+            //跳转填写支付宝界面
+            intent.setClass(context, MfrmBoundAlipayController.class);
+        } else {
+            //跳转提现界面
+            intent.setClass(context, MfrmWithdrawalsController.class);
+        }
         startActivity(intent);
     }
 
