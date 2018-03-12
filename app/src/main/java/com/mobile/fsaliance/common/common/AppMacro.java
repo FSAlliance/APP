@@ -9,7 +9,7 @@ public class AppMacro {
 	// Crash日志文件夹路径
 	public static final String CRASH_MESSAGE_PATH = APP_PATH + "CrashMeaasge/";
 	public static final String PHOTO_PATH = APP_PATH + "photo/";
-	public static final String REQUEST_IP_PORT = "http://39.107.106.248:3389";//接口http://39.107.106.248:3389
+	public static final String REQUEST_IP_PORT = "http://192.168.0.102:8080";//接口http://39.107.106.248:3389
 
 	public static final String REQUEST_GOODS_PATH = "/FSAlliance/rest";//接口
 	public static final int RESPONCESUCCESS = 200; //请求接口能调通
@@ -18,7 +18,8 @@ public class AppMacro {
 	//具体的接口
 	public static final String REQUEST_FAVORITE_LIST = "/Goods/favoriteGroup";//获取选品库列表
 	public static final String REQUEST_FAVORITE_ITEMS = "/Goods/favoriteItem";//获取选品库中的数据
-	public static final String REQUEST_GET_GOOD_CODE = "/Goods/code";//获取选品库中的数据
+	public static final String REQUEST_GET_GOOD_CODE = "/Goods/code";//将有优惠的商品转换成淘口令
+	public static final String REQUEST_GET_GOOD_CODE_EX = "/Goods/codeEx";//将没有优惠卷的商品转换成淘口令
 	public static final String REQUEST_SEARCH_GOOD = "/Goods/searchGoods";//搜索商品
 	public static final String REQUEST_REGISTER = "/user/register";//注册
 	public static final String REQUEST_LOGIN = "/user/checkSign";//登录

@@ -43,6 +43,7 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
     private CircleProgressBarView circleProgressBarView;
 
     private static final int GET_GOOD_CODE = 0;//获取淘口令
+    private static final int GET_GOOD_CODE_Ex = 1;//获取淘口令
     private Object cancelObject = new Object();
     private RequestQueue queue;
     private Good good;//商品信息
@@ -112,7 +113,12 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
             return;
         }
         Glide.with(this).load(good.getGoodsImg()).into(goodsInfoImg);
-        getGoodInfos(good);
+        String clickUrl = good.getCouponClickUrl();
+        if (clickUrl == null || "".equals(clickUrl)) {
+            getGoodInfosEx(good);
+        } else {
+            getGoodInfos(good);
+        }
     }
 
     /**
@@ -128,20 +134,46 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
             return;
         }
         String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_GET_GOOD_CODE;
-        Request<String> request = NoHttp.createStringRequest(uri);
-        request.cancelBySign(cancelObject);
-        request.add("userId", "128556731");
-        request.add("text", good.getGoodsTitle());
         String clickUrl = good.getCouponClickUrl();
         if (good.getCouponClickUrl() == null || "".equals(good.getCouponClickUrl())) {
             clickUrl = good.getItemUrl();
         }
-        L.i("QQQQQQQQQ","clickUrl: "+clickUrl);
-        request.add("url", clickUrl);//编码
+        Request<String> request = NoHttp.createStringRequest(uri);
+        request.cancelBySign(cancelObject);
+        request.add("userId", "128556731");
+        request.add("text", good.getGoodsTitle());
         request.add("logo", good.getGoodsImg());
         request.add("ext", "");
+        L.i("QQQQQQQQQ","clickUrl: "+clickUrl);
+        request.add("url", clickUrl);//编码
         L.i("QQQQQQQQQQ", "url: " + request.url());
         queue.add(GET_GOOD_CODE, request, this);
+    }
+
+    /**
+     * @param good 商品信息
+     * @author yuanxueyuan
+     * @Title: getGoodInfos
+     * @Description: 获取淘口令
+     * @date 2018/1/29 20:12
+     */
+    private void getGoodInfosEx(Good good) {
+        if (good == null) {
+            L.e("good == null");
+            return;
+        }
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_GET_GOOD_CODE_EX;
+        String clickUrl = good.getItemUrl();
+        Request<String> request = NoHttp.createStringRequest(uri);
+        request.cancelBySign(cancelObject);
+        request.add("userId", "128556731");
+        request.add("text", good.getGoodsTitle());
+        request.add("logo", good.getGoodsImg());
+        request.add("ext", "");
+        L.i("QQQQQQQQQ","clickUrl: "+clickUrl);
+        request.add("url", clickUrl);//编码
+        L.i("QQQQQQQQQQ", "url: " + request.url());
+        queue.add(GET_GOOD_CODE_Ex, request, this);
     }
 
     /**
@@ -253,6 +285,13 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
                     }
                     analyzeData(result);
                     break;
+                case GET_GOOD_CODE_Ex:
+                    if (result == null || "".equals(result)) {
+                        L.e("result == null");
+                        return;
+                    }
+                    analyzeDataEx(result);
+                    break;
                 default:
                     break;
             }
@@ -297,6 +336,43 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
             }
             goodsInfoCodeText.setText(model);
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * @param result 获取到的结果
+     * @author yuanxueyuan
+     * @Title: analyzeDataEx
+     * @Description: 解析数据
+     * @date 2018/1/29 20:27
+     */
+    private void analyzeDataEx(String result) {
+        if (result == null || "".equals(result)) {
+            //获取失败
+            //暂无优惠卷
+            return;
+        }
+        try {
+            JSONObject resultJson = new JSONObject(result);
+            if (resultJson == null) {
+                //暂无优惠卷
+                L.e("resultJson == null");
+                return;
+            }
+            JSONObject response = resultJson.optJSONObject("wireless_share_tpwd_create_response");
+            if (response == null) {
+                L.e("response == null");
+                //暂无优惠卷
+                return;
+            }
+            String model = response.optString("model");
+            if (model == null || "".equals(model)) {
+                return;
+            }
+            goodsInfoCodeText.setText(model);
         } catch (JSONException e) {
             e.printStackTrace();
         }

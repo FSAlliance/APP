@@ -123,7 +123,7 @@ public class MfrmSearchGoodListController extends BaseController
         String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_SEARCH_GOOD;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
-        request.add("text", param);
+        request.add("queryWord", param);
         request.add("pageNo", pageNo);
         request.add("pageSize", AppMacro.PAGE_SIZE);
         L.i("QQQQQQQQQQQQQ","url: "+request.url());
@@ -186,8 +186,8 @@ public class MfrmSearchGoodListController extends BaseController
                     break;
                 //搜索商品信息
                 case SEARCH_ASSET_LIST:
-//                    assetList = analyzeSearchData(result);
-//                    mfrmSearchGoodListView.showSearchAssetList(assetList);
+                    List<Good> searchGoods = analyzeSearchData(result);
+                    mfrmSearchGoodListView.showGoodList(searchGoods);
                     break;
                 default:
                     break;
