@@ -13,6 +13,7 @@ import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.StatusBarUtil;
 
 public class MfrmSearchGoodsController extends BaseController implements View.OnClickListener {
 
@@ -29,7 +30,10 @@ public class MfrmSearchGoodsController extends BaseController implements View.On
     @Override
     protected void onCreateFunc(Bundle savedInstanceState) {
         //取消标题
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        int result = StatusBarUtil.StatusBarLightMode(this);
+        if (result != 0) {
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
+        }
         setContentView(R.layout.activity_search_goods_controller);
 
         initView();

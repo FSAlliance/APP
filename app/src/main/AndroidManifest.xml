@@ -24,7 +24,7 @@
     <application
         android:name=".common.common.InitApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/icon"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -42,13 +42,6 @@
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".main.MfrmLoginController"
@@ -108,6 +101,7 @@
         <activity
             android:name=".mine.MfrmFindMyOrderController"
             android:screenOrientation="portrait"></activity>
+
         <activity android:name=".mine.ContactUsActivity"></activity>
     </application>
 

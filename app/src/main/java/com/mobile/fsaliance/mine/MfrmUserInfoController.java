@@ -204,6 +204,7 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
                     File temp = new File(phoroPath);
                     mfrmUserInfoView.setSelectPhoto(Uri.fromFile(temp));
                     updatePicture(temp);
+
                     break;
                 case GALLERY_REQUEST_CODE:
                     mfrmUserInfoView.setSelectPhoto(data.getData());
