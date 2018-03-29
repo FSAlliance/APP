@@ -2,6 +2,7 @@ package com.mobile.fsaliance.goods;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Window;
 
 import com.mobile.fsaliance.R;
@@ -138,13 +139,30 @@ public class MfrmSearchGoodListController extends BaseController
     @Override
     public void onClickPullDown(String searchTxt) {
         refreshList = true;
-        getSearchAssetData(searchTxt, AppMacro.FIRST_PAGE);
+        if (fromWhichView == AppMacro.FROM_HOME) {
+            //选品库
+            getFavoriteGoods(favorite, AppMacro.FIRST_PAGE);
+        } else {
+            getSearchAssetData(searchTxt, AppMacro.FIRST_PAGE);
+        }
     }
 
     @Override
     public void onClickLoadMore(String searchTxt) {
         loadMoreList = true;
-        getSearchAssetData(searchGoods, pageNo);
+        if (fromWhichView == AppMacro.FROM_HOME) {
+            if (favorite == null) {
+                T.showShort(this, R.string.get_goods_failed);
+                return;
+            }
+            getFavoriteGoods(favorite, pageNo);
+        } else {
+            if (TextUtils.isEmpty(searchGoods)) {
+                T.showShort(this, R.string.get_goods_failed);
+                return;
+            }
+            getSearchAssetData(searchGoods, pageNo);
+        }
     }
 
     @Override
@@ -340,7 +358,7 @@ public class MfrmSearchGoodListController extends BaseController
 //            }
         }
         if (null == result || "".equals(result)) {
-            T.showShort(this, R.string.get_myasset_failed);
+            T.showShort(this, R.string.get_goods_failed);
 //            reloadNoDataList();
             L.e("result == null");
             return null;
@@ -358,6 +376,9 @@ public class MfrmSearchGoodListController extends BaseController
                     return null;
                 }
                 JSONArray jsonArray = jsonObjectResult.optJSONArray("n_tbk_item");
+                if (jsonArray == null) {
+                    return null;
+                }
                 mfrmSearchGoodListView.isLoadMore = true;
                 if (jsonArray.length() <= 0) {
                     if (loadMoreList) {
