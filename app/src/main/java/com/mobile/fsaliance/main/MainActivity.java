@@ -140,6 +140,9 @@ public class MainActivity extends AppCompatActivity
      */
 
     private void showHome(){
+        if (result != 0) {
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
+        }
         homeTxt.setTextColor(getResources().getColor(R.color.login_btn_color));
         superTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
         mineTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
@@ -157,6 +160,9 @@ public class MainActivity extends AppCompatActivity
       * @date 2017/9/5 21:38
     */
     private void showMine() {
+        if (result != 0) {
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
+        }
         homeTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
         superTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
         mineTxt.setTextColor(getResources().getColor(R.color.login_btn_color));
@@ -173,6 +179,9 @@ public class MainActivity extends AppCompatActivity
       * @date 2017/9/5 21:37
     */
     private void showSuperVoucher(){
+        if (result != 0) {
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
+        }
         homeTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
         superTxt.setTextColor(getResources().getColor(R.color.login_btn_color));
         mineTxt.setTextColor(getResources().getColor(R.color.optiontext_color_black));
@@ -189,16 +198,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.ll_home_page:
                 showHome();
                 viewPager.setCurrentItem(0);
-                if (result != 0) {
-                    StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
-                }
                 break;
             case R.id.ll_super_page:
                 showSuperVoucher();
                 viewPager.setCurrentItem(1);
-                if (result != 0) {
-                    StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
-                }
                 break;
             case R.id.ll_mine_page:
                 User user = LoginUtils.getUserInfo(this);
@@ -207,9 +210,6 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     showMine();
                     viewPager.setCurrentItem(2);
-                    if (result != 0) {
-                        StatusBarUtil.initWindows(this, getResources().getColor(R.color.login_btn_color));
-                    }
                 }
                 break;
         }

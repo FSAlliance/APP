@@ -68,6 +68,7 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
         request.add("phoneNum", phoneNum);
         request.add("password", password);
         queue.add(LOGON_IN, request, this);
+        L.e("tyd--"+request.url());
     }
     /**
       * @author tanyadong

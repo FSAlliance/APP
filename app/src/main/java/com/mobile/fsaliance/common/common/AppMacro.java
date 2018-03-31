@@ -9,7 +9,7 @@ public class AppMacro {
 	// Crash日志文件夹路径
 	public static final String CRASH_MESSAGE_PATH = APP_PATH + "CrashMeaasge/";
 	public static final String PHOTO_PATH = APP_PATH + "photo/";
-	public static final String REQUEST_IP_PORT = "http://39.107.106.248:7000";//接口http://39.107.106.248:3389
+	public static final String REQUEST_IP_PORT = "http://39.107.106.248:7000";//接口http://39.107.106.248:7000
 
 	public static final String REQUEST_GOODS_PATH = "/FSAlliance/rest";//接口
 	public static final int RESPONCESUCCESS = 200; //请求接口能调通

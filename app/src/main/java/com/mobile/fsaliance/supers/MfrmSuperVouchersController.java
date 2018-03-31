@@ -96,7 +96,6 @@ public class MfrmSuperVouchersController extends BaseFragmentController implemen
 		if (!isPrepared || !isVisible || mHasLoadedOnce) {
 			return;
 		}
-		L.e("tyd---bbbbbbbb");
 		getCustomGoodsData(AppMacro.ADZONEID, FIRST_PAGE);
 		mHasLoadedOnce = true;
 	}

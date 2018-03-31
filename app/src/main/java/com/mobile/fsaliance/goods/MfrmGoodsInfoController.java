@@ -19,6 +19,7 @@ import com.mobile.fsaliance.common.base.BaseController;
 import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.common.CircleProgressBarView;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 import com.mobile.fsaliance.common.vo.Good;
 import com.yanzhenjie.nohttp.NoHttp;
@@ -67,8 +68,10 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
 
     @Override
     protected void onCreateFunc(Bundle savedInstanceState) {
-        //取消标题
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        int result = StatusBarUtil.StatusBarLightMode(this);
+        if (result != 0) {
+            StatusBarUtil.initWindows(this, getResources().getColor(R.color.white));
+        }
         setContentView(R.layout.activity_goods_info_controller);
         queue = NoHttp.newRequestQueue();
 
