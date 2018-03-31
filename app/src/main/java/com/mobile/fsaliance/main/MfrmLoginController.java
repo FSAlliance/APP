@@ -33,7 +33,6 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
     private Object cancelObject = new Object();
     private RequestQueue queue;
     private static final int LOGON_IN = 0;
-    private User user;
     @Override
     protected void getBundleData() {
 
@@ -49,11 +48,6 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
         mfrmLoginView = (MfrmLoginView) findViewById(R.id.activity_login_view);
         mfrmLoginView.setDelegate(this);
         queue = NoHttp.newRequestQueue();
-//        user = LoginUtils.getUserInfo(this);
-//        if (user == null) {
-//            return;
-//        }
-//        mfrmLoginView.initData(user);
     }
 
     /**
@@ -64,13 +58,6 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
     */
     @Override
     public void onClickLogin(String phoneNum, String password) {
-        user = LoginUtils.getUserInfo(this);
-        if (user == null) {
-            user = new User();
-        }
-        user.setPassword(password);
-        user.setPhoneNum(phoneNum);
-        LoginUtils.saveUserInfo(this, user);
         if (phoneNum == null || "".equals(phoneNum) || password == null || "".equals(password)) {
             L.e("username == null || password == null");
             return;
@@ -145,9 +132,7 @@ public class MfrmLoginController extends BaseController implements MfrmLoginView
                 }
                 if (ret == AppMacro.GET_DATA_RET_SUCCESS) {
                     JSONObject jsonUser = jsonObject.optJSONObject("content");
-                    if (user == null) {
-                        user = new User();
-                    }
+                    User user = new User();
                     user.setId(jsonUser.optString("SUserId"));
                     user.setPhoneNum(jsonUser.optString("SPhoneNum"));
                     user.setPassword(jsonUser.optString("SPassword"));

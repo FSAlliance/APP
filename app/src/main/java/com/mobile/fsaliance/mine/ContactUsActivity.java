@@ -66,14 +66,14 @@ public class ContactUsActivity extends BaseController implements View.OnClickLis
      * @date 2018/2/27 21:31
      */
     private void addListener() {
-        contactUsBackImg.setOnClickListener(this);
+        titleLiftLl.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.img_back:
+            case R.id.ll_title_left:
                 finish();
                 break;
         }
