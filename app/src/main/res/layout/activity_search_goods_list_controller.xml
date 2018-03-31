@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -14,7 +14,7 @@
         android:background="@color/xml_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/home_top_text">
+        android:layout_below="@+id/share_to_invite_title">
         <ListView
             android:id="@+id/search_goods_list_back_list_view"
             android:scrollbars="none"
@@ -53,4 +53,4 @@
             android:layout_height="match_parent"
             android:visibility="gone"/>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

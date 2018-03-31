@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -44,7 +45,6 @@ public class MfrmSearchGoodListController extends BaseController
     private boolean refreshList = false;
     private boolean loadMoreList = false;
     private Object cancelObject = new Object();
-    private int lastCount = 0;//上次请求数据个数
 
     private String searchGoods;//搜索的商品
     private int fromWhichView;//从那个界面跳转过来的
@@ -102,7 +102,7 @@ public class MfrmSearchGoodListController extends BaseController
      */
     private void getFavoriteGoods(Favorite favorite, int pageNo) {
         if (favorite == null) {
-            //TODO 没有设备
+            mfrmSearchGoodListView.setNoDataView(true);
             return;
         }
         String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_FAVORITE_ITEMS;
@@ -125,40 +125,48 @@ public class MfrmSearchGoodListController extends BaseController
      * @date 2017/9/9 10:42
      */
     private void getSearchAssetData(String param, int pageNo) {
+        if (TextUtils.isEmpty(param)) {
+            mfrmSearchGoodListView.setNoDataView(true);
+            return;
+        }
         String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_SEARCH_GOOD;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
         request.add("queryWord", param);
         request.add("pageNo", pageNo);
         request.add("pageSize", AppMacro.PAGE_SIZE);
-        L.i("QQQQQQQQQQQQQ","url: "+request.url());
+        L.i("QQQQQQQQQQQQQ","url:"+request.url());
         queue.add(SEARCH_ASSET_LIST, request, this);
     }
 
 
     @Override
-    public void onClickPullDown(String searchTxt) {
+    public void onClickPullDown() {
         refreshList = true;
+        pageNo = AppMacro.FIRST_PAGE;
         if (fromWhichView == AppMacro.FROM_HOME) {
             //选品库
             getFavoriteGoods(favorite, AppMacro.FIRST_PAGE);
         } else {
-            getSearchAssetData(searchTxt, AppMacro.FIRST_PAGE);
+            //搜索
+            getSearchAssetData(searchGoods, AppMacro.FIRST_PAGE);
         }
     }
 
     @Override
-    public void onClickLoadMore(String searchTxt) {
+    public void onClickLoadMore() {
         loadMoreList = true;
         if (fromWhichView == AppMacro.FROM_HOME) {
             if (favorite == null) {
-                T.showShort(this, R.string.get_goods_failed);
+                T.showShort(this, R.string.check_asset_no_more);
+                L.e("favorite == null");
                 return;
             }
             getFavoriteGoods(favorite, pageNo);
         } else {
             if (TextUtils.isEmpty(searchGoods)) {
-                T.showShort(this, R.string.get_goods_failed);
+                T.showShort(this, R.string.check_asset_no_more);
+                L.e("searchGoods == null");
                 return;
             }
             getSearchAssetData(searchGoods, pageNo);
@@ -199,17 +207,37 @@ public class MfrmSearchGoodListController extends BaseController
                 case FAVORITE_GOODS:
                     List<Good> goods = analyzeFavoriteData(result);
                     if (goods == null || goods.size() <= 0) {
-                        //TODO 展示没有数据
+                        if (pageNo == AppMacro.FIRST_PAGE) {
+                            mfrmSearchGoodListView.setNoDataView(true);
+                        } else {
+                            T.showShort(this, R.string.check_asset_no_more);
+                        }
                         return;
                     }
-                    mfrmSearchGoodListView.showGoodList(goods);
+                    if (pageNo == AppMacro.FIRST_PAGE + 1) {
+                        mfrmSearchGoodListView.showGoodList(goods);
+                        return;
+                    }
+                    mfrmSearchGoodListView.addGoodList(goods);
 
 
                     break;
                 //搜索商品信息
                 case SEARCH_ASSET_LIST:
                     List<Good> searchGoods = analyzeSearchData(result);
-                    mfrmSearchGoodListView.showGoodList(searchGoods);
+                    if (searchGoods == null || searchGoods.size() <= 0) {
+                        if (pageNo == AppMacro.FIRST_PAGE) {
+                            mfrmSearchGoodListView.setNoDataView(true);
+                        } else {
+                            T.showShort(this, R.string.check_asset_no_more);
+                        }
+                        return;
+                    }
+                    if (pageNo == AppMacro.FIRST_PAGE + 1) {
+                        mfrmSearchGoodListView.showGoodList(searchGoods);
+                        return;
+                    }
+                    mfrmSearchGoodListView.addGoodList(searchGoods);
                     break;
                 default:
                     break;
@@ -226,7 +254,7 @@ public class MfrmSearchGoodListController extends BaseController
      */
     private List<Good> analyzeFavoriteData(String result) {
         if (null == result || "".equals(result)) {
-//            reloadNoDataList();
+            L.e("null == result ");
             return null;
         }
         List<Good> goods = new ArrayList<>();
@@ -237,9 +265,10 @@ public class MfrmSearchGoodListController extends BaseController
                 JSONObject error = resultJson.getJSONObject("error_response");
                 int errorCode = error.getInt("code");
                 if (errorCode == 15) {
-                    //TODO 没有数据
+                    L.e("errorCode == 15");
                     return null;
                 }
+                return null;
             } else if (resultJson.has("tbk_uatm_favorites_item_get_response")) {
                 //有数据
                 JSONObject responseJson = resultJson.getJSONObject("tbk_uatm_favorites_item_get_response");
@@ -254,8 +283,11 @@ public class MfrmSearchGoodListController extends BaseController
                 }
                 JSONArray favoriteItemList = results.optJSONArray("uatm_tbk_item");
                 if (favoriteItemList == null || favoriteItemList.length() <= 0) {
-                    //TODO 没有数据
+                    L.e("favoriteItemList == null || favoriteItemList.length() <= 0");
                     return null;
+                } else {
+                    pageNo++;
+                    mfrmSearchGoodListView.setNoDataView(false);
                 }
                 for (int i = 0; i < favoriteItemList.length(); i++) {
                     JSONObject goodJson = (JSONObject) favoriteItemList.get(i);
@@ -337,7 +369,6 @@ public class MfrmSearchGoodListController extends BaseController
                 }
             }
             return goods;
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -352,14 +383,7 @@ public class MfrmSearchGoodListController extends BaseController
      * @date 2018/1/29 22:39
      */
     private List<Good> analyzeSearchData(String result) {
-        if (!loadMoreList) {
-//            if (goodsList != null) {
-//                goodsList.clear();
-//            }
-        }
         if (null == result || "".equals(result)) {
-            T.showShort(this, R.string.get_goods_failed);
-//            reloadNoDataList();
             L.e("result == null");
             return null;
         }
@@ -381,12 +405,6 @@ public class MfrmSearchGoodListController extends BaseController
                 }
                 mfrmSearchGoodListView.isLoadMore = true;
                 if (jsonArray.length() <= 0) {
-                    if (loadMoreList) {
-                        mfrmSearchGoodListView.isLoadMore = false;
-                        T.showShort(this, R.string.check_asset_no_more);
-                    } else {
-//                        reloadNoDataList();
-                    }
                     return null;
                 } else {
                     pageNo++;
@@ -412,15 +430,12 @@ public class MfrmSearchGoodListController extends BaseController
                     good.setGoodsFinalPrice(jsonObjectContent.optString("zk_final_price"));
                     goodsList.add(good);
                 }
-                lastCount = jsonArray.length();
             } else {
-                T.showShort(this, R.string.get_goods_failed);
-//                reloadNoDataList();
+                L.e("！！！jsonObject.has(tbk_item_get_response)");
                 return null;
             }
         } catch (JSONException e) {
             T.showShort(this, R.string.get_goods_failed);
-//            reloadNoDataList();
             e.printStackTrace();
         }
         return  goodsList;

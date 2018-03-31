@@ -113,7 +113,7 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         if (super.delegate instanceof MfrmSearchGoodListDelegate) {
-            ((MfrmSearchGoodListDelegate) super.delegate).onClickPullDown("");
+            ((MfrmSearchGoodListDelegate) super.delegate).onClickPullDown();
         }
     }
 
@@ -126,7 +126,7 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (super.delegate instanceof MfrmSearchGoodListDelegate) {
-            ((MfrmSearchGoodListDelegate) super.delegate).onClickLoadMore("");
+            ((MfrmSearchGoodListDelegate) super.delegate).onClickLoadMore();
         }
         return isLoadMore;
     }
@@ -162,6 +162,28 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
         }
     }
 
+
+    /**
+     * @param goodList 商品列表
+     * @author yuanxueyuan
+     * @Title: showGoodLisgt
+     * @Description: 展示商品列表
+     * @date 2018/1/28 20:38
+     */
+    public void addGoodList(List<Good> goodList) {
+        if (goodList == null) {
+            L.e("goodList == null");
+            return;
+        }
+        if (goodListViewAdapter == null) {
+            goodListViewAdapter = new GoodListViewAdapter(context, goodList);
+            searchGoodList.setAdapter(goodListViewAdapter);
+            goodListViewAdapter.setDelegate(this);
+        } else {
+            goodListViewAdapter.addList(goodList);
+            goodListViewAdapter.notifyDataSetChanged();
+        }
+    }
 
     /**
      * @param goodList 商品列表
@@ -215,9 +237,9 @@ public class MfrmSearchGoodListView extends BaseView implements BGARefreshLayout
 
     public interface MfrmSearchGoodListDelegate {
 
-        void onClickPullDown(String searchTxt); //下拉刷新
+        void onClickPullDown(); //下拉刷新
 
-        void onClickLoadMore(String searchTxt); //上拉加载
+        void onClickLoadMore(); //上拉加载
 
         void onClickToGoodDetail(Good asset); //点击商品列表
 

@@ -43,6 +43,20 @@ public class GoodListViewAdapter extends BaseAdapter {
         this.goods = data;
     }
 
+    /**
+     * @param list 添加数据
+     * @author yuanxueyuan
+     * @Title: addList
+     * @Description: 添加数据
+     * @date 2018/3/31 11:45
+     */
+    public void addList(List<Good> list) {
+        if (list == null) {
+            return;
+        }
+        this.goods.addAll(list);
+    }
+
     public void setDelegate(GoodListViewAdapterDelegate delegate) {
         this.delegate = delegate;
     }
