@@ -45,8 +45,8 @@
         </activity>
         <activity
             android:name=".main.MfrmLoginController"
-            android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".main.MfrmRegisterController"
             android:screenOrientation="portrait"></activity>

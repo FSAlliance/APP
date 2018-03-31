@@ -58,13 +58,8 @@ public class MainActivity extends AppCompatActivity
         click();
 
     }
-
     @Override
     protected void onPostResume() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            id = intent.getIntExtra("id",1);
-        }
         if(id==1){
             showHome();
             viewPager.setCurrentItem(0);
