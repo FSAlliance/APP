@@ -4,6 +4,7 @@
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
+    android:background="@color/list_bg"
     android:layout_height="match_parent">
     <include android:id="@+id/title_include"
         layout="@layout/include_toolbar_title"/>

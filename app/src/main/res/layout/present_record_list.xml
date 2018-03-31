@@ -7,20 +7,20 @@
     <RelativeLayout
         android:id="@+id/rl_item_parent"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="60dp">
         <ImageView
             android:id="@+id/img_present_record"
+            android:src="@drawable/img_presenting"
             android:layout_marginLeft="15dp"
-            android:src="@drawable/logon_input_bg"
             android:layout_centerVertical="true"
-            android:padding="15dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
         <LinearLayout
             android:id="@+id/ll_present_record_info"
             android:layout_toLeftOf="@+id/txt_present_record_symbol"
             android:layout_toRightOf="@+id/img_present_record"
             android:orientation="vertical"
+            android:layout_marginLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <TextView
@@ -63,12 +63,6 @@
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"  />
-        <View
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/line_color"/>
     </RelativeLayout>
 
 </LinearLayout>
