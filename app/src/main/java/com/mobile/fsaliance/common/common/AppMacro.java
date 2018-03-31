@@ -9,7 +9,7 @@ public class AppMacro {
 	// Crash日志文件夹路径
 	public static final String CRASH_MESSAGE_PATH = APP_PATH + "CrashMeaasge/";
 	public static final String PHOTO_PATH = APP_PATH + "photo/";
-	public static final String REQUEST_IP_PORT = "http://39.107.106.248:7000";//接口http://39.107.106.248:7000
+	public static final String REQUEST_IP_PORT = "http://39.107.106.248:7000";//接口http://39.107.106.248:7000   192.168.0.105:8080
 
 	public static final String REQUEST_GOODS_PATH = "/FSAlliance/rest";//接口
 	public static final int RESPONCESUCCESS = 200; //请求接口能调通
@@ -56,10 +56,10 @@ public class AppMacro {
 	public static final int ERROR_INITE_NUM = -19;      //注册时邀请码不正确
 
 	//订单记录
-	public static final int ORDER_ALL = 1;//所有订单
-	public static final int ORDER_HAVE_PAY = 2;//订单付款
+	public static final int ORDER_ALL = 0;//所有订单
+	public static final int ORDER_HAVE_PAY = 12;//订单付款
 	public static final int ORDER_HAVE_SETTLEMENT = 3;//订单结算
-	public static final int ORDER_HAVE_INVALID = 4;//订单失效
+	public static final int ORDER_HAVE_INVALID = 13;//订单失效
 
 
 }
