@@ -66,7 +66,7 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
         request.setCancelSign(cancelObject);
         request.add("phoneNum", userName);
         request.add("password",password);
-        request.add("shareCode",refereeAcount);
+        request.add("inviteNum",refereeAcount);
         queue.add(0, request, this);
         L.e("tyd   "+request.url());
     }
