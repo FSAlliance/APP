@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:ellipsize="end"
+            android:gravity="center"
             android:layout_centerInParent="true"
             android:textColor="@color/optiontext_color_black"
             android:textSize="@dimen/about_text_size" />

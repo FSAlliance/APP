@@ -72,7 +72,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textIsSelectable="true"
-            android:textSize="30dp"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/qrcode_transparent_bg"
             android:text="@string/goods_info_error"/>
 
@@ -83,10 +84,9 @@
             <TextView
                 android:id="@+id/goods_info_copy_one_key"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:gravity="center"
-                android:textSize="20dp"
-                android:layout_margin="20dp"
+                android:layout_margin="40dp"
                 android:textColor="@color/white"
                 android:background="@drawable/bg_one_key_copy"
                 android:text="@string/goods_info_one_key_copy"
@@ -94,10 +94,9 @@
             <TextView
                 android:id="@+id/goods_info_to_taobao"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:gravity="center"
-                android:textSize="20dp"
-                android:layout_margin="20dp"
+                android:layout_margin="40dp"
                 android:textColor="@color/white"
                 android:background="@drawable/bg_one_key_copy"
                 android:text="@string/goods_info_to_taobao"
