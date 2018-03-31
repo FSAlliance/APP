@@ -222,6 +222,26 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
         }
     }
 
+    /**
+     * @param code 需要复制文字
+     * @author yuanxueyuan
+     * @Title: copyCode
+     * @Description: 复制文字
+     * @date 2018/3/31 17:09
+     */
+    private void copyCode(String code) {
+        // 复制到剪切板
+        // 从API11开始android推荐使用android.content.ClipboardManager
+        // 为了兼容低版本我们这里使用旧版的android.text.ClipboardManager，虽然提示deprecated，但不影响使用。
+        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        if (cm == null) {
+            T.showShort(this, R.string.share_copy_error);
+            return;
+        }
+        // 将文本内容放到系统剪贴板里。
+        cm.setText(code);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -236,23 +256,14 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
                     T.showShort(this, R.string.share_copy_error);
                     return;
                 }
-                // 复制到剪切板
-                // 从API11开始android推荐使用android.content.ClipboardManager
-                // 为了兼容低版本我们这里使用旧版的android.text.ClipboardManager，虽然提示deprecated，但不影响使用。
-                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                if (cm == null) {
-                    T.showShort(this, R.string.share_copy_error);
-                    return;
-                }
-                // 将文本内容放到系统剪贴板里。
-                cm.setText(goodCode);
+                copyCode(goodCode);
                 T.showShort(this, R.string.share_copy_success);
                 break;
             //直接领券
             case R.id.goods_info_to_taobao:
-                //TODO 跳转淘宝 根据地址
                 String goodCode1 = getGoodCode();
                 if (checkPackage(this, "com.taobao.taobao")) {
+                    copyCode(goodCode1);
                     Intent intent = new Intent();
                     intent.setAction("android.intent.action.VIEW");
 //                    String url = "taobao://shop.m.taobao.com/shop/shop_index.htm?shop_id=131259851&spm=a230r.7195193.1997079397.8.Pp3ZMM&point";
@@ -260,7 +271,7 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
 //                    intent.setData(uri);
                     Uri uri = Uri.parse(good.getItemUrl()); // 商品地址
                     intent.setData(uri);
-                    intent.setClassName("com.taobao.taobao", "com.taobao.tao.detail.activity.DetailActivity");
+                    intent.setClassName("com.taobao.taobao", "com.taobao.tao.detail.activity.DetailActivity");//com.taobao.tao.detail.activity.DetailActivity
                     startActivity(intent);
                 }
                 break;
