@@ -111,7 +111,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
     public void onResume() {
         super.onResume();
         flag = true;
-        getOrderData(firstPage, typeId, user);
+//        getOrderData(firstPage, typeId, user);
     }
 
     private void initView() {
@@ -135,7 +135,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         } else {
-            adapter.updateList(orders);
+            adapter.updateList(orderArrayList);
             adapter.notifyDataSetChanged();
         }
     }
@@ -296,14 +296,15 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
                         String orderNumber = orderJson.optString("id");
                         String createTime = orderJson.optString("createTime");
                         String shopTitle = orderJson.optString("exnickname");
+                        String earningTime = orderJson.optString("earningTime");
                         int type = orderJson.optInt("payStatus");
                         order.setMoney(money);
                         order.setOrderItemTitle(title);
                         order.setOrderNumber(orderNumber);
-                        order.setOrderSellerNick("aaaaa");
                         order.setOrderTime(createTime);
                         order.setOrderShopTitle(shopTitle);
                         order.setType(type);
+                        order.setEarningTime(earningTime);
                         list.add(order);
                     }
                 } else {
@@ -326,6 +327,7 @@ public class TabFragment extends BaseFragmentController implements BGARefreshLay
             switch (i) {
                 case GET_MY_ORDER:
                     //200为接口能调通
+                    L.i("QQQQQQQQQQQ","GET_MY_ORDER");
                     if (response.responseCode() == AppMacro.RESPONCESUCCESS) {
                         String result = (String) response.get();
                         orders = analyzeOrderListData(result);

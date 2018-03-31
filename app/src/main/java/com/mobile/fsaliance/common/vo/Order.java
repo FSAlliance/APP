@@ -18,6 +18,7 @@ public class Order implements Serializable {
 	private int type; //订单状态   0成功 1 已结算 2已付款 3 失效订单
 	private Double money;//订单总金额
 	private String orderTime;//下单时间
+	private String earningTime;//结算时间
 	private String orderShopTitle; //店铺名称
 	private String orderSellerNick; //卖家昵称
 	private String orderItemTitle;// 商品标题
@@ -65,6 +66,14 @@ public class Order implements Serializable {
 		this.orderTime = orderTime;
 	}
 
+	public String getEarningTime() {
+		return earningTime;
+	}
+
+	public void setEarningTime(String earningTime) {
+		this.earningTime = earningTime;
+	}
+
 	public String getOrderShopTitle() {
 		return orderShopTitle;
 	}
@@ -83,6 +92,21 @@ public class Order implements Serializable {
 
 	public String getOrderItemTitle() {
 		return orderItemTitle;
+	}
+
+	@Override
+	public String toString() {
+		return "Order{" +
+				"id='" + id + '\'' +
+				", orderNumber='" + orderNumber + '\'' +
+				", type=" + type +
+				", money=" + money +
+				", orderTime='" + orderTime + '\'' +
+				", earningTime='" + earningTime + '\'' +
+				", orderShopTitle='" + orderShopTitle + '\'' +
+				", orderSellerNick='" + orderSellerNick + '\'' +
+				", orderItemTitle='" + orderItemTitle + '\'' +
+				'}';
 	}
 
 	public void setOrderItemTitle(String orderItemTitle) {

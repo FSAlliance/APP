@@ -3,6 +3,7 @@ package com.mobile.fsaliance.mine;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mobile.fsaliance.R;
+import com.mobile.fsaliance.common.common.AppMacro;
+import com.mobile.fsaliance.common.util.L;
 import com.mobile.fsaliance.common.vo.Order;
 
 
@@ -74,6 +77,8 @@ public class MyOrder_all_Adapter extends BaseAdapter{
             vh.myOrderMoney = (TextView) convertView.findViewById(R.id.txt_myorder_money);
             vh.myOrderID = (TextView) convertView.findViewById(R.id.txt_myorder_id);
             vh.myOrderTime = (TextView) convertView.findViewById(R.id.txt_myorder_time);
+            vh.myOrderEarnTime = (TextView) convertView.findViewById(R.id.txt_myorder_time_earn);
+            vh.myOrderEarnTimeLL = (LinearLayout) convertView.findViewById(R.id.ll_myorder_time_earn);
             vh.myOrderIntroduceTxt = (TextView) convertView.findViewById(R.id.txt_myorder_introduce);
             convertView.setTag(vh);
         }else {
@@ -81,16 +86,23 @@ public class MyOrder_all_Adapter extends BaseAdapter{
         }
         //赋值
 
-        final Order order=list.get(position);
-
-        if (order.getType() == 0) { //订单成功
-            vh.myOrderMoney.setText(R.string.my_order_success);
-        } else if (order.getType() == 1) { //已结算
-            vh.myOrderMoney.setText(R.string.my_order_already_settled);
-        } else if (order.getType() == 2) { //已付款
-            vh.myOrderMoney.setText(R.string.my_order_already_paid);
-        } else if (order.getType() == 3) { //失效
-            vh.myOrderMoney.setText(R.string.my_order_fail);
+        Order order=list.get(position);
+        if (order == null) {
+            return convertView;
+        }
+        if (order.getType() == AppMacro.ORDER_HAVE_SETTLEMENT) { //已结算
+            String earnTime = order.getEarningTime();
+            if (!TextUtils.isEmpty(earnTime) && !("null".equals(earnTime))) {
+                vh.myOrderEarnTimeLL.setVisibility(View.VISIBLE);
+                vh.myOrderEarnTime.setText(earnTime);
+            }
+            vh.myOrderStateTxt.setText(R.string.my_order_already_settled);
+        } else if (order.getType() == AppMacro.ORDER_HAVE_PAY) { //已付款
+            vh.myOrderStateTxt.setText(R.string.my_order_already_paid);
+            vh.myOrderEarnTimeLL.setVisibility(View.GONE);
+        } else if (order.getType() == AppMacro.ORDER_HAVE_INVALID) { //失效
+            vh.myOrderStateTxt.setText(R.string.my_order_fail);
+            vh.myOrderEarnTimeLL.setVisibility(View.GONE);
         }
         vh.myOrderMoney.setText(String.valueOf(list.get(position).getMoney()));
         vh.myOrderIntroduceTxt.setText(order.getOrderItemTitle());
@@ -115,6 +127,8 @@ public class MyOrder_all_Adapter extends BaseAdapter{
         TextView myOrderMoney;
         TextView myOrderID;
         TextView myOrderTime;
+        TextView myOrderEarnTime;//结算时间
+        LinearLayout myOrderEarnTimeLL;
 
     }
 

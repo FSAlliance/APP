@@ -97,7 +97,7 @@
     <string name="goods_search_text">搜索</string>
 
     <!--我的界面-->
-    <string name="mine_money_balance">余额</string>
+    <string name="mine_money_balance">积分</string>
     <string name="mine_money_in_the_present">提现中</string>
     <string name="mine_money_has_present">已提现</string>
     <string name="mine_my_order">我的订单</string>
@@ -124,13 +124,13 @@
     <string name="mine_bound_alipay_no">您还没有绑定支付宝!</string>
     <string name="mine_bound_alipay_current">您当前账号为:</string>
 
-    <string name="mine_wallet">钱包</string>
-    <string name="my_money_balance">我的余额</string>
+    <string name="mine_wallet">积分</string>
+    <string name="my_money_balance">我的积分</string>
     <string name="mine_wallet_present">提现</string>
-    <string name="present_moneny">提现金额</string>
-    <string name="present_moneny_able">可提取金额</string>
+    <string name="present_moneny">提现积分</string>
+    <string name="present_moneny_able">可提取积分</string>
     <string name="present_all">全部提现</string>
-    <string name="please_input_present_moneny">请输入要提现的金额</string>
+    <string name="please_input_present_moneny">请输入要提现的积分</string>
     <string name="please_input_alipayaccount">请输入支付宝账号</string>
     <string name="please_input_alipayaccount_error">请输入正确的支付宝账号</string>
     <string name="please_input_user_name">请输入用户名</string>
@@ -138,7 +138,7 @@
     <string name="bound_fail">绑定失败</string>
     <string name="present_fail">提现失败</string>
     <string name="present_ok">确认提现</string>
-    <string name="present_moneny_overrun">提现金额超限</string>
+    <string name="present_moneny_overrun">提现积分超限</string>
     <string name="present_moneny_min">未达到最小的提现积分</string>
     <string name="present_moneny_null">没有积分可以提现</string>
     <string name="tack_picture">拍照</string>
@@ -169,6 +169,7 @@
     <string name="my_order_get_no_more">没有更多订单</string>
     <string name="my_order_id">订单编号:</string>
     <string name="my_order_time">下单时间:</string>
+    <string name="my_order_time_earn">结算时间:</string>
     <string name="my_order_success">订单成功</string>
     <string name="my_order_fail">订单失效</string>
     <string name="my_order_already_settled">已结算</string>

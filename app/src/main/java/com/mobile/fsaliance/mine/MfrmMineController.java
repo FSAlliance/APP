@@ -2,6 +2,7 @@ package com.mobile.fsaliance.mine;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,10 @@ public class MfrmMineController extends BaseFragmentController implements MfrmMi
      */
 
     private void getUserInfoData(String userid) {
+        if (TextUtils.isEmpty(userid)) {
+            L.e("TextUtils.isEmpty(userid)");
+            return;
+        }
         String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_GET_USER_INFO;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
