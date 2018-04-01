@@ -159,6 +159,7 @@
     <string name="new_pwd_is_error">两次密码不一致</string>
     <string name="new_pwd_is_equals_original_pwd">新密码和原密码一致</string>
     <string name="modify_pwd_fail">修改密码失败</string>
+    <string name="modify_pwd_success">修改密码成功</string>
     <string name="password_is_empty">密码不能为空</string>
     <string name="password_is_short">密码长度必须为6~16个字符</string>
 
@@ -192,6 +193,7 @@
     <string name="get_userinfo_failed">获取信息失败</string>
     <string name="share_copy_error">复制失败</string>
     <string name="share_copy_success">复制成功</string>
+    <string name="no_taobao">请先安装淘宝APP客户端</string>
 
     <!--找回订单-->
     <string name="find_my_order_null">请输入要找回的订单号</string>

@@ -120,6 +120,7 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
                 if (jsonObject.has("ret") && jsonObject.getInt("ret") == 0) {
                     user.setPassword(newPassword);
                     LoginUtils.saveUserInfo(this, user);
+                    T.showShort(this, R.string.modify_pwd_success);
                     finish();
                 } else {
                     T.showShort(this, R.string.modify_pwd_fail);

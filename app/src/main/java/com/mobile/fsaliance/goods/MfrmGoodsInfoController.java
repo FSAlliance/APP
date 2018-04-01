@@ -273,6 +273,8 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
                     intent.setData(uri);
                     intent.setClassName("com.taobao.taobao", "com.taobao.tao.detail.activity.DetailActivity");//com.taobao.tao.detail.activity.DetailActivity
                     startActivity(intent);
+                } else {
+                    T.showShort(this,R.string.no_taobao);
                 }
                 break;
             default:
