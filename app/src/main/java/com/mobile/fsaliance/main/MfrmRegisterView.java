@@ -120,6 +120,10 @@ public class MfrmRegisterView extends BaseView {
             T.showShort(context, R.string.referee_acount_is_null);
             return false;
         }
+        if (password.length() < 6 || password.length() > 16) {
+            T.showShort(context, R.string.password_is_short);
+            return false;
+        }
         return true;
     }
 

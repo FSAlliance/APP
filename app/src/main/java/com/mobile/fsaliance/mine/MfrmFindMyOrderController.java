@@ -243,7 +243,7 @@ public class MfrmFindMyOrderController extends BaseController implements View.On
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
         request.add("orderId",myOrder);
-        request.add("userId",  "10a9b01e-cdeb-441f-ab65-154ba1c64395");
+        request.add("userId",  user.getId());
         L.i("QQQQQQQQQQ","url: "+request.url());
         queue.add(FIND_MY_ORDER, request, this);
     }

@@ -160,6 +160,7 @@
     <string name="new_pwd_is_equals_original_pwd">新密码和原密码一致</string>
     <string name="modify_pwd_fail">修改密码失败</string>
     <string name="password_is_empty">密码不能为空</string>
+    <string name="password_is_short">密码长度必须为6~16个字符</string>
 
     <!--修改用户名-->
     <string name="hint_input_nickname">请输入用户名</string>

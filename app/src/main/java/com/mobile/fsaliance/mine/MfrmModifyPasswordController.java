@@ -195,6 +195,10 @@ public class MfrmModifyPasswordController extends BaseController implements OnRe
             T.showShort(this, R.string.new_pwd_is_equals_original_pwd);
             return false;
         }
+        if (newPwd.length() < 6 || newPwd.length() > 16) {
+            T.showShort(this, R.string.password_is_short);
+            return false;
+        }
         return true;
     }
 }

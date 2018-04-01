@@ -2,6 +2,7 @@ package com.mobile.fsaliance.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.mobile.fsaliance.R;
 import com.mobile.fsaliance.common.base.BaseController;
@@ -54,19 +55,17 @@ public class MfrmRegisterController extends BaseController implements MfrmRegist
      * @date 2017/9/6 22:15
      */
     @Override
-    public void onClickRegister(String refereeAcount, String userName, String password) {
-        User user = LoginUtils.getUserInfo(this);
-        if (user == null) {
-            user = new User();
+    public void onClickRegister(String inviteNum, String userName, String password) {
+        if (TextUtils.isEmpty(inviteNum) || TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
+            L.i("TextUtils.isEmpty(inviteNum)");
+            return;
         }
-        user.setPassword(password);
-        LoginUtils.saveUserInfo(this, user);
         String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH +AppMacro.REQUEST_REGISTER;
         Request<String> request = NoHttp.createStringRequest(uri);
         request.setCancelSign(cancelObject);
         request.add("phoneNum", userName);
         request.add("password",password);
-        request.add("inviteNum",refereeAcount);
+        request.add("inviteNum",inviteNum);
         queue.add(0, request, this);
         L.e("tyd   "+request.url());
     }
