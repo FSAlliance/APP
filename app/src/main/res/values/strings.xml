@@ -190,6 +190,7 @@
     <string name="share_please_install">请先安装</string>
     <string name="device_share_msgTitle">可分享的应用</string>
     <string name="video_update_fail">上传失败</string>
+    <string name="video_update_sucess">上传成功</string>
     <string name="get_userinfo_failed">获取信息失败</string>
     <string name="share_copy_error">复制失败</string>
     <string name="share_copy_success">复制成功</string>

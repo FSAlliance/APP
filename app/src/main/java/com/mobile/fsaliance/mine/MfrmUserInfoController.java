@@ -4,6 +4,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -32,7 +34,11 @@ import com.yanzhenjie.nohttp.rest.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.UUID;
@@ -200,9 +206,13 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+            Bitmap bitmap;
+            File temp;
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE:
-                    File temp = new File(phoroPath);
+//                    File temp = new File(phoroPath);
+                    bitmap= BitmapFactory.decodeFile(phoroPath);
+                    temp= saveBitmapFile(bitmap,phoroPath);
                     mfrmUserInfoView.setSelectPhoto(Uri.fromFile(temp));
                     updatePicture(temp);
 
@@ -210,8 +220,10 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
                 case GALLERY_REQUEST_CODE:
                     mfrmUserInfoView.setSelectPhoto(data.getData());
                     String path = getRealFilePath(this, data.getData());
+                    bitmap= BitmapFactory.decodeFile(path);
+                    temp = saveBitmapFile(bitmap, path);
                     L.e("tyd------path"+path);
-                    updatePicture(new File(path));
+                    updatePicture(temp);
                     break;
                 case 2:
                     mfrmUserInfoView.setAlipayBound(data.getStringExtra("boundAlipay"));
@@ -280,6 +292,7 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
                 try {
                     jsonObject = new JSONObject(response.get().toString());
                     if (jsonObject.optInt("ret") == 0) {
+                        T.showShort(this, getResources().getString(R.string.video_update_sucess));
                     } else {
                         T.showShort(this, getResources().getString(R.string.video_update_fail));
                     }
@@ -291,7 +304,18 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
                 break;
         }
     }
-
+    public File saveBitmapFile(Bitmap bitmap, String url){
+        File file=new File(url);//将要保存图片的路径
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
     @Override
     public void onFailed(int i, Response<String> response) {
         Exception exception = response.getException();
