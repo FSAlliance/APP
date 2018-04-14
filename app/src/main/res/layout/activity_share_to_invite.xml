@@ -15,7 +15,7 @@
         android:id="@+id/ll_share_to_invite"
         android:layout_width="match_parent"
         android:layout_height="133dp"
-        android:background="@drawable/search_delete"
+        android:background="@drawable/bg_common"
         android:layout_below="@id/share_to_invite_title">
 
         <LinearLayout

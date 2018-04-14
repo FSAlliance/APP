@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorAccent_press">#f76194</color>
+    <color name="colorAccent">#FF6F16</color>
+    <color name="colorAccent_press">#FFFF8E16</color>
     <color name="green_light">#41D228</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>
@@ -21,7 +21,8 @@
     <color name="asset_child">#666666</color>
     <color name="read">#ff0000</color>
     <color name="login_bg">#EFEEF5</color>
-    <color name="login_btn_color">#F54277</color>
+    <!--#F54277-->
+    <color name="login_btn_color">#FF6F16</color>
     <color name="login_register">#70BDCF</color>
     <color name="login_title_color">#F7F7F7</color>
     <color name="good_search">#fef5f2f2</color>

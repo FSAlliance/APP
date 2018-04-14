@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp">
         <ImageView
-            android:src="@drawable/mine_money_banner"
+            android:src="@drawable/bg_common"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,6 +40,7 @@
 
                 <TextView
                     android:text="￥"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="30dp"
                     android:layout_gravity="center"

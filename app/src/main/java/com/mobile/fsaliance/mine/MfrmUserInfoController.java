@@ -89,7 +89,8 @@ public class MfrmUserInfoController extends BaseController implements MfrmUserIn
         Request<String> request = NoHttp.createStringRequest(uri, RequestMethod.POST);
         request.setCancelSign(cancelObject);
         request.add("file", file);
-        request.setMultipartFormEnable(true);
+        request.add("userId", user.getId());
+//        request.setMultipartFormEnable(true);
         queue.add(0, request, this);
         L.e("tyd----"+request.url());
     }

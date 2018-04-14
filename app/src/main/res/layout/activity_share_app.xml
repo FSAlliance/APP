@@ -71,9 +71,9 @@
         android:gravity="center">
         <ImageView
             android:id="@+id/img_share_app_qr"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/search_delete"/>
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/qrcode_download"/>
     </LinearLayout>
 
 

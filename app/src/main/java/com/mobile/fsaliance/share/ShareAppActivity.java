@@ -150,7 +150,7 @@ public class ShareAppActivity extends Activity implements View.OnClickListener {
         return false;
     }
     /**
-     * @author 姜冬阳
+     * @author tyd
      * @Description: 检查系统应用程序，并打开
      * @date 2017/2/27
      * ${tags}

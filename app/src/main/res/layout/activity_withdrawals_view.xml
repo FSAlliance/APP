@@ -8,16 +8,11 @@
     >
     <include android:id="@+id/title_include"
         layout="@layout/include_toolbar_title"/>
-    <ImageView
-        android:src="@drawable/moredetails_arrow"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp" />
 
     <LinearLayout
+        android:background="@drawable/bg_common"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -26,8 +21,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="￥"
+            android:visibility="gone"
             android:textColor="@color/read"
-            android:textSize="18dp" />
+            android:textSize="30dp" />
 
         <TextView
             android:id="@+id/txt_money_count"
@@ -37,7 +33,7 @@
             android:layout_marginLeft="5dp"
             android:text="0"
             android:textColor="@color/read"
-            android:textSize="18dp" />
+            android:textSize="30dp" />
     </LinearLayout>
     <!--可提取金额-->
     <LinearLayout
@@ -65,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/read"
+            android:visibility="gone"
             android:text="@string/home_goods_money"/>
     </LinearLayout>
 
