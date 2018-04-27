@@ -390,16 +390,16 @@ public class MfrmSearchGoodListController extends BaseController
         List<Good> goodsList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(result);
-            if (jsonObject.has("tbk_item_get_response")) {
-                JSONObject optJSONObject = jsonObject.optJSONObject("tbk_item_get_response");
+            if (jsonObject.has("tbk_sc_material_optional_response")) {
+                JSONObject optJSONObject = jsonObject.optJSONObject("tbk_sc_material_optional_response");
                 if (optJSONObject == null) {
                     return null;
                 }
-                JSONObject jsonObjectResult= optJSONObject.optJSONObject("results");
+                JSONObject jsonObjectResult= optJSONObject.optJSONObject("result_list");
                 if (jsonObjectResult == null) {
                     return null;
                 }
-                JSONArray jsonArray = jsonObjectResult.optJSONArray("n_tbk_item");
+                JSONArray jsonArray = jsonObjectResult.optJSONArray("map_data");
                 if (jsonArray == null) {
                     return null;
                 }

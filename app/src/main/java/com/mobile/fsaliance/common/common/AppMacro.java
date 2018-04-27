@@ -21,6 +21,7 @@ public class AppMacro {
 	public static final String REQUEST_GET_GOOD_CODE = "/Goods/code";//将有优惠的商品转换成淘口令
 	public static final String REQUEST_GET_GOOD_CODE_EX = "/Goods/codeEx";//将没有优惠卷的商品转换成淘口令
 	public static final String REQUEST_SEARCH_GOOD = "/Goods/searchGoods";//搜索商品
+	public static final String REQUEST_CUSTOM_GOOD = "/Goods/Custom";//首页
 	public static final String REQUEST_REGISTER = "/user/register";//注册
 	public static final String REQUEST_LOGIN = "/user/checkSign";//登录
 	public static final String REQUEST_UPDATE_LOGIN_TIME = "/user/updateLoginTime";//更新登录时间

@@ -33,7 +33,9 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MfrmGoodsInfoController extends BaseController implements View.OnClickListener, OnResponseListener {
 
@@ -143,7 +145,7 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
         }
         Request<String> request = NoHttp.createStringRequest(uri);
         request.cancelBySign(cancelObject);
-        request.add("userId", "128556731");
+        request.add("userId", "18332852812");//128556731
         request.add("text", good.getGoodsTitle());
         request.add("logo", good.getGoodsImg());
         request.add("ext", "");
@@ -276,6 +278,8 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
                 } else {
                     T.showShort(this,R.string.no_taobao);
                 }
+
+
                 break;
             default:
                 break;

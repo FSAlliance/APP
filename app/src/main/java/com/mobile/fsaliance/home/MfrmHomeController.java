@@ -86,13 +86,14 @@ public class MfrmHomeController extends BaseFragmentController implements
 	  * @date 2017/9/9 10:42
 	*/
 	private void getCustomGoodsData(int i ,long adzoneid, long pageNo) {
-		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + "/Goods/Custom";
+		String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_CUSTOM_GOOD;
 		Request<String> request = NoHttp.createStringRequest(uri);
 		request.cancelBySign(cancelObject);
 		request.add("adzoneid", adzoneid);
 		request.add("platform", AppMacro.PLATFORM);
 		request.add("pageNo", pageNo);
 		request.add("pageSize", PAGE_SIZE);
+		L.i("QQQQQQQQQQQQQQQ","url: "+request.url());
 		queue.add(i, request, this);
 	}
 
