@@ -475,6 +475,7 @@ public class MfrmHomeController extends BaseFragmentController implements
 					good.setGoodsImg(jsonObjectContent.optString("pict_url"));
 					good.setShopTitle(jsonObjectContent.optString("shop_title"));
 					good.setGoodsTitle(jsonObjectContent.optString("title"));
+					good.setGoodsId(jsonObjectContent.optString("num_iid"));//商品ID
 					good.setVolume(jsonObjectContent.optInt("volume"));
 					goodsList.add(good);
 				}

@@ -390,16 +390,16 @@ public class MfrmSearchGoodListController extends BaseController
         List<Good> goodsList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(result);
-            if (jsonObject.has("tbk_dg_item_coupon_get_response")) {
-                JSONObject optJSONObject = jsonObject.optJSONObject("tbk_dg_item_coupon_get_response");
+            if (jsonObject.has("tbk_sc_material_optional_response")) {
+                JSONObject optJSONObject = jsonObject.optJSONObject("tbk_sc_material_optional_response");
                 if (optJSONObject == null) {
                     return null;
                 }
-                JSONObject jsonObjectResult= optJSONObject.optJSONObject("results");
+                JSONObject jsonObjectResult= optJSONObject.optJSONObject("result_list");
                 if (jsonObjectResult == null) {
                     return null;
                 }
-                JSONArray jsonArray = jsonObjectResult.optJSONArray("tbk_coupon");
+                JSONArray jsonArray = jsonObjectResult.optJSONArray("map_data");
                 if (jsonArray == null) {
                     return null;
                 }
@@ -415,11 +415,18 @@ public class MfrmSearchGoodListController extends BaseController
                     JSONObject jsonObjectContent = jsonArray.getJSONObject(i);
                     good.setCommissionRate(jsonObjectContent.optString("commission_rate"));
                     good.setCouponClickUrl(jsonObjectContent.optString("coupon_click_url"));
-                    good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
+                    String CouponInfo = jsonObjectContent.optString("coupon_info");
+                    if (CouponInfo != null && !"".equals(CouponInfo)) {
+                        String[]  strs = CouponInfo.split("元");
+                        if (strs.length >= 2){
+                            CouponInfo = strs[1];
+                            CouponInfo = CouponInfo.replace("减","");
+                        }
+                    }
+                    good.setCouponInfo(CouponInfo);
+                    good.setGoodsId(jsonObjectContent.optString("num_iid"));//商品ID
                     good.setCouponRemainCount(jsonObjectContent.optInt("coupon_remain_count"));
                     good.setCouponTotalCount(jsonObjectContent.optInt("coupon_total_count"));
-                    good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
-                    good.setCouponInfo(jsonObjectContent.optString("coupon_info"));
                     good.setItemDescription(jsonObjectContent.optString("item_description"));
                     good.setItemUrl(jsonObjectContent.optString("item_url"));
                     good.setNick(jsonObjectContent.optString("nick"));

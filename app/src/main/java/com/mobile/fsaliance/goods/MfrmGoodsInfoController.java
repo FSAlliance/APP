@@ -47,6 +47,7 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
 
     private static final int GET_GOOD_CODE = 0;//获取淘口令
     private static final int GET_GOOD_CODE_Ex = 1;//获取淘口令
+    private static final int GET_GOOD_CODE_BY_WEB = 2;//获取淘口令
     private Object cancelObject = new Object();
     private RequestQueue queue;
     private Good good;//商品信息
@@ -118,12 +119,13 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
             return;
         }
         Glide.with(this).load(good.getGoodsImg()).into(goodsInfoImg);
-        String clickUrl = good.getCouponClickUrl();
+        /*String clickUrl = good.getCouponClickUrl();
         if (clickUrl == null || "".equals(clickUrl)) {
             getGoodInfosEx(good);
         } else {
             getGoodInfos(good);
-        }
+        }*/
+        getGoodInfoByWeb(good);
     }
 
     /**
@@ -179,6 +181,25 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
         request.add("url", clickUrl);//编码
         L.i("QQQQQQQQQQ", "url: " + request.url());
         queue.add(GET_GOOD_CODE_Ex, request, this);
+    }
+
+    /**
+     * @param good 商品
+     * @author yuanxueyuan
+     * @Title: getGoodInfoByWeb
+     * @Description: 根据淘宝联盟网页获取淘口令
+     * @date 2018/5/13 21:25
+     */
+    private void getGoodInfoByWeb(Good good) {
+        if (good == null) {
+            L.e("good == null");
+            return;
+        }
+        String uri = AppMacro.REQUEST_IP_PORT + AppMacro.REQUEST_GOODS_PATH + AppMacro.REQUEST_GET_GOOD_CODE_BY_WEB;
+        Request<String> request = NoHttp.createStringRequest(uri);
+        request.cancelBySign(cancelObject);
+        request.add("numId", good.getGoodsId());
+        queue.add(GET_GOOD_CODE_BY_WEB, request, this);
     }
 
     /**
@@ -312,6 +333,13 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
                     }
                     analyzeDataEx(result);
                     break;
+                case GET_GOOD_CODE_BY_WEB:
+                    if (result == null || "".equals(result)) {
+                        L.e("result == null");
+                        return;
+                    }
+                    analyzeDataByWeb(result);
+                    break;
                 default:
                     break;
             }
@@ -399,9 +427,50 @@ public class MfrmGoodsInfoController extends BaseController implements View.OnCl
 
     }
 
+    /**
+     * @param result 获取到的结果
+     * @author yuanxueyuan
+     * @Title: analyzeDataByWeb
+     * @Description: 解析数据
+     * @date 2018/1/29 20:27
+     */
+    private void analyzeDataByWeb(String result) {
+        if (result == null || "".equals(result)) {
+            //获取失败
+            //暂无优惠卷
+            return;
+        }
+        try {
+            JSONObject resultJson = new JSONObject(result);
+            if (resultJson == null) {
+                //暂无优惠卷
+                L.e("resultJson == null");
+                return;
+            }
+            JSONObject response = resultJson.optJSONObject("data");
+            if (response == null) {
+                L.e("response == null");
+                //暂无优惠卷
+                return;
+            }
+            String model = "";
+            String couponLinkTaoToken = response.optString("couponLinkTaoToken");
+            String taoToken = response.optString("taoToken");
+            if (couponLinkTaoToken == null || "".equals(couponLinkTaoToken)) {
+                model = taoToken;
+            } else {
+                model = couponLinkTaoToken;
+            }
+            goodsInfoCodeText.setText(model);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     @Override
     public void onFailed(int i, Response response) {
-
     }
 
     @Override
