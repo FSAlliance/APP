@@ -171,19 +171,11 @@
                     android:layout_marginTop="5dp"
                     android:textColor="@color/black"
                    android:layout_centerVertical="true"
-                    android:textSize="10dp" />
+                    android:textSize="12dp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
-<!--
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:background="@color/line_color" />
--->
 </RelativeLayout>
 
 </RelativeLayout>

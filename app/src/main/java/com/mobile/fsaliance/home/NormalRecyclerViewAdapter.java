@@ -32,6 +32,7 @@ public class NormalRecyclerViewAdapter extends BGARecyclerViewAdapter<Good> {
     protected void fillData(BGAViewHolderHelper helper, int position, Good good) {
         helper.getView(R.id.view_item_line).setVisibility(View.GONE);
         helper.setText(R.id.home_goods_describe, good.getGoodsTitle());
+        helper.setText(R.id.home_goods_seller_name, good.getShopTitle());
         ImageView imageView = helper.getImageView(R.id.home_goods_img);
         Glide.with(mContext).load(good.getGoodsImg()).into(imageView);
         helper.setText(R.id.home_goods_price_discount, good.getCouponInfo()); //优惠券价值
