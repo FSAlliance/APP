@@ -95,6 +95,7 @@ public class GoodListViewAdapter extends BaseAdapter {
             holder.goodsImg = (ImageView) view.findViewById(R.id.home_goods_img);
             holder.goodsLL = (LinearLayout) view.findViewById(R.id.home_goods);
             holder.lineView = (ImageView) view.findViewById(R.id.view_item_line);
+            holder.goodsSellerName = (TextView) view.findViewById(R.id.home_goods_seller_name);
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();
@@ -115,6 +116,7 @@ public class GoodListViewAdapter extends BaseAdapter {
                 }
                 holder.goodsPriceText.setText(good.getGoodsFinalPrice()); //商品价格
                 holder.goodsSaleNumText.setText(good.getVolume()+"");//商品销量
+                holder.goodsSellerName.setText(good.getShopTitle());
                 Glide.with(context).load(good.getGoodsImg()).into(holder.goodsImg);
                 holder.goodsLL.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -138,6 +140,7 @@ public class GoodListViewAdapter extends BaseAdapter {
         private TextView goodsSaleNumText;
         private RelativeLayout goodsPriceDiscountRl;
         private ImageView lineView;
+        private TextView goodsSellerName;
     }
 
 

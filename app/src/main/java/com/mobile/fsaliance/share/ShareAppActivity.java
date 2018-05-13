@@ -15,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mobile.fsaliance.R;
+import com.mobile.fsaliance.common.common.AppMacro;
 import com.mobile.fsaliance.common.util.FileUtils;
 import com.mobile.fsaliance.common.util.L;
+import com.mobile.fsaliance.common.util.MakeQrcode;
 import com.mobile.fsaliance.common.util.StatusBarUtil;
 import com.mobile.fsaliance.common.util.T;
 
@@ -49,6 +52,7 @@ public class ShareAppActivity extends Activity implements View.OnClickListener {
     private String strWeChatFriendActivityName = "com.tencent.mm.ui.tools.ShareToTimeLineUI";
     // 图片格式
     private String imgFormat = "image/png";
+    private String qrde_path = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +84,14 @@ public class ShareAppActivity extends Activity implements View.OnClickListener {
                 R.string.share_wechat), strWeChatActivityName, strWeChatPackageName);
         qqShareItem = new ShareItem(getResources().getString(
                 R.string.share_qq), strQQActivityName, strQQPackageName);
-
+        qrde_path = AppMacro.PHOTO_PATH + "qrcode.bmp";
+        String url = "http://39.107.106.248:7000/FSAlliance/download/download.jsp";
+        Bitmap bitmap = MakeQrcode.generateQRCode(url, 300,300);
+        if (bitmap == null) {
+            return;
+        }
+        Glide.with(this).load(qrde_path).into(QRCodeImg);
+        qrde_path = MakeQrcode.savePicpath(bitmap, qrde_path);
     }
 
      /**
@@ -217,11 +228,11 @@ public class ShareAppActivity extends Activity implements View.OnClickListener {
                 break;
             //分享到QQ
             case R.id.img_share_to_invite_qq:
-                shareMsg(this, getResources().getString(R.string.device_share_msgTitle), "", qqShareItem);
+                shareMsg(this, getResources().getString(R.string.device_share_msgTitle), qrde_path, qqShareItem);
                 break;
             //分享到微信
             case R.id.img_share_to_invite_wechat:
-                shareMsg(this, getResources().getString(R.string.device_share_msgTitle), "", wechatShareItem);
+                shareMsg(this, getResources().getString(R.string.device_share_msgTitle), qrde_path, wechatShareItem);
                 break;
             default:
                 break;
